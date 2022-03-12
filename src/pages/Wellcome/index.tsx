@@ -1,5 +1,8 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 // IMAGES
-import ChatQuestion from "../../images/chatQuestion.png";
+import WellcomeImage from "../../images/wellcomeImage.png";
 
 import {
   Container,
@@ -8,8 +11,10 @@ import {
   ImageCenter,
   Footer,
 } from "./styles";
+import ButtonDefault from "../../components/form/ButtonDefault";
 
 export default function Wellcome() {
+  const navigate = useNavigate();
   return (
     <Container>
       <Content>
@@ -21,8 +26,9 @@ export default function Wellcome() {
 
         <SectionImage>
           <ImageCenter>
-            <img src={ChatQuestion} alt="chat de questões" />
+            <img src={WellcomeImage} alt="chat de questões" />
           </ImageCenter>
+
         </SectionImage>
 
         <Footer>
@@ -31,7 +37,12 @@ export default function Wellcome() {
             <span className="colorHighlights">troque por prêmios</span>.
           </h2>
 
-          <button>Quero participar e ganhar</button>
+          <ButtonDefault 
+
+            onClick={() => navigate("/register")}
+          >
+            Quero participar e ganhar
+          </ButtonDefault>
         </Footer>
       </Content>
     </Container>

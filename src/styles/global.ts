@@ -40,7 +40,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: Poppins, sans-serif;
+    font-family: Inter, sans-serif;
     -webkit-font-smoothing: antialiased;
 
     background: var(--background);
@@ -60,12 +60,12 @@ export const GlobalStyles = createGlobalStyle`
     font: inherit;
   }
 
-  p, h1, h2, h3, h4, h5, h6 {
+  /* p, h1, h2, h3, h4, h5, h6 {
     overflow-wrap: break-word;
-    font-family: Poppins, sans-serif;
+    font-family: Inter, sans-serif;
     color: var(--gray-800);
     font-weight: 600;
-  }
+  } */
 
   #root, #__next {
     isolation: isolate;
