@@ -82,6 +82,10 @@ export const GlobalStyles = createGlobalStyle`
   button {
     cursor: pointer;
   }
+  
+  .colorHighlights {
+    color: var(--yellow);
+  }
 
   .container {
     width: var(--container-width-lg);
