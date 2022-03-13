@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import ButtonDefault from '../../components/form/ButtonDefault';
 
 // IMAGES
 import WellcomeImage from "../../images/wellcomeImage.png";
@@ -11,7 +12,6 @@ import {
   ImageCenter,
   Footer,
 } from "./styles";
-import ButtonDefault from "../../Components/form/ButtonDefault";
 
 export default function Wellcome() {
   const history = useHistory();

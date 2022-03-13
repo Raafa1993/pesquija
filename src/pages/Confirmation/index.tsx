@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import ButtonDefault from "../../Components/form/ButtonDefault";
-import InputSms from "../../Components/form/InputSms";
+import ButtonDefault from "../../components/form/ButtonDefault";
+import InputSms from "../../components/form/InputSms";
 import getValidationErrors from "../../Utils/getValidationErrors";
 import { Form } from "@unform/web";
 import { FormHandles } from "@unform/core";
