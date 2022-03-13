@@ -8,6 +8,8 @@ import PrivateRoutes from './PrivateRoutes';
 import Wellcome from "../pages/Wellcome";
 import Home from "../pages/Home";
 import SignIn from "../pages/SignIn";
+import Dashboard from '../pages/Dashboard/Dashboard';
+import SurveyStarts from "../pages/SurveyStart/SurveyStart";
 
 function Routes() {
   return (
@@ -18,6 +20,8 @@ function Routes() {
         <PrivateRoutes path="/register" component={Register} />
         <PrivateRoutes path="/confirmation" component={Confirmation} />
         <PrivateRoutes path="/home" component={Home} isPrivate />
+        <PrivateRoutes path="/painel" component={Dashboard} />
+        <PrivateRoutes path="/pesquisa" component={SurveyStarts} />
       </Switch>
     </>
   )
