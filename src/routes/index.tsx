@@ -1,5 +1,3 @@
-import React from 'react'
-import { render } from "react-dom";
 import {
   Route,
   Routes as Switch,
@@ -7,6 +5,7 @@ import {
 
 import Wellcome from "../pages/Wellcome";
 import Dashboard from '../pages/Dashboard/Dashboard';
+import SurveyStarts from "../pages/SurveyStart/SurveyStart";
 
 function Routes() {
   return (
@@ -14,6 +13,7 @@ function Routes() {
       <Switch>
         <Route path="/" element={<Wellcome />} />
         <Route path="/painel" element={<Dashboard />} />
+        <Route path="/pesquisa" element={<SurveyStarts />} />
       </Switch>
     </>
   )
