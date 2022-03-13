@@ -1,4 +1,5 @@
 import {
+  Route,
   Switch,
 } from "react-router-dom";
 import Confirmation from "../pages/Confirmation";
@@ -21,7 +22,8 @@ function Routes() {
         <PrivateRoutes path="/confirmation" component={Confirmation} />
         <PrivateRoutes path="/home" component={Home} isPrivate />
         <PrivateRoutes path="/painel" component={Dashboard} />
-        <PrivateRoutes path="/pesquisa" component={SurveyStarts} />
+        {/* <PrivateRoutes path="/pesquisa" component={SurveyStarts} /> */}
+        <Route path="/pesquisa" component={SurveyStarts} />
       </Switch>
     </>
   )

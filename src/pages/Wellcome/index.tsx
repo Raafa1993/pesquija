@@ -11,7 +11,7 @@ import {
   ImageCenter,
   Footer,
 } from "./styles";
-import ButtonDefault from "../../Components/form/ButtonDefault";
+import ButtonDefault from "../../components/form/ButtonDefault";
 
 export default function Wellcome() {
   const history = useHistory();
