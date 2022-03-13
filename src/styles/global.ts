@@ -16,6 +16,7 @@ export const GlobalStyles = createGlobalStyle`
     --black: #021623;
     --blue: #089BFF;
     --green: #1BA039;
+    --red: #E32E2E;
 
 
     --background: #021623;
@@ -40,7 +41,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: Poppins, sans-serif;
+    font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
 
     background: var(--background);
