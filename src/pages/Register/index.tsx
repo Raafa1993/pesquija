@@ -1,7 +1,12 @@
-import { ChangeEvent, FormEvent, useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import ButtonBackToPage from "../../components/form/ButtonBackToPage";
 import ButtonDefault from "../../components/form/ButtonDefault";
 import InputForm from "../../components/form/InputForm";
+import getValidationErrors from "../../Utils/getValidationErrors";
+import { Form } from '@unform/web';
+import { FormHandles } from '@unform/core';
+import * as Yup from "yup";
+import { useHistory } from "react-router-dom";
 import {
   Container,
   Content,
@@ -12,47 +17,60 @@ import {
 } from "./styles";
 
 export default function Register() {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [isFocused, setIsFocused] = useState(false);
-  const [isField, setIsField] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    date: "",
-    sexo: "",
-  });
+  const formRef = useRef<FormHandles>(null);
+  const history = useHistory()
+  const [load, setLoad] = useState(false);
 
-  const handleIsFocus = useCallback(() => {
-    setIsFocused(true);
-  }, []);
+  const handleSubmit = useCallback(async (data: object) => {
+    try {
+      formRef.current?.setErrors({});
+      setLoad(true)
+      
+      const schema = Yup.object().shape({
+        name: Yup.string().required("Nome obrigatório"),
+        phone: Yup.string().required("Telefone obrigatório"),
+        date: Yup.string().required("Data de nascimento obrigatório"),
+        sexo: Yup.string().required("Sexo obrigatório"),
+      });
 
-  const handleInputBlur = useCallback(() => {
-    setIsFocused(false);
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+  
+      const { name, phone, date, sexo }: any =  data;
+  
+      const newData = {
+        name,
+        phone,
+        date,
+        sexo,
+      };
 
-    setIsField(!!inputRef.current?.value);
-  }, []);
+      localStorage.setItem('@Pesquija:user', JSON.stringify(newData));
 
-  function handleOnChange(event: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  }
+      // const response = await api.post("/usuario", newData);
+      // console.log(response.data)
 
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
+      setLoad(false)
+      // alert('Cadastro realizado com sucesso!')
 
-    const { name, phone, date, sexo } = formData;
+      setTimeout(() => {
+        history.push(`/confirmation`)
+      }, 3000)
 
-    const data = {
-      name,
-      phone,
-      date,
-      sexo,
-    };
+    } catch(err: any) {
+      setLoad(false)
 
-    // await api.post('create', data)
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err);
 
-    await alert(`usuario cadastrado ${JSON.stringify(data)}`);
-  }
+        formRef.current?.setErrors(errors);
+        return;
+      }
+      alert(err.response.data.message)
+    }
+
+  }, [history])
 
   return (
     <Container>
@@ -73,13 +91,12 @@ export default function Register() {
         </SectionTitle>
 
         <SectionForm>
-          <form onSubmit={handleSubmit}>
+          <Form ref={formRef} onSubmit={handleSubmit}>
             <div className="field">
               <InputForm
                 type="text"
-                name="nome"
+                name="name"
                 placeholder="Digite seu nome"
-                onChange={handleOnChange}
               />
             </div>
             <div className="field">
@@ -88,7 +105,6 @@ export default function Register() {
                 name="phone"
                 mask="fone"
                 placeholder="Digite seu telefone"
-                onChange={handleOnChange}
               />
             </div>
 
@@ -98,7 +114,6 @@ export default function Register() {
                 name="date"
                 mask="date"
                 placeholder="Digite data de nascimento"
-                onChange={handleOnChange}
               />
             </div>
 
@@ -107,12 +122,16 @@ export default function Register() {
                 type="text"
                 name="sexo"
                 placeholder="Digite seu sexo"
-                onChange={handleOnChange}
               />
             </div>
 
-            <ButtonDefault type="submit">Finalizar meu cadastro</ButtonDefault>
-          </form>
+            <ButtonDefault 
+              type="submit"
+              disabled={load}
+            >
+                Finalizar meu cadastro
+              </ButtonDefault>
+          </Form>
         </SectionForm>
         <Footer>
           <h2>Com o seu cadastro você já ganha 20 pontos 💎️</h2>

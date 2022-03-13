@@ -87,6 +87,11 @@ export const GlobalStyles = createGlobalStyle`
     color: var(--yellow);
   }
 
+  .colorHighlightsStrong {
+    font-weight: 800;
+    color: var(--black);
+  }
+
   .container {
     width: var(--container-width-lg);
     margin: 0 auto;

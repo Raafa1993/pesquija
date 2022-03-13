@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 // IMAGES
 import WellcomeImage from "../../images/wellcomeImage.png";
@@ -14,7 +14,7 @@ import {
 import ButtonDefault from "../../components/form/ButtonDefault";
 
 export default function Wellcome() {
-  const navigate = useNavigate();
+  const history = useHistory();
   return (
     <Container>
       <Content>
@@ -38,8 +38,7 @@ export default function Wellcome() {
           </h2>
 
           <ButtonDefault 
-
-            onClick={() => navigate("/register")}
+            onClick={() => history.push("/register")}
           >
             Quero participar e ganhar
           </ButtonDefault>

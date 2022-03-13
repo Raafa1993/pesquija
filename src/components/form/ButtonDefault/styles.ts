@@ -1,8 +1,9 @@
 import { shade } from 'polished';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface Props {
     isLoading: number;
+    disabled?: boolean;
 }
 
 export const Container = styled.button<Props>`
@@ -20,13 +21,23 @@ export const Container = styled.button<Props>`
     font-weight: 600;
     color: var(--white);
 
-    margin-top: 40px;
+    /* margin-top: 40px; */
     transition: background-color 0.2s;
 
     &:hover {
       background: ${shade(0.2, '#089BFF')};
     }
 
-    cursor: ${({ isLoading }) => (isLoading ? 'not-allowewd' : 'pointer')}
+    ${props => props.disabled && css`
+      background: #364046;
+      color: #778189;
+      cursor: not-allowed;
+
+      &:hover {
+        background: #364046;
+      }
+    `}
+
+    /* cursor: ${({ isLoading }) => (isLoading ? 'not-allowewd' : 'pointer')} */
     
 `;

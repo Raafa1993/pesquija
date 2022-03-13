@@ -11,12 +11,12 @@ export const Container = styled.div<ContainerProps>`
   align-items: center;
   position: relative;
 
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 12px;
-  border: 1px solid #ffffff;
+  background: rgba(2, 22, 35, 0.04);
+  border-radius: 16px;
+  border: 1px solid #021623;
   padding: 16px 24px;
   width: 100%;
-  height: 56px;
+  height: 64px;
 
   transition: all 0.3s;
 
@@ -31,7 +31,7 @@ export const Container = styled.div<ContainerProps>`
     props.isField &&
     css`
       background: rgba(27, 160, 57, 0.04);
-      border: 1px solid var(--green);
+      border: 1px solid #1BA039;
     `}
 
   ${(props) =>
@@ -47,12 +47,15 @@ export const Container = styled.div<ContainerProps>`
     background: transparent;
     border: none;
     font-size: 16px;
-    color: var(--white);
+    color: var(--black);
+    line-height: 32px;
+    letter-spacing: 10px;
     font-weight: 500;
     text-align: center;
     outline: none;
     &::placeholder {
       color: #666360;
+      letter-spacing: normal
     }
   }
 `;

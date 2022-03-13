@@ -7,10 +7,10 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean
 }
 
-export default function ButtonDefault({ loading, children, ...rest }: ButtonProps) {
+export default function ButtonDefault({ loading, disabled, children, ...rest }: ButtonProps) {
   return (
     <Container
-      disabled={loading}
+      disabled={disabled}
       isLoading={Number(loading)}
       {...rest}
     >

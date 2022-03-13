@@ -15,7 +15,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   mask?: string;
 }
 
-export default function InputForm({ mask, name, ...rest }: InputProps) {
+export default function InputSms({ mask, name, ...rest }: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [isFocused, setIsFocused] = useState(false);
