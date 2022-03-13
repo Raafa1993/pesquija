@@ -65,7 +65,7 @@ export const DashboardBottom = styled.div`
         transform: translateX(-50%);
         margin-top: -2.5rem;
         .points,
-        .research {
+        .survey {
             background: #FFFBE6;
             border: 2px solid var(--yellow);
             border-radius: 1rem;
@@ -79,6 +79,7 @@ export const DashboardBottom = styled.div`
             span {
                 font-size: 1.375rem;
                 font-weight: 800;
+                color: var(--black);
             }
         }
     }
@@ -97,7 +98,7 @@ export const DashboardBottom = styled.div`
     }
 `
 
-export const Researches = styled.div`
+export const Surveys = styled.div`
     display: flex;
     gap: 1.25rem;
     margin-top: 1.25rem;
@@ -157,7 +158,7 @@ export const Researches = styled.div`
             color: var(--red);
             cursor: not-allowed;
         }
-        .researchName {
+        .surveyName {
             p {
                 color: var(--black);
                 font-weight: 400;
