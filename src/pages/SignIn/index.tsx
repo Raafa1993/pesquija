@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from "react";
-import ButtonBackToPage from "../../components/form/ButtonBackToPage";
-import ButtonDefault from "../../components/form/ButtonDefault";
-import InputForm from "../../components/form/InputForm";
+import ButtonBackToPage from "../../Components/form/ButtonBackToPage";
+import ButtonDefault from "../../Components/form/ButtonDefault";
+import InputForm from "../../Components/form/InputForm";
 import getValidationErrors from "../../Utils/getValidationErrors";
 import { Form } from "@unform/web";
 import { FormHandles } from "@unform/core";
