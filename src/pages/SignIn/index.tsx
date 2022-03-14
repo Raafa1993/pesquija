@@ -1,11 +1,4 @@
 import { useCallback, useRef, useState } from "react";
-<<<<<<< HEAD
-
-=======
-import ButtonBackToPage from "../../components/form/ButtonBackToPage";
-import ButtonDefault from "../../components/form/ButtonDefault";
-import InputForm from "../../components/form/InputForm";
->>>>>>> aa1ca67ba86caa1a591173f3860ab302202f40f8
 import getValidationErrors from "../../Utils/getValidationErrors";
 import { Form } from "@unform/web";
 import { FormHandles } from "@unform/core";
