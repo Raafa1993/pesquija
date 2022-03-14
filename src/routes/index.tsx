@@ -13,7 +13,6 @@ import Dashboard from '../pages/Dashboard/Dashboard';
 import SurveyStarts from "../pages/SurveyStart/SurveyStart";
 import SurveyFinish from "../pages/SurveyFinish/SurveyFinish";
 import Question from "../pages/Question";
-import QuestionSix from "../pages/QuestionSix/QuestionSix";
 
 function Routes() {
   return (
@@ -29,7 +28,6 @@ function Routes() {
         <PrivateRoutes path="/fim-pesquisa" component={SurveyFinish} isPrivate/>
         <PrivateRoutes path="/pesquisa" component={SurveyStarts} isPrivate />
         <PrivateRoutes path="/questao" component={Question} isPrivate />        
-        <PrivateRoutes path="/questao6" component={QuestionSix} isPrivate />        
       </Switch>
     </>
   )

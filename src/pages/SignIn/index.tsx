@@ -18,8 +18,8 @@ import InputForm from "../../components/form/InputForm";
 import ButtonDefault from "../../components/form/ButtonDefault";
 
 interface SignInFormData {
-  name: string;
-  phone: string;
+  email: any;
+  senha: any;
 }
 
 export default function SignIn() {
@@ -29,8 +29,8 @@ export default function SignIn() {
   const { signIn } = useAuth();
 
   const [formData, setFormData] = useState<SignInFormData>({
-    name: "",
-    phone: "",
+    email: "",
+    senha: "",
   });
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -45,8 +45,8 @@ export default function SignIn() {
         setLoad(true);
 
         const schema = Yup.object().shape({
-          name: Yup.string().required("Nome obrigatório"),
-          phone: Yup.string().required("Telefone obrigatório"),
+          email: Yup.string().required("Email obrigatório"),
+          senha: Yup.string().required("Senha obrigatório"),
         });
 
         await schema.validate(data, {
@@ -54,14 +54,14 @@ export default function SignIn() {
         });
 
         await signIn({
-          name: data.name,
-          phone: data.phone,
+          email: data.email,
+          senha: data.senha,
         });
 
         setLoad(false);
 
         setTimeout(() => {
-          history.push(`/confirmation`);
+          history.push(`/painel`);
         }, 3000);
       } catch (err: any) {
         setLoad(false);
@@ -102,21 +102,21 @@ export default function SignIn() {
             <Form ref={formRef} onSubmit={handleSubmit}>
               <div className="field">
                 <InputForm
-                  value={formData.name}
+                  value={formData.email}
                   type="text"
-                  name="name"
-                  placeholder="Digite seu nome"
+                  name="email"
+                  placeholder="Digite seu email"
                   onChange={handleInputChange}
                 />
               </div>
 
               <div className="field">
                 <InputForm
-                  value={formData.phone}
-                  type="text"
-                  name="phone"
-                  mask="fone"
-                  placeholder="Digite seu telefone"
+                  value={formData.senha}
+                  type="password"
+                  name="senha"
+                  // mask="fone"1
+                  placeholder="Digite sua senha"
                   onChange={handleInputChange}
                 />
               </div>
