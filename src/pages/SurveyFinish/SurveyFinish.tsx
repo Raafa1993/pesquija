@@ -1,6 +1,6 @@
 import { DashboardBottom, DashboardContainer, DashboardTop, SurveyContainer } from "./styles";
 import Emoji from 'a11y-react-emoji';
-import Company2 from '../../assets/porto-seguro.png';
+import Company2 from '../../images/PortoSeguro.png';
 import ButtonDefault from "../../components/form/ButtonDefault";
 import Trophy from '../../images/trophy.png';
 import Confetti from 'react-confetti'

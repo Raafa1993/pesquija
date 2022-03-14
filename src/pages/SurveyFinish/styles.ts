@@ -21,6 +21,7 @@ export const DashboardTop = styled.div`
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
+        margin-bottom: 20px;
         .confetti {
             left: 50% !important;
             transform: translateX(-50%);
@@ -31,6 +32,7 @@ export const DashboardTop = styled.div`
         line-height: 32px;
         color: var(--white);
         font-weight: 500;
+        text-align: center;
         span {
             font-weight: 800;
         }
@@ -40,6 +42,7 @@ export const DashboardTop = styled.div`
         flex-direction: column;
         font-size: 75px;
         align-items: center;
+        margin-top: 20px;
 
         p {
             font-size: 24px;
@@ -57,6 +60,7 @@ export const DashboardTop = styled.div`
         font-size: 1rem;
         font-weight: 600;
         color: var(--yellow);
+        margin-top: 40px;
     }
 
     @media (max-width: 1400px) {
@@ -98,7 +102,6 @@ export const DashboardBottom = styled.div`
         background: var(--blue);
     }
     @media(max-width: 1400px) {
-        height: 40vh;
         padding: 10px 2.5rem;
         .warning {
             width: 180px;
@@ -148,10 +151,10 @@ export const SurveyContainer = styled.div`
         margin-top: 30px;
 
         .companyPhoto {
-            width: 75px;
-            height: 75px;
+            width: 100px;
+            height: 100px;
             background-position: center;
-            background-size: contain;
+            background-size: cover;
             background-repeat: no-repeat;
             border-radius: 50%;
         }
