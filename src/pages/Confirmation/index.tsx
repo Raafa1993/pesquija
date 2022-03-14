@@ -9,7 +9,6 @@ import * as Yup from "yup";
 
 // IMAGES
 import FaceEmoji from "../../images/faceEmoji.png";
-import { CheckIcon } from "../../icons/CheckIcon";
 
 import {
   Container,
@@ -58,7 +57,7 @@ export default function Confirmation() {
         // alert('Cadastro realizado com sucesso!')
 
         setTimeout(() => {
-          history.push(`/home`)
+          history.push("/painel")
         }, 3000)
       } catch (err: any) {
         setLoad(false);
@@ -80,11 +79,10 @@ export default function Confirmation() {
       <ContentTop>
         <Header>
           <h1>{`${user.name }, seu cadastro foi finalizado com sucesso! ✅`}</h1>
-
-          <SectionImage>
-            <img src={FaceEmoji} alt="Emoji" />
-          </SectionImage>
         </Header>
+        <SectionImage>
+          <img src={FaceEmoji} alt="Emoji" />
+        </SectionImage>
       </ContentTop>
 
       <ContentBottom>
@@ -105,7 +103,7 @@ export default function Confirmation() {
                 placeholder="Código SMS"
               />
             </div>
-{/* 
+          {/* 
             {load === true && (
               <div className="checkIcon">
                 <CheckIcon />  

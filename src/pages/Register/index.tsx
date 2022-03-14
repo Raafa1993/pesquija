@@ -11,6 +11,7 @@ import {
   Container,
   Content,
   Header,
+  Main,
   SectionTitle,
   SectionForm,
   Footer,
@@ -78,64 +79,67 @@ export default function Register() {
         <Header>
           <ButtonBackToPage />
         </Header>
-        <SectionTitle>
-          <h1>Parabéns!🎉</h1>
-          <p>
-            Agora basta preencher o cadastro abaixo para começar a participar de
-            nossas pesquisas e{" "}
-            <span className="colorHighlights">
-              ganhar muitos e muitos prêmios
-            </span>
-            .
-          </p>
-        </SectionTitle>
 
-        <SectionForm>
-          <Form ref={formRef} onSubmit={handleSubmit}>
-            <div className="field">
-              <InputForm
-                type="text"
-                name="name"
-                placeholder="Digite seu nome"
-              />
-            </div>
-            <div className="field">
-              <InputForm
-                type="text"
-                name="phone"
-                mask="fone"
-                placeholder="Digite seu telefone"
-              />
-            </div>
+        <Main>
+          <SectionTitle>
+            <h1>Parabéns!🎉</h1>
+            <p>
+              Agora basta preencher o cadastro abaixo para começar a participar de
+              nossas pesquisas e{" "}
+              <span className="colorHighlights">
+                ganhar muitos e muitos prêmios
+              </span>
+              .
+            </p>
+          </SectionTitle>
 
-            <div className="field">
-              <InputForm
-                type="text"
-                name="date"
-                mask="date"
-                placeholder="Digite data de nascimento"
-              />
-            </div>
+          <SectionForm>
+            <Form ref={formRef} onSubmit={handleSubmit}>
+              <div className="field">
+                <InputForm
+                  type="text"
+                  name="name"
+                  placeholder="Digite seu nome"
+                />
+              </div>
+              <div className="field">
+                <InputForm
+                  type="text"
+                  name="phone"
+                  mask="fone"
+                  placeholder="Digite seu telefone"
+                />
+              </div>
 
-            <div className="field">
-              <InputForm
-                type="text"
-                name="sexo"
-                placeholder="Digite seu sexo"
-              />
-            </div>
+              <div className="field">
+                <InputForm
+                  type="text"
+                  name="date"
+                  mask="date"
+                  placeholder="Digite data de nascimento"
+                />
+              </div>
 
-            <ButtonDefault 
-              type="submit"
-              disabled={load}
-            >
-                Finalizar meu cadastro
-              </ButtonDefault>
-          </Form>
-        </SectionForm>
-        <Footer>
-          <h2>Com o seu cadastro você já ganha 20 pontos 💎️</h2>
-        </Footer>
+              <div className="field">
+                <InputForm
+                  type="text"
+                  name="sexo"
+                  placeholder="Digite seu sexo"
+                />
+              </div>
+
+              <ButtonDefault
+                type="submit"
+                disabled={load}
+              >
+                  Finalizar meu cadastro
+                </ButtonDefault>
+            </Form>
+          </SectionForm>
+          <Footer>
+            <h2>Com o seu cadastro você já ganha 20 pontos 💎️</h2>
+          </Footer>
+        </Main>
       </Content>
     </Container>
   );

@@ -12,6 +12,7 @@ import SignIn from "../pages/SignIn";
 import Dashboard from '../pages/Dashboard/Dashboard';
 import SurveyStarts from "../pages/SurveyStart/SurveyStart";
 import SurveyFinish from "../pages/SurveyFinish/SurveyFinish";
+import Question from "../pages/Question";
 
 function Routes() {
   return (
@@ -26,6 +27,9 @@ function Routes() {
         {/* <PrivateRoutes path="/pesquisa" component={SurveyStarts} /> */}
         <Route path="/pesquisa" component={SurveyStarts} />
         <Route path="/fim-pesquisa" component={SurveyFinish} />
+        <PrivateRoutes path="/painel" component={Dashboard} isPrivate />
+        <PrivateRoutes path="/pesquisa" component={SurveyStarts} isPrivate />
+        <PrivateRoutes path="/questao" component={Question} isPrivate />
       </Switch>
     </>
   )
