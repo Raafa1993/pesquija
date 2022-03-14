@@ -16,6 +16,7 @@ import {
   SectionForm,
   Footer,
 } from "./styles";
+import api from '../../services/api';
 
 export default function Register() {
   const formRef = useRef<FormHandles>(null);
@@ -28,30 +29,35 @@ export default function Register() {
       setLoad(true)
       
       const schema = Yup.object().shape({
-        name: Yup.string().required("Nome obrigatório"),
-        phone: Yup.string().required("Telefone obrigatório"),
-        date: Yup.string().required("Data de nascimento obrigatório"),
-        sexo: Yup.string().required("Sexo obrigatório"),
+        nome: Yup.string().required("Nome obrigatório"),
+        email: Yup.string().required("Email obrigatório"),
+        senha: Yup.string().required("Senha obrigatória"),
+        confirmeSenha: Yup.string().required("Confirmação de senha obrigatória"),
+        telefone: Yup.string().required("Telefone obrigatório"),
+        nascimento: Yup.string().required("Data de nascimento obrigatório"),
+        genero: Yup.string().required("Genero obrigatório"),
       });
 
       await schema.validate(data, {
         abortEarly: false,
       });
   
-      const { name, phone, date, sexo }: any =  data;
+      const { nome, email, senha, confirmeSenha, telefone, nascimento, genero }: any =  data;
   
       const newData = {
-        name,
-        phone,
-        date,
-        sexo,
+        nome,
+        email,
+        senha,
+        confirmeSenha,
+        telefone,
+        nascimento,
+        genero,
       };
 
       localStorage.setItem('@Pesquija:user', JSON.stringify(newData));
-
-      // const response = await api.post("/usuario", newData);
-      // console.log(response.data)
-
+      const response = await api.post('usuario', newData);
+      localStorage.setItem('@Pesquija:id_usuario', JSON.stringify(response.data.result.id_usuario));
+     
       setLoad(false)
       // alert('Cadastro realizado com sucesso!')
 
@@ -68,7 +74,7 @@ export default function Register() {
         formRef.current?.setErrors(errors);
         return;
       }
-      alert(err.response.data.message)
+      // alert(err.response.data.message)
     }
 
   }, [history])
@@ -98,15 +104,36 @@ export default function Register() {
               <div className="field">
                 <InputForm
                   type="text"
-                  name="name"
+                  name="nome"
                   placeholder="Digite seu nome"
                 />
               </div>
               <div className="field">
                 <InputForm
                   type="text"
-                  name="phone"
-                  mask="fone"
+                  name="email"
+                  placeholder="Digite seu email"
+                />
+              </div>
+              <div className="field">
+                <InputForm
+                  type="password"
+                  name="senha"
+                  placeholder="Digite sua senha"
+                />
+              </div>
+              <div className="field">
+                <InputForm
+                  type="password"
+                  name="confirmeSenha"
+                  placeholder="confirme sua senha"
+                />
+              </div>
+              <div className="field">
+                <InputForm
+                  type="text"
+                  name="telefone"
+                  // mask="fone"
                   placeholder="Digite seu telefone"
                 />
               </div>
@@ -114,7 +141,7 @@ export default function Register() {
               <div className="field">
                 <InputForm
                   type="text"
-                  name="date"
+                  name="nascimento"
                   mask="date"
                   placeholder="Digite data de nascimento"
                 />
@@ -123,7 +150,7 @@ export default function Register() {
               <div className="field">
                 <InputForm
                   type="text"
-                  name="sexo"
+                  name="genero"
                   placeholder="Digite seu sexo"
                 />
               </div>
