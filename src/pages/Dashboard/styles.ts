@@ -44,9 +44,13 @@ export const Profile = styled.div`
     @media (max-width: 1400px) {
         gap: 2rem;
         padding-top: 3rem;
+        flex-direction: row;
     }
     @media(max-width: 1000px) {
         flex-direction: column;
+        span {
+            width: 90%;
+        }
     }
 `
 
@@ -122,28 +126,19 @@ export const Surveys = styled.div`
     flex-direction: column;
     gap: 1.25rem;
     margin-top: 1.25rem;
-    height: 25rem;
-    .unlocked,
-    .locked {
+    height: 30rem;
+    .unlocked {
         display: flex;
         align-items: center;
         flex-direction: column;
         width: 100%;
-        height: 22rem;
+        height: 24rem;
         overflow-y: auto;
         .companyImage {
             width: 3.125rem;
             height: 3.125rem;
             background-size: cover;
             background-position: center;
-            border-radius: 50%;
-        }
-        .companyImage2 {
-            width: 3.125rem;
-            height: 3.125rem;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
             border-radius: 50%;
         }
     }
@@ -155,7 +150,6 @@ export const Surveys = styled.div`
         width: 100%;
         height: 4.375rem;
         margin-bottom: 10px;
-        /* background: var(--gray-100); */
         border-radius: 1rem;
         button {
             padding: .938rem;
@@ -192,9 +186,5 @@ export const Surveys = styled.div`
     @media (max-width: 1400px) {
         width: 100%;
         overflow: auto;
-        .unlocked,
-        .locked {
-            height: calc(21rem - 8rem);
-        }
     }   
 `

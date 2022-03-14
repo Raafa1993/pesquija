@@ -2,7 +2,7 @@ import Emoji from "a11y-react-emoji";
 
 //Images
 import Company from "../../assets/worldformats.png";
-import Company2 from "../../assets/porto-seguro.png";
+import Company2 from "../../images/PortoSeguro.png";
 import User from "../../assets/user.jpg";
 
 import {
@@ -12,23 +12,30 @@ import {
   Surveys,
 } from "./styles";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../../hooks/Auth";
 
 interface User {
   id: string;
-  name: string;
+  nome: string;
   avatar: string;
-  phone: string;
-  date: string;
-  sexo: string;
+  telefone: string;
+  nascimento: string;
+  genero: string;
 }
 
 export default function Dashboard() {
+  const history = useHistory()
+  const { user } = useAuth()
   const [data, setData] = useState<User>(
     window.localStorage.getItem("@Pesquija:user")
       ? JSON.parse(window.localStorage.getItem("@Pesquija:user") as any)
       : [],
-  );
+  );  
 
+  const [unlocked, setUnlocked] = useState(true)
+
+  
   return (
     <DashboardContainer>
       <Profile>
@@ -37,8 +44,8 @@ export default function Dashboard() {
           style={{ backgroundImage: `url(${User})` }}
         />
         <div>
-          <div className="name">{data.name}</div>
-          <div className="phone">{data.phone}</div>
+          <div className="name">{data.nome}</div>
+          <div className="phone">{data.telefone}</div>
           <span>
             Participe de + pesquisas para receber cada vez mais!
             <Emoji symbol="✨" label="bright" />
@@ -63,12 +70,11 @@ export default function Dashboard() {
         </div>
 
         <div className="title">
-          <h3>Painel de pesquisas</h3> {/*Aqui vai um icone de link??*/}
+          <h3>Painel de pesquisas</h3> <Emoji symbol="👀" label="eyes" />
           <p>
             Que tal participar de uma pesquisa agora?{" "}
             <Emoji symbol="👀" label="eyes" />
           </p>{" "}
-          {/*Aqui vai um icone de olhos*/}
         </div>
 
         <Surveys>
@@ -84,25 +90,15 @@ export default function Dashboard() {
                     <p>Consumo de rádio</p>
                     <span>35 pontos</span>
                   </div>
-                  <button className="ok">Participar</button>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="locked">
-            {[0, 1, 2, 3, 4, 5, 6].map((row: any, key: any) => {
-              return (
-                <div className="column">
-                  <div
-                    className="companyImage2"
-                    style={{ backgroundImage: `url(${Company2})` }}
-                  />
-                  <div className="surveyName">
-                    <p>Porto Seguro</p>
-                    <span>50 pontos</span>
-                  </div>
-                  <button className="block">Bloqueada</button>
+                  {
+                    unlocked 
+                    ? <button className="ok"
+                        onClick={() => history.push(`/questao`) }
+                      >
+                        Participar
+                    </button>
+                    : <button className="block">Bloqueada</button>
+                  }
                 </div>
               );
             })}
