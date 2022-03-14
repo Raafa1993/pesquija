@@ -16,8 +16,8 @@ interface AuthState {
 }
 
 interface SignInCredentials {
-  name: string;
-  phone: string;
+  email: any;
+  senha: any;
 }
 
 interface AuthContextData {
@@ -47,10 +47,10 @@ function AuthProvider({ children }: TransactionsProviderProps) {
     return {} as AuthState;
   })
 
-  const signIn = useCallback(async ({ name, phone }) => {
-    const response = await api.post(`/api`, {
-      name,
-      phone,
+  const signIn = useCallback(async ({ email, senha }) => {
+    const response = await api.post(`/login`, {
+      email,
+      senha,
     });
 
     const { user, token } = response.data.result;
@@ -65,9 +65,9 @@ function AuthProvider({ children }: TransactionsProviderProps) {
       token
     })
 
-    console.log(name, phone)
+    // console.log(email, senha)
   }, []);
-    console.log(data)
+    // console.log(data)
   
   const signOut = useCallback(() => {
     localStorage.removeItem('@Pesquija:token');
