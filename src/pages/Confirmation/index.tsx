@@ -18,12 +18,14 @@ import {
   SectionImage,
   Main,
 } from "./styles";
+import api from "../../services/api";
 
 export default function Confirmation() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
   const [load, setLoad] = useState(false);
   const user = JSON.parse(window.localStorage.getItem("@Pesquija:user") as any);
+  const id_usuario = JSON.parse(window.localStorage.getItem("@Pesquija:id_usuario") as any);
 
   const handleSubmit = useCallback(
     async (data: object) => {
@@ -32,7 +34,7 @@ export default function Confirmation() {
         setLoad(false);
 
         const schema = Yup.object().shape({
-          code: Yup.string().required("Código obrigatório").max(6).min(6),
+          code: Yup.string().required("Código obrigatório").max(5).min(4),
         });
 
         await schema.validate(data, {
@@ -42,20 +44,18 @@ export default function Confirmation() {
         const { code }: any = data;
 
         const newData = {
-          token: code
-          // user: user
+          token: code,
+          id_usuario: id_usuario
         };
 
-        console.log(newData);
+        console.log(newData, 'login token');
 
         localStorage.setItem('@Pesquija:token', JSON.stringify(newData));
 
-        // const response = await api.post("/usuario", newData);
-        // console.log(response.data)
-
+        const response = await api.post("/token-validar", newData);
+        
         setLoad(true);
-        // alert('Cadastro realizado com sucesso!')
-
+        
         setTimeout(() => {
           history.push("/painel")
         }, 3000)
@@ -78,7 +78,7 @@ export default function Confirmation() {
     <Container>
       <ContentTop>
         <Header>
-          <h1>{`${user.name }, seu cadastro foi finalizado com sucesso! ✅`}</h1>
+          <h1>{`${user.nome }, seu cadastro foi finalizado com sucesso! ✅`}</h1>
         </Header>
         <SectionImage>
           <img src={FaceEmoji} alt="Emoji" />
