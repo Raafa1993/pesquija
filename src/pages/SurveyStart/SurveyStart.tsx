@@ -2,6 +2,7 @@ import { DashboardBottom, DashboardContainer, SurveyContainer } from "./styles";
 import Warning from '../../assets/Warning.png';
 import Emoji from 'a11y-react-emoji';
 import Company2 from '../../assets/porto-seguro.png';
+import ButtonDefault from "../../components/form/ButtonDefault";
 
 export default function SurveyStarts() {
     return (
@@ -25,7 +26,13 @@ export default function SurveyStarts() {
                             <div className="points"><Emoji className="gem" symbol="💎" label="blue gem" /> 35 pontos</div>
                         </div>
                     </div>
+
                 </SurveyContainer>
+
+                <ButtonDefault>
+                    Iniciar pesquisa
+                </ButtonDefault>
+
             </DashboardBottom>
         </DashboardContainer>
     )
