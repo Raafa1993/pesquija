@@ -1,7 +1,7 @@
 import { DashboardBottom, DashboardContainer, SurveyContainer } from "./styles";
 import Warning from '../../assets/Warning.png';
 import Emoji from 'a11y-react-emoji';
-import Company2 from '../../assets/porto-seguro.png';
+import Company2 from '../../images/PortoSeguro.png';
 import ButtonDefault from "../../components/form/ButtonDefault";
 
 export default function SurveyStarts() {
