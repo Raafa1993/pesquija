@@ -6,6 +6,57 @@ export const Container = styled.div`
   
   width: 100vw;
   height: 100vh;
+
+  .modal {
+    width: 960px;
+    height: 250px;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    background: var(--white);
+    border-radius: 16px 16px 0 0;
+    .image {
+      width: 130px;
+      height: 130px;
+      background-size: cover;
+      background-position: center;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: -65px;
+    }
+    .title {
+      margin-top: 60px;
+      margin-bottom: 40px;
+      text-align: center;
+      color: var(--black);
+      font-weight: 600;
+      font-size: 20px;
+      span {
+        font-weight: 800;
+      }
+    }
+    .buttons {
+      display: flex;
+      gap: 20px;
+      button {
+        width: 50%;
+      }
+      .no {
+        background: red;
+        &:hover {
+          background: #b50303;
+        }
+      }
+      .yes {
+        background: var(--green);
+        &:hover {
+          background: #027c1d;
+        }
+      }
+    }
+  }
 `;
 
 export const ContentTop = styled.div`
