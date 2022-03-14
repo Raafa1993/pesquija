@@ -42,13 +42,18 @@ export const Profile = styled.div`
         color: var(--yellow);
     }
     @media (max-width: 1400px) {
-        flex-direction: row;
         gap: 2rem;
         padding-top: 3rem;
+    }
+    @media(max-width: 1000px) {
+        flex-direction: column;
     }
 `
 
 export const DashboardBottom = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100vw;
     height: 60vh;
     padding: 2.5rem;
@@ -96,10 +101,25 @@ export const DashboardBottom = styled.div`
         }
 
     }
+    @media(max-width: 1000px) {
+        .status {
+            gap: 10px;
+            .points, 
+            .survey{
+                width: 12rem;
+                height: 6rem;
+                padding: 1rem;
+                p {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
 `
 
 export const Surveys = styled.div`
     display: flex;
+    flex-direction: column;
     gap: 1.25rem;
     margin-top: 1.25rem;
     height: 25rem;
@@ -108,7 +128,7 @@ export const Surveys = styled.div`
         display: flex;
         align-items: center;
         flex-direction: column;
-        width: 50%;
+        width: 100%;
         height: 22rem;
         overflow-y: auto;
         .companyImage {
@@ -135,7 +155,7 @@ export const Surveys = styled.div`
         width: 100%;
         height: 4.375rem;
         margin-bottom: 10px;
-        background: var(--gray-100);
+        /* background: var(--gray-100); */
         border-radius: 1rem;
         button {
             padding: .938rem;
@@ -170,6 +190,8 @@ export const Surveys = styled.div`
         }
     }
     @media (max-width: 1400px) {
+        width: 100%;
+        overflow: auto;
         .unlocked,
         .locked {
             height: calc(21rem - 8rem);
