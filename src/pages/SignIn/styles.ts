@@ -76,9 +76,6 @@ export const SectionForm = styled.div`
       background: var(--black);
       border: 1px solid var(--white);
       &:hover {
-        /* opacity: .8; */
-        /* background: var(--blue);
-        border: 1px solid var(--blue); */
       }
     }
   }
@@ -87,7 +84,3 @@ export const SectionForm = styled.div`
     margin-top: 2rem;
   }
 `;
-<<<<<<< HEAD
-=======
-
->>>>>>> f272a9c6daf43563b0b893f9710487b3cd694ccb

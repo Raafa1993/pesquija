@@ -4,7 +4,7 @@ import HeadphoneImg from "../../images/headphone.png";
 
 import { Container, ContentTop, Header, ContentBottom, Main } from "./styles";
 import { ArrowLeftIcon } from "../../icons/ArrowLeftIcon";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ButtonRadio from "../form/ButtonRadio";
 import Songs from "../Songs/Songs";
 import api from "../../services/api";
@@ -20,6 +20,18 @@ interface ButtonsProps {
   handleOnChange: (value: any) => void;
 }
 
+interface RespostaAPI {
+  id_pergunta?: any,
+  resposta?: {
+    respostas: [any]
+  }
+}
+
+interface DTOForApi {
+  id_pesquisa: any,
+  respostaPesquisa: [RespostaAPI]
+}
+
 export default function Questions({
   load,
   data,
@@ -30,14 +42,20 @@ export default function Questions({
   handleOnChange
 }: ButtonsProps) {
   const history = useHistory();
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
-  const [radioSelected, setRadioSelected] = useState('')
+  const params:any = useParams()
+  const [selectedItems, setSelectedItems] = useState<any[]>([]);
+  const [radioSelected, setRadioSelected] = useState<any>(false)
   const [loading, setLoading] = useState(false)
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     itemsCheck: [],
-    itemsRadio: 0,
+    itemsRadio: false,
   })
+
+  const [DTOForApi, setDTOForApi] = useState<DTOForApi>({
+    id_pesquisa: params.id,
+    respostaPesquisa: [{}]
+})
 
   const [error, setError] = useState({
     error: false,
@@ -51,18 +69,20 @@ export default function Questions({
     setCurrentPage(currentPage - 1);
   }
 
-  function handleSelectItem(id: number) {
-    const alreadySelected = selectedItems.findIndex((item) => item === id);
-
-    if (alreadySelected >= 0) {
-      const filteredItems = selectedItems.filter((item) => item !== id);
-
-      setSelectedItems(filteredItems);
-    } else {
-      setSelectedItems([...selectedItems, id]);
-    }
+  function handleSelectItem(item: any) {
     
-    // setFormData({...formData, ['items']: selectedItems})
+    const alreadySelected = selectedItems.filter(obj => obj.value === item.value).length
+
+    if (alreadySelected > 0) {
+      const filteredItems = selectedItems.filter((obj) => obj.value !== item.value);
+      setSelectedItems(filteredItems);
+      formData.itemsCheck = filteredItems
+    } else {
+      setSelectedItems([...selectedItems, item]);
+      formData.itemsCheck.push(item)
+    }
+
+    setFormData({...formData})
     
   }
 
@@ -72,43 +92,116 @@ export default function Questions({
     setFormData({...formData, 'itemsRadio': item})
   }
 
-
-  console.log("FORMDATA", formData)
-
-  const handleSubmit = useCallback(async (event: any) => {
+  const handleSubmitNext = useCallback(async (event: any) => {
     try {
+
       event.preventDefault();
       setLoading(true)
 
-      if (formData.itemsCheck.length <= 0)
-        throw {
-          message: "Selecione uma opção",
-        };
+      if (data.tipo === 'radio' && formData.itemsCheck.length <= 0)
+        throw "Selecione alguma opção"
 
-      if (formData.itemsRadio < 0)
-        throw {
-          message: "Selecione uma opção",
-      };
-
+      if (data.tipo === "checkbox" && formData.itemsRadio === false )
+        throw "Selecione uma opção"
 
       setLoading(false)
-
       setCurrentPage(currentPage + 1)
 
-    } catch (e: any) {
-      setTimeout(() => {
-        setError({
-          error: true,
-          message: e.message,
-        });
-        setLoading(false)
-      }, 1000);
-    }
-  }, [history]
-  )
-  
+      const respostaPesquisa:any = DTOForApi.respostaPesquisa.filter(obj => obj.id_pergunta === data.id_pergunta)
 
-  console.log(radioSelected)
+      if ( respostaPesquisa.length === 0 ) {
+        
+        if ( data.tipo === 'checkbox' ) {
+
+          DTOForApi.respostaPesquisa.push({
+            id_pergunta: data.id_pergunta,
+            resposta: {
+              respostas: [formData.itemsRadio.label]
+            }
+          })
+
+        } else if ( data.tipo === 'radio' ) {
+
+          const arrayCheckbox:any = []
+
+          formData.itemsCheck.map((row:any) => {
+            arrayCheckbox.push(row.value)
+          })
+
+          DTOForApi.respostaPesquisa.push({
+            id_pergunta: data.id_pergunta,
+            resposta: {
+              respostas: arrayCheckbox
+            }
+          })
+        }
+      } else {
+
+        if ( data.tipo === 'checkbox' ) {
+
+          const questions:any = DTOForApi.respostaPesquisa.filter(obj => obj.id_pergunta !== data.id_pergunta)
+          DTOForApi.respostaPesquisa = questions
+
+          DTOForApi.respostaPesquisa.push({
+            id_pergunta: data.id_pergunta,
+            resposta: {
+              respostas: [formData.itemsRadio.label]
+            }
+          })
+
+        } else if ( data.tipo === 'radio' ) {
+
+          const arrayCheckbox:any = []
+
+          formData.itemsCheck.map((row:any) => {
+            arrayCheckbox.push(row.value)
+          })
+
+          const questions:any = DTOForApi.respostaPesquisa.filter(obj => obj.id_pergunta !== data.id_pergunta)
+          DTOForApi.respostaPesquisa = questions
+
+          DTOForApi.respostaPesquisa.push({
+            id_pergunta: data.id_pergunta,
+            resposta: {
+              respostas: arrayCheckbox
+            }
+          })
+        }
+
+      }
+
+      setDTOForApi({...DTOForApi})
+      resetForm()
+
+    } catch (e: any) {
+
+      console.log(e)
+      alert(e)
+
+    }
+  }, [data, formData]
+  )
+
+  function resetForm()
+  {
+
+    const formDataDefault = {
+      itemsCheck: [],
+      itemsRadio: false,
+    }
+
+    setRadioSelected(false)
+    setSelectedItems([])
+    setFormData({...formDataDefault})
+
+  }
+
+  function handleOnFinish()
+  {
+
+    const response:any = api.post('resposta', DTOForApi)
+
+  }
 
   return (
     <Container>
@@ -132,7 +225,7 @@ export default function Questions({
       </ContentTop>
       <ContentBottom>
         <Main>
-          <form onSubmit={handleSubmit}>
+          <form>
 
           <div className="questions">
             {load ? (
@@ -149,8 +242,11 @@ export default function Questions({
                           value: key,
                         },
                       ]}
-                      value={radioSelected}
-                      onChange={(value) => hadnleOnRadio(value)}
+                      value={radioSelected.value}
+                      onChange={() => hadnleOnRadio({
+                        label: row,
+                        value: key,
+                      })}
                     />
                   ))
                 )}
@@ -159,8 +255,11 @@ export default function Questions({
                   data.opcoes.map((row: any, key: any) => (
                     <ButtonRadio
                       key={key}
-                      isSelected={selectedItems.includes(key) ? true : false}
-                      onClick={() => handleSelectItem(key)}
+                      isSelected={selectedItems.filter(obj => obj.value === key).length ? true : false}
+                      onClick={() => handleSelectItem({
+                        label: row,
+                        value: key
+                      })}
                     >
                       {row}
                     </ButtonRadio>
@@ -185,6 +284,7 @@ export default function Questions({
               <div className="finalQUestion">
                 <button
                   className="buttonFinalQuestion"
+                  onClick={handleOnFinish}
                 >
                   Finalizar pesquisa
                 </button>
@@ -193,7 +293,7 @@ export default function Questions({
               <div className="footerQuestion">
                 <button
                   type="submit"
-                  onClick={() => setCurrentPage(currentPage + 1)}
+                  onClick={handleSubmitNext}
                   className="buttonNextpage"
                 >
                   <ArrowLeftIcon />

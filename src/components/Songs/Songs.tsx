@@ -15,12 +15,14 @@ interface SongProps {
 
 export default function Songs({ image, title, subTitle, music, row }: SongProps) {
   const audioRef = useRef<HTMLAudioElement>(null)
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState({})
   const { 
     isPlaying,
     togglePlay,
     setplayingState,
   } = useContext(PlayerContext)
+
+  console.log(selected)
 
   useEffect(() => {
     if (!audioRef.current) {
@@ -48,6 +50,7 @@ export default function Songs({ image, title, subTitle, music, row }: SongProps)
                 <span>{subTitle}</span>
               </div>
               <button 
+                type="button"
                 className="play"
                 onClick={togglePlay}
               >
@@ -67,6 +70,7 @@ export default function Songs({ image, title, subTitle, music, row }: SongProps)
             <div className="score">
               {[0, 1, 2, 3, 4, 5].map((row, key) => (
                 <button
+                  type="button"
                   className={`buttonSound ${
                     row === selected && selected === 0
                       ? "zero"
@@ -82,7 +86,7 @@ export default function Songs({ image, title, subTitle, music, row }: SongProps)
                       ? "five"
                       : ""
                   }`}
-                  onClick={() => setSelected(key)}
+                  onClick={() => setSelected(row)}
                 >
                   {key}
                 </button>

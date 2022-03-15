@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ButtonBackToPage from "../../components/form/ButtonBackToPage";
 import ButtonDefault from "../../components/form/ButtonDefault";
 import InputForm from "../../components/form/InputForm";
@@ -23,6 +23,13 @@ export default function Register() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory()
   const [load, setLoad] = useState(true);
+  const [sexo, setSexo] = useState([])
+
+  useEffect(() => {
+    api.get('/usuario-generos').then((res) => {
+      setSexo(res.data.result)
+    })
+  }, [])
 
   const handleSubmit = useCallback(async (data: object) => {
     try {
@@ -57,7 +64,6 @@ export default function Register() {
 
       const response = await api.post('/usuario', newData);
       console.log(response.data.result)
-      // localStorage.setItem('@Pesquija:sms', JSON.stringify(response.data.result.token));
       setLoad(false)
       setTimeout(() => {
         history.push(`/confirmation/${response.data.result.id_usuario}`)
@@ -153,8 +159,10 @@ export default function Register() {
                 placeholder="Selecione uma opção"
                 // onChange={console.log('')}
               >
-                <option value="default">Selecione uma opção</option>
-                <option value="1">opcao 1</option>
+                <option value="">Selecione uma opção</option>
+                {sexo.map((row: any) => (
+                  <option value={row.descricao}>{row.descricao}</option>
+                ))}
               </Select>
                 {/* <InputForm
                   type="text"
