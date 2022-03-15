@@ -185,6 +185,7 @@ export default function Questions({
               <div className="finalQUestion">
                 <button
                   className="buttonFinalQuestion"
+                  onClick={() => history.push('/fim-pesquisa')}
                 >
                   Finalizar pesquisa
                 </button>
