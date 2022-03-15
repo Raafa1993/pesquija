@@ -146,12 +146,18 @@ export const Surveys = styled.div`
   .column {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     gap: 1.25rem;
     width: 100%;
+    max-width: 600px;
     height: 4.375rem;
     margin-bottom: 10px;
     border-radius: 1rem;
+
+    .columLeft {
+      display: flex;
+      align-items: center;
+    }
     .buttonQuestion {
       padding: 0.938rem;
       border-radius: 1rem;
@@ -175,6 +181,7 @@ export const Surveys = styled.div`
       }
     }
     .surveyName {
+      margin-left: 1rem;
       p {
         color: var(--black);
         font-weight: 400;

@@ -10,7 +10,7 @@ export const ContentTop = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 40%;
+  height: 35%;
   background-color: #089bff;
 `;
 
@@ -87,7 +87,7 @@ export const ContentBottom = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 65%;
   background-color: var(--white);
 `;
 
@@ -100,7 +100,10 @@ export const Main = styled.div`
   margin: 0 auto;
   padding: 0 2rem;
   height: 100%;
-  margin-top: 100px;
+  margin-top: 80px;
+
+  overflow-x: scroll;
+  
 
   .questions {
     display: grid;

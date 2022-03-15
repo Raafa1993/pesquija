@@ -95,13 +95,15 @@ export default function Home() {
             {data.map((row) => {
               return (
                 <div className="column" key={row.id_pesquisa}>
-                  <div
-                    className="companyImage"
-                    style={{ backgroundImage: `url(${Company})` }}
-                  />
-                  <div className="surveyName">
-                    <p>{row.titulo}</p>
-                    <span>{row.pontos} pontos</span>
+                  <div className="columLeft">
+                    <div
+                      className="companyImage"
+                      style={{ backgroundImage: `url(${Company})` }}
+                    />
+                    <div className="surveyName">
+                      <p>{row.titulo}</p>
+                      <span>{row.pontos} pontos</span>
+                    </div>
                   </div>
 
                   <button
