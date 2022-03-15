@@ -3,12 +3,14 @@ import styled from "styled-components";
 export const DashboardContainer = styled.div`
     width: 100vw;
     height: 100vh;
+    display: flex;
+    justify-content: center;
     background: var(--background);
 `
 
 export const DashboardBottom = styled.div`
-    width: 100vw;
-    height: 70vh;
+    width: 60rem;
+    height: 75vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,11 +50,43 @@ export const DashboardBottom = styled.div`
             cursor: pointer;
         }
     }
+
+    button {
+        margin-top: 10px;
+        width: 500px;
+        background: var(--green);
+    }
+    @media(max-width: 1400px) {
+        height: 70vh;
+        .warning {
+            width: 180px;
+            height: 180px;
+            margin-top: -70px; 
+        }
+        .infos {
+            padding-top: 55px;
+        }
+        button {
+            height: 55px;
+        }
+    }
+    @media(max-width: 1000px) {
+        width: 100%;
+        padding-bottom: 1rem;
+        .infos {
+            width: 90%;
+        }
+        button {
+            width: 110%;
+            height: 95px;
+            margin-top: 35px;
+        }
+    }
 `
 
 export const SurveyContainer = styled.div`
     width: 500px;
-    height: 350px;
+    height: 320px;
     border: 2px solid var(--yellow);
     border-radius: 1rem;
     background: #FFFBE6;
@@ -62,6 +96,7 @@ export const SurveyContainer = styled.div`
     h3 {
         text-transform: uppercase;
         color: var(--black);
+        font-weight: 600;
         span {
             font-weight: 800;
         }
@@ -81,12 +116,9 @@ export const SurveyContainer = styled.div`
             width: 150px;
             height: 150px;
             background-position: center;
-            background-size: contain;
+            background-size: cover;
             background-repeat: no-repeat;
-        }
-
-        .details {
-
+            border-radius: 50%;
         }
 
         .minutes,
@@ -116,5 +148,19 @@ export const SurveyContainer = styled.div`
     }
     @media(max-width: 1400px) {
         overflow-y: scroll;
+        margin-top: 10px;
+        /* height: 280px; */
+    }
+    @media(max-width: 1000px) {
+        width: 110%;
+        margin-top: 35px;
+        padding: 15px;
+        .surveyDetails {
+            margin-top: 30px;
+            .companyPhoto {
+                width: 110px;
+                height: 110px;
+            }
+        }
     }
 `

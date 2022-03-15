@@ -11,10 +11,12 @@ import {
   Container,
   Content,
   Header,
+  Main,
   SectionTitle,
   SectionForm,
   Footer,
 } from "./styles";
+import api from '../../services/api';
 
 export default function Register() {
   const formRef = useRef<FormHandles>(null);
@@ -27,35 +29,41 @@ export default function Register() {
       setLoad(true)
       
       const schema = Yup.object().shape({
-        name: Yup.string().required("Nome obrigatório"),
-        phone: Yup.string().required("Telefone obrigatório"),
-        date: Yup.string().required("Data de nascimento obrigatório"),
-        sexo: Yup.string().required("Sexo obrigatório"),
+        nome: Yup.string().required("Nome obrigatório"),
+        email: Yup.string().required("Email obrigatório"),
+        senha: Yup.string().required("Senha obrigatória"),
+        confirmeSenha: Yup.string().required("Confirmação de senha obrigatória"),
+        telefone: Yup.string().required("Telefone obrigatório"),
+        nascimento: Yup.string().required("Data de nascimento obrigatório"),
+        genero: Yup.string().required("Genero obrigatório"),
       });
 
       await schema.validate(data, {
         abortEarly: false,
       });
   
-      const { name, phone, date, sexo }: any =  data;
+      const { nome, email, senha, confirmeSenha, telefone, nascimento, genero }: any =  data;
   
       const newData = {
-        name,
-        phone,
-        date,
-        sexo,
+        nome,
+        email,
+        senha,
+        confirmeSenha,
+        telefone,
+        nascimento,
+        genero,
       };
 
       localStorage.setItem('@Pesquija:user', JSON.stringify(newData));
-
-      // const response = await api.post("/usuario", newData);
-      // console.log(response.data)
-
+      const response = await api.post('/usuario', newData);
+      // console.log(response)
+      localStorage.setItem('@Pesquija:id_usuario', JSON.stringify(response.data.result.id_usuario));
+     
       setLoad(false)
       // alert('Cadastro realizado com sucesso!')
 
       setTimeout(() => {
-        history.push(`/confirmation`)
+        history.push(`/confirmation/${response.data.result.id_usuario}`)
       }, 3000)
 
     } catch(err: any) {
@@ -67,7 +75,7 @@ export default function Register() {
         formRef.current?.setErrors(errors);
         return;
       }
-      alert(err.response.data.message)
+      // alert(err.response.data.message)
     }
 
   }, [history])
@@ -78,64 +86,88 @@ export default function Register() {
         <Header>
           <ButtonBackToPage />
         </Header>
-        <SectionTitle>
-          <h1>Parabéns!🎉</h1>
-          <p>
-            Agora basta preencher o cadastro abaixo para começar a participar de
-            nossas pesquisas e{" "}
-            <span className="colorHighlights">
-              ganhar muitos e muitos prêmios
-            </span>
-            .
-          </p>
-        </SectionTitle>
 
-        <SectionForm>
-          <Form ref={formRef} onSubmit={handleSubmit}>
-            <div className="field">
-              <InputForm
-                type="text"
-                name="name"
-                placeholder="Digite seu nome"
-              />
-            </div>
-            <div className="field">
-              <InputForm
-                type="text"
-                name="phone"
-                mask="fone"
-                placeholder="Digite seu telefone"
-              />
-            </div>
+        <Main>
+          <SectionTitle>
+            <h1>Parabéns!🎉</h1>
+            <p>
+              Agora basta preencher o cadastro abaixo para começar a participar de
+              nossas pesquisas e{" "}
+              <span className="colorHighlights">
+                ganhar muitos e muitos prêmios
+              </span>
+              .
+            </p>
+          </SectionTitle>
 
-            <div className="field">
-              <InputForm
-                type="text"
-                name="date"
-                mask="date"
-                placeholder="Digite data de nascimento"
-              />
-            </div>
+          <SectionForm>
+            <Form ref={formRef} onSubmit={handleSubmit}>
+              <div className="field">
+                <InputForm
+                  type="text"
+                  name="nome"
+                  placeholder="Digite seu nome"
+                />
+              </div>
+              <div className="field">
+                <InputForm
+                  type="text"
+                  name="email"
+                  placeholder="Digite seu email"
+                />
+              </div>
+              <div className="field">
+                <InputForm
+                  type="password"
+                  name="senha"
+                  placeholder="Digite sua senha"
+                />
+              </div>
+              <div className="field">
+                <InputForm
+                  type="password"
+                  name="confirmeSenha"
+                  placeholder="confirme sua senha"
+                />
+              </div>
+              <div className="field">
+                <InputForm
+                  type="text"
+                  name="telefone"
+                  // mask="fone"
+                  placeholder="Digite seu telefone"
+                />
+              </div>
 
-            <div className="field">
-              <InputForm
-                type="text"
-                name="sexo"
-                placeholder="Digite seu sexo"
-              />
-            </div>
+              <div className="field">
+                <InputForm
+                  type="text"
+                  name="nascimento"
+                  mask="date"
+                  placeholder="Digite data de nascimento"
+                />
+              </div>
 
-            <ButtonDefault
-              type="submit"
-              disabled={load}
-            >
-                Finalizar meu cadastro
-              </ButtonDefault>
-          </Form>
-        </SectionForm>
-        <Footer>
-          <h2>Com o seu cadastro você já ganha 20 pontos 💎️</h2>
-        </Footer>
+              <div className="field">
+                <InputForm
+                  type="text"
+                  name="genero"
+                  placeholder="Digite seu sexo"
+                />
+              </div>
+
+              <ButtonDefault
+                type="submit"
+                disabled={load}
+              >
+                  Finalizar meu cadastro
+                </ButtonDefault>
+            </Form>
+          </SectionForm>
+          <Footer>
+            <h2>Com o seu cadastro você já ganha 20 pontos 💎️</h2>
+          </Footer>
+        </Main>
       </Content>
     </Container>
   );

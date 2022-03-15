@@ -9,9 +9,4 @@ export const Container = styled.button`
 
     background: transparent;
     border: none;
-
-    &:hover {
-      background: ${shade(0.2, '#021623')};
-    }
-
 `;

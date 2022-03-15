@@ -24,6 +24,14 @@ export const Header = styled.div`
   height: 40px;
 `;
 
+export const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
 export const SectionTitle = styled.div`
   display: flex;
   flex-direction: column;
@@ -33,7 +41,6 @@ export const SectionTitle = styled.div`
     font-size: 2rem;
     font-weight: 900;
     color: var(--white);
-    margin-top: -22px;
   }
 
   p {
@@ -53,7 +60,7 @@ export const SectionForm = styled.div`
   justify-content: center;
 
   width: 100%;
-  margin-top: 3.60rem;
+  margin-top: 3.6rem;
 
   form {
     display: flex;
@@ -61,17 +68,19 @@ export const SectionForm = styled.div`
     width: 100%;
     gap: 16px;
 
-    >button {
-      margin-top: 40px;
+    > button {
+      margin-top: 20px;
     }
   }
 
-  @media(max-width: 499px) {
+  @media (max-width: 499px) {
     margin-top: 2rem;
+    form {
       button {
-        margin-top: 16px;
+        margin-top: 14px;
       }
     }
+  }
 `;
 
 export const Footer = styled.div`
@@ -85,6 +94,4 @@ export const Footer = styled.div`
     text-align: center;
     color: var(--white);
   }
-
 `;
-

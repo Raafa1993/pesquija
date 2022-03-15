@@ -1,31 +1,122 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import Emoji from "a11y-react-emoji";
 
-// IMAGES
-import WellcomeImage from "../../images/wellcomeImage.png";
+//Images
+import Company from "../../assets/worldformats.png";
+import User from "../../assets/user.jpg";
 
 import {
-  Container,
-  Content,
-  SectionImage,
-  ImageCenter,
+  DashboardContainer,
+  DashboardBottom,
+  Profile,
+  Surveys,
 } from "./styles";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../../hooks/Auth";
+import api from "../../services/api";
+
+interface User {
+  id: string;
+  nome: string;
+  avatar: string;
+  telefone: string;
+  nascimento: string;
+  genero: string;
+}
+
+interface SearchProps {
+  id_pesquisa: number,
+  titulo: string,
+  pontos: number,
+  status: string,
+  imagem: string,
+}
 
 export default function Home() {
   const history = useHistory();
-  return (
-    <Container>
-      <Content>
-        <h1>
-          Bem vindo a HOME😎💎
-        </h1>
-        <SectionImage>
-          <ImageCenter>
-            <img src={WellcomeImage} alt="chat de questões" />
-          </ImageCenter>
+  const { user } = useAuth();
+  const [load, setLoad] = useState(true);
+  const [data, setData] = useState<SearchProps[]>([]);
 
-        </SectionImage>
-      </Content>
-    </Container>
+  const [unlocked, setUnlocked] = useState(true)
+
+  useEffect(() => {
+    setLoad(true);
+    api.get('/pesquisa').then((res) => {
+      setData(res.data.result)
+    })
+    setLoad(false)
+  }, [])
+
+  
+  return (
+    <DashboardContainer>
+      <Profile>
+        <div
+          className="userImage"
+          style={{ backgroundImage: `url(${User})` }}
+        />
+        <div>
+          <div className="name">{user.nome}</div>
+          <div className="phone">{user.phone}</div>
+          <span>
+            Participe de + pesquisas para receber cada vez mais!
+            <Emoji symbol="✨" label="bright" />
+          </span>
+        </div>
+      </Profile>
+
+      <DashboardBottom>
+        <div className="status">
+          <div className="points">
+            <p>Seus pontos</p>
+            <span>
+              <Emoji symbol="💎" label="blue gem" /> 350
+            </span>
+          </div>
+          <div className="survey">
+            <p>Pesquisas concluídas</p>
+            <span>
+              <Emoji symbol="🏆" label="trophy" /> 0
+            </span>
+          </div>
+        </div>
+
+        <div className="title">
+          <h3>Painel de pesquisas</h3> <Emoji symbol="👀" label="eyes" />
+          <p>
+            Que tal participar de uma pesquisa agora?{" "}
+            <Emoji symbol="👀" label="eyes" />
+          </p>{" "}
+        </div>
+
+        <Surveys>
+          <div className="unlocked">
+            {data.map((row) => {
+              return (
+                <div className="column" key={row.id_pesquisa}>
+                  <div
+                    className="companyImage"
+                    style={{ backgroundImage: `url(${Company})` }}
+                  />
+                  <div className="surveyName">
+                    <p>{row.titulo}</p>
+                    <span>{row.pontos} pontos</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => history.push(`/questao/${row.id_pesquisa}`)} 
+                    className={`buttonQuestion ${row.status === 'ativa' ? 'ok' : 'block'}`}>
+                    {row.status === 'ativa' ? 'Participar' : 'Bloqueada'}
+                  </button>
+                
+                </div>
+              );
+            })}
+          </div>
+        </Surveys>
+      </DashboardBottom>
+    </DashboardContainer>
   );
 }

@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ButtonDefault from "../../components/form/ButtonDefault";
 import InputSms from "../../components/form/InputSms";
 import getValidationErrors from "../../Utils/getValidationErrors";
@@ -9,7 +9,6 @@ import * as Yup from "yup";
 
 // IMAGES
 import FaceEmoji from "../../images/faceEmoji.png";
-import { CheckIcon } from "../../icons/CheckIcon";
 
 import {
   Container,
@@ -19,13 +18,15 @@ import {
   SectionImage,
   Main,
 } from "./styles";
+import api from "../../services/api";
 
 export default function Confirmation() {
+  const params = useParams<any>()
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
   const [load, setLoad] = useState(false);
   const user = JSON.parse(window.localStorage.getItem("@Pesquija:user") as any);
-
+  
   const handleSubmit = useCallback(
     async (data: object) => {
       try {
@@ -33,7 +34,7 @@ export default function Confirmation() {
         setLoad(false);
 
         const schema = Yup.object().shape({
-          code: Yup.string().required("Código obrigatório").max(6).min(6),
+          code: Yup.string().required("Código obrigatório").max(5).min(4),
         });
 
         await schema.validate(data, {
@@ -43,22 +44,20 @@ export default function Confirmation() {
         const { code }: any = data;
 
         const newData = {
-          token: code
-          // user: user
+          token: code,
+          id_usuario: params.id
         };
 
-        console.log(newData);
+        console.log(newData, 'login token');
 
         localStorage.setItem('@Pesquija:token', JSON.stringify(newData));
 
-        // const response = await api.post("/usuario", newData);
-        // console.log(response.data)
-
+        const response = await api.post("/token-validar", newData);
+        
         setLoad(true);
-        // alert('Cadastro realizado com sucesso!')
-
+        
         setTimeout(() => {
-          history.push(`/home`)
+          history.push("/home")
         }, 3000)
       } catch (err: any) {
         setLoad(false);
@@ -79,12 +78,11 @@ export default function Confirmation() {
     <Container>
       <ContentTop>
         <Header>
-          <h1>{`${user.name }, seu cadastro foi finalizado com sucesso! ✅`}</h1>
-
-          <SectionImage>
-            <img src={FaceEmoji} alt="Emoji" />
-          </SectionImage>
+          <h1>{`${user.nome }, seu cadastro foi finalizado com sucesso! ✅`}</h1>
         </Header>
+        <SectionImage>
+          <img src={FaceEmoji} alt="Emoji" />
+        </SectionImage>
       </ContentTop>
 
       <ContentBottom>
@@ -105,7 +103,7 @@ export default function Confirmation() {
                 placeholder="Código SMS"
               />
             </div>
-{/* 
+          {/* 
             {load === true && (
               <div className="checkIcon">
                 <CheckIcon />  
