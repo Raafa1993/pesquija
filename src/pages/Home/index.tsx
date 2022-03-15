@@ -10,9 +10,10 @@ import {
   Profile,
   Surveys,
 } from "./styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../hooks/Auth";
+import api from "../../services/api";
 
 interface User {
   id: string;
@@ -23,16 +24,29 @@ interface User {
   genero: string;
 }
 
+interface SearchProps {
+  id_pesquisa: number,
+  titulo: string,
+  pontos: number,
+  status: string,
+  imagem: string,
+}
+
 export default function Home() {
-  const history = useHistory()
-  const { user } = useAuth()
-  const [data, setData] = useState<User>(
-    window.localStorage.getItem("@Pesquija:user")
-      ? JSON.parse(window.localStorage.getItem("@Pesquija:user") as any)
-      : [],
-  );  
+  const history = useHistory();
+  const { user } = useAuth();
+  const [load, setLoad] = useState(true);
+  const [data, setData] = useState<SearchProps[]>([]);
 
   const [unlocked, setUnlocked] = useState(true)
+
+  useEffect(() => {
+    setLoad(true);
+    api.get('/pesquisa').then((res) => {
+      setData(res.data.result)
+    })
+    setLoad(false)
+  }, [])
 
   
   return (
@@ -43,8 +57,8 @@ export default function Home() {
           style={{ backgroundImage: `url(${User})` }}
         />
         <div>
-          <div className="name">{data.nome}</div>
-          <div className="phone">{data.telefone}</div>
+          <div className="name">{user.nome}</div>
+          <div className="phone">{user.phone}</div>
           <span>
             Participe de + pesquisas para receber cada vez mais!
             <Emoji symbol="✨" label="bright" />
@@ -78,26 +92,25 @@ export default function Home() {
 
         <Surveys>
           <div className="unlocked">
-            {[0, 1, 2, 3, 4, 5, 6].map((row: any, key: any) => {
+            {data.map((row) => {
               return (
-                <div className="column" key={key}>
+                <div className="column" key={row.id_pesquisa}>
                   <div
                     className="companyImage"
                     style={{ backgroundImage: `url(${Company})` }}
                   />
                   <div className="surveyName">
-                    <p>Consumo de rádio</p>
-                    <span>35 pontos</span>
+                    <p>{row.titulo}</p>
+                    <span>{row.pontos} pontos</span>
                   </div>
-                  {
-                    unlocked 
-                    ? <button className="ok"
-                        onClick={() => history.push(`/questao`) }
-                      >
-                        Participar
-                    </button>
-                    : <button className="block">Bloqueada</button>
-                  }
+
+                  <button
+                    type="button"
+                    onClick={() => history.push(`/questao/${row.id_pesquisa}`)} 
+                    className={`buttonQuestion ${row.status === 'ativa' ? 'ok' : 'block'}`}>
+                    {row.status === 'ativa' ? 'Participar' : 'Bloqueada'}
+                  </button>
+                
                 </div>
               );
             })}
