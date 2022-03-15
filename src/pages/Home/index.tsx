@@ -2,7 +2,7 @@ import Emoji from "a11y-react-emoji";
 
 //Images
 import Company from "../../assets/worldformats.png";
-import User from "../../assets/user.jpg";
+import UserImage from '../../images/User.png';
 
 import {
   DashboardContainer,
@@ -52,7 +52,7 @@ export default function Home() {
       <Profile>
         <div
           className="userImage"
-          style={{ backgroundImage: `url(${User})` }}
+          style={{ backgroundImage: `url(${UserImage})` }}
         />
         <div>
           <div className="name">{user.nome}</div>

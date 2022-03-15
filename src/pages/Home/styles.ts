@@ -34,6 +34,7 @@ export const Profile = styled.div`
   .phone {
     color: var(--blue);
     font-size: 1.2rem;
+    margin-top: 0.625rem;
   }
   span {
     margin-top: 0.625rem;
@@ -105,6 +106,7 @@ export const DashboardBottom = styled.div`
     }
   }
   @media (max-width: 1000px) {
+    height: 55vh;
     .status {
       gap: 10px;
       .points,
@@ -128,6 +130,7 @@ export const Surveys = styled.div`
   height: 30rem;
   width: 100%;
   max-width: 960px;
+  overflow: scroll;
   .unlocked {
     display: flex;
     align-items: center;
