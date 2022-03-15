@@ -73,31 +73,40 @@ export default function Questions({
               <div>Carregando</div>
             ) : (
               <>
-                {data.tipo === "checkbox"
-                  ? data.opcoes.map((row: any, key: any) => (
-                      <ButonQuestion onClick={() => hadnleOnNextPage(row, key)}>
-                        {row}
-                      </ButonQuestion>
-                    ))
-                  : data.opcoes.map((row: any, key: any) => (
-                      <ButtonRadio
-                        key={key}
-                        isSelected={selectedItems.includes(key) ? true : false}
-                        onClick={() => handleSelectItem(key)}
-                      >
-                        {row}
-                      </ButtonRadio>
-                    ))}
+                {data.tipo === 'checkbox' && (
+                  data.opcoes.map((row: any, key: any) => (
+                    <ButonQuestion onClick={() => hadnleOnNextPage(row, key)}>
+                      {row}
+                    </ButonQuestion>
+                  ))
+                )}
 
-                {data.opcoes.map((row: any) => {})}
+                {data.tipo === 'radio' && (
+                  data.opcoes.map((row: any, key: any) => (
+                    <ButtonRadio
+                      key={key}
+                      isSelected={selectedItems.includes(key) ? true : false}
+                      onClick={() => handleSelectItem(key)}
+                    >
+                      {row}
+                    </ButtonRadio>
+                  ))
+                )}
+
+                {data.tipo === 'subRange' && (
+                  data.opcoes.map((row: any, key: any) => (
+                    <div>ola</div>
+                  ))
+                )}
               </>
             )}
           </div>
-          {data.tipo === 'radio' && (
+          {data.tipo === "radio" && (
             <div className="footerQuestion">
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
-                className="buttonNextpage">
+                className="buttonNextpage"
+              >
                 <ArrowLeftIcon />
               </button>
             </div>
@@ -108,3 +117,20 @@ export default function Questions({
   );
 }
 
+// {data.tipo === "checkbox"
+// ? data.opcoes.map((row: any, key: any) => (
+//     <ButonQuestion onClick={() => hadnleOnNextPage(row, key)}>
+//       {row}
+//     </ButonQuestion>
+//   ))
+// : data.opcoes.map((row: any, key: any) => (
+//     <ButtonRadio
+//       key={key}
+//       isSelected={selectedItems.includes(key) ? true : false}
+//       onClick={() => handleSelectItem(key)}
+//     >
+//       {row}
+//     </ButtonRadio>
+//   ))}
+
+// {data.opcoes.map((row: any) => {})}
