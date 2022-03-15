@@ -71,9 +71,23 @@ export const SectionForm = styled.div`
     flex-direction: column;
     width: 100%;
     gap: 16px;
+
+    .register {
+      background: var(--black);
+      border: 1px solid var(--white);
+      &:hover {
+        /* opacity: .8; */
+        /* background: var(--blue);
+        border: 1px solid var(--blue); */
+      }
+    }
   }
 
   @media (max-width: 499px) {
     margin-top: 2rem;
   }
 `;
+<<<<<<< HEAD
+=======
+
+>>>>>>> f272a9c6daf43563b0b893f9710487b3cd694ccb

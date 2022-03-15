@@ -119,13 +119,14 @@ export default function Register() {
                   type="password"
                   name="senha"
                   placeholder="Digite sua senha"
+                  autoComplete="new-password"
                 />
               </div>
               <div className="field">
                 <InputForm
                   type="password"
                   name="confirmeSenha"
-                  placeholder="confirme sua senha"
+                  placeholder="Confirme sua senha"
                 />
               </div>
               <div className="field">
