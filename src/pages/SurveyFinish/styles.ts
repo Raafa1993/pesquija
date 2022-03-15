@@ -56,11 +56,11 @@ export const DashboardTop = styled.div`
         }
     }
     .emoji {
-        margin-top: 0.625rem;
+        margin-bottom: 15px;
         font-size: 1rem;
         font-weight: 600;
         color: var(--yellow);
-        margin-top: 40px;
+        margin-top: 30px;
     }
 
     @media (max-width: 1400px) {

@@ -5,9 +5,12 @@ import ButtonDefault from "../../components/form/ButtonDefault";
 import Trophy from '../../images/trophy.png';
 import Confetti from 'react-confetti'
 import { useEffect, useState } from "react";
+import { useAuth } from "../../hooks/Auth";
+import { useHistory } from "react-router-dom";
 
 export default function SurveyFinish() {
-
+    const history = useHistory();
+    const { user } = useAuth();
     const [confetti, setConfetti] = useState(true)
 
     useEffect(() => {
@@ -30,7 +33,7 @@ export default function SurveyFinish() {
                 />
                 </div>
 
-                <h3><span>Fernanda</span>, parabéns! Você concluiu a pesquisa e ganhou </h3>
+                <h3><span>{user.nome}</span>, parabéns! Você concluiu a pesquisa e ganhou </h3>
 
                 <div className="gem">
                     <Emoji symbol="💎" label="Blue gem" />
@@ -59,7 +62,9 @@ export default function SurveyFinish() {
 
                 </SurveyContainer>
 
-                <ButtonDefault>
+                <ButtonDefault
+                    onClick={() => history.push('/home')}
+                >
                     Ver mais pesquisas
                 </ButtonDefault>
 
