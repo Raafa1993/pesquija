@@ -3,25 +3,49 @@ import Artist from '../../images/Ludmilla.png'
 import { PlayIcon } from '../../icons/PlayIcon';
 import { useState } from 'react';
 
+interface SongProps {
+    photo: string,
+    title: string,
+    subtitle: string;
+    play: (value: any) => void;
+}
 
 export default function Songs() {
     const [selected, setSelected] = useState<string>('')
+    const [data, setData] = useState<SongProps>()
+
+    const infos = [
+        {
+        photo: '',
+        title: 'Socadona (feat. Mr. Vegas)',
+        subtitle: 'LUDMILLA, Mariah Angeliq &#38; Top...',
+        },
+        {
+        photo: '',
+        title: 'Gueto',
+        subtitle: 'Iza',
+        }
+    ]
  
     return (
         <ContentBottom>
             <Main>
                 <div className="questions">
                     {
-                        [0,].map((row: any, key: any) => {
+                        infos.map((row: any, key: any) => {
                             return (
                             <div className='songContainer' key={key}>
                                 <div className='song'>
                                     <div className='artist' style={{backgroundImage: `url(${Artist})`}} />
                                     <div className='infos'>
-                                        <div className='name'>Socadona (feat. Mr. Vegas)</div>
-                                        <span>LUDMILLA, Mariah Angeliq &#38; Top...</span>
+                                        <div className='name'>{row.title}</div>
+                                        <span>{row.subtitle}</span>
                                     </div>
-                                    <div className='play'><PlayIcon /></div>
+                                    <div 
+                                        className='play'
+                                    >
+                                        <PlayIcon />
+                                    </div>
                                 </div>
                                 <div className='score'>
                                     <div 

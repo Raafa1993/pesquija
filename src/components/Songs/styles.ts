@@ -15,7 +15,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 width: 100%;
-max-width: 960px;
+max-width: 600px;
 margin: 0 auto;
 padding: 0 2rem;
 height: 100%;
@@ -30,15 +30,24 @@ margin-top: 140px;
   width: 100%;
   
   .songContainer {
+      width: 350px;
       margin-bottom: 15px;
       display: flex;
       flex-direction: column;
       gap: 15px;
       border-bottom: 2px dashed #DADADA;
+      .play {
+          transition: all .2s;
+          cursor: pointer;
+          &:hover {
+              opacity: .8;
+          }
+      }
   }
 
   .song {
       display: flex;
+      justify-content: space-between;
       align-items: center;
       gap: 15px;
       .artist {
@@ -51,6 +60,7 @@ margin-top: 140px;
       }
 
       .infos {
+          flex: 1;
           .name {
             font-size: 14px;
             font-weight: 800;
@@ -66,6 +76,7 @@ margin-top: 140px;
   }
   .score {
       display: flex;
+      justify-content: space-evenly;
       align-items: center;
       gap: 15px;
       margin-bottom: 15px;
