@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ButtonDefault from "../../components/form/ButtonDefault";
 import InputSms from "../../components/form/InputSms";
 import getValidationErrors from "../../Utils/getValidationErrors";
@@ -21,12 +21,12 @@ import {
 import api from "../../services/api";
 
 export default function Confirmation() {
+  const params = useParams<any>()
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
   const [load, setLoad] = useState(false);
   const user = JSON.parse(window.localStorage.getItem("@Pesquija:user") as any);
-  const id_usuario = JSON.parse(window.localStorage.getItem("@Pesquija:id_usuario") as any);
-
+  
   const handleSubmit = useCallback(
     async (data: object) => {
       try {
@@ -45,7 +45,7 @@ export default function Confirmation() {
 
         const newData = {
           token: code,
-          id_usuario: id_usuario
+          id_usuario: params.id
         };
 
         console.log(newData, 'login token');
@@ -57,7 +57,7 @@ export default function Confirmation() {
         setLoad(true);
         
         setTimeout(() => {
-          history.push("/painel")
+          history.push("/home")
         }, 3000)
       } catch (err: any) {
         setLoad(false);

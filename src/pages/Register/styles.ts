@@ -69,7 +69,7 @@ export const SectionForm = styled.div`
     gap: 16px;
 
     > button {
-      margin-top: 40px;
+      margin-top: 20px;
     }
   }
 
@@ -77,7 +77,7 @@ export const SectionForm = styled.div`
     margin-top: 2rem;
     form {
       button {
-        margin-top: 16px;
+        margin-top: 14px;
       }
     }
   }

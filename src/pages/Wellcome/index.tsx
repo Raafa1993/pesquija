@@ -38,7 +38,7 @@ export default function Wellcome() {
           </h2>
 
           <ButtonDefault 
-            onClick={() => history.push("/register")}
+            onClick={() => history.push("/login")}
           >
             Quero participar e ganhar
           </ButtonDefault>

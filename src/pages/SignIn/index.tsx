@@ -61,7 +61,7 @@ export default function SignIn() {
         setLoad(false);
 
         setTimeout(() => {
-          history.push(`/painel`);
+          history.push(`/home`);
         }, 3000);
       } catch (err: any) {
         setLoad(false);

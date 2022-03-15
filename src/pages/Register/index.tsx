@@ -55,14 +55,15 @@ export default function Register() {
       };
 
       localStorage.setItem('@Pesquija:user', JSON.stringify(newData));
-      const response = await api.post('usuario', newData);
+      const response = await api.post('/usuario', newData);
+      // console.log(response)
       localStorage.setItem('@Pesquija:id_usuario', JSON.stringify(response.data.result.id_usuario));
      
       setLoad(false)
       // alert('Cadastro realizado com sucesso!')
 
       setTimeout(() => {
-        history.push(`/confirmation`)
+        history.push(`/confirmation/${response.data.result.id_usuario}`)
       }, 3000)
 
     } catch(err: any) {
