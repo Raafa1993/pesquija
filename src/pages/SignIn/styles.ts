@@ -70,6 +70,16 @@ export const SectionForm = styled.div`
     flex-direction: column;
     width: 100%;
     gap: 16px;
+
+    .register {
+      background: var(--black);
+      border: 1px solid var(--white);
+      &:hover {
+        /* opacity: .8; */
+        /* background: var(--blue);
+        border: 1px solid var(--blue); */
+      }
+    }
   }
 
   @media (max-width: 499px) {
@@ -77,15 +87,3 @@ export const SectionForm = styled.div`
   }
 `;
 
-export const Footer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-
-  h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    text-align: center;
-    color: var(--white);
-  }
-`;

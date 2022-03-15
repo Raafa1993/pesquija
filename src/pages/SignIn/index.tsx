@@ -16,6 +16,7 @@ import {
 import ButtonBackToPage from "../../components/form/ButtonBackToPage";
 import InputForm from "../../components/form/InputForm";
 import ButtonDefault from "../../components/form/ButtonDefault";
+import Emoji from 'a11y-react-emoji';
 
 interface SignInFormData {
   email: any;
@@ -87,10 +88,9 @@ export default function SignIn() {
 
         <Main>
           <SectionTitle>
-            <h1>Parabéns!🎉</h1>
+            <h1>Faça seu login! <Emoji className="gem" symbol="🎁" label="gift" />  </h1>
             <p>
-              Agora basta preencher o cadastro abaixo para começar a participar de
-              nossas pesquisas e{" "}
+              Você está apenas à alguns cliques de{" "}
               <span className="colorHighlights">
                 ganhar muitos e muitos prêmios
               </span>
@@ -126,6 +126,7 @@ export default function SignIn() {
               </ButtonDefault>
 
               <ButtonDefault 
+                className="register"
                 type="button"
                 onClick={() => history.push('/register')}
               >
@@ -134,9 +135,6 @@ export default function SignIn() {
             </Form>
           </SectionForm>
         </Main>
-        {/* <Footer>
-          <h2>Com o seu cadastro você já ganha 20 pontos 💎️</h2>
-        </Footer> */}
       </Content>
     </Container>
   );
