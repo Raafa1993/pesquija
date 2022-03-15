@@ -84,3 +84,7 @@ export const SectionForm = styled.div`
     margin-top: 2rem;
   }
 `;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3787e4f420400f833a2ead26b3d9d01d0b6fcf66
