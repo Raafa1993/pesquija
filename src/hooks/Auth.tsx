@@ -5,9 +5,11 @@ interface User {
   id: string;
   nome: string;
   avatar: string;
-  phone: string;
+  telefone: string;
   date: string;
-  sexo: string
+  sexo: string;
+  ponstos: number;
+  pesquisas: number;
 }
 
 interface AuthState {
@@ -32,7 +34,6 @@ interface TransactionsProviderProps {
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
-// let user: User;
 
 function AuthProvider({ children }: TransactionsProviderProps) {
   const [data, setData] = useState<AuthState>(() => {
@@ -64,10 +65,7 @@ function AuthProvider({ children }: TransactionsProviderProps) {
       user, 
       token
     })
-
-    // console.log(email, senha)
   }, []);
-    // console.log(data)
   
   const signOut = useCallback(() => {
     localStorage.removeItem('@Pesquija:token');
@@ -87,22 +85,6 @@ function AuthProvider({ children }: TransactionsProviderProps) {
     },
     [setData, data.token]
   )
-
-  // const updateUser = useCallback((user: User) => {
-  //   console.log('res', user)
-
-  //     api.get(`usuario/${user.id}`).then((res) => {
-  //       const { nome, avatar, email, profile, } = res.data.result;
-  //       localStorage.setItem("@Pesquija:user", JSON.stringify({nome, avatar, email, profile}));
-  //     })
-      
-  //     setData({
-  //       token: data.token,
-  //       user,
-  //     });
-  //   },
-  //   [setData, data.token]
-  // )
 
   return (
     <AuthContext.Provider value={{ user: data.user, signIn, signOut, updateUser }}>

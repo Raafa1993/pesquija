@@ -60,7 +60,7 @@ export const Container = styled.div<ContainerProps>`
 export const Error = styled.div`
   display: flex;
   position: absolute;
-  right: 0;
+  right: 6px;
   top: -17px;
   * {
     animation: fadeInUp 0.4s linear;

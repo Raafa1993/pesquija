@@ -5,14 +5,14 @@ export const Container = styled.div`
   justify-content: center;
 
   width: 100%;
-  height: 100vh;
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 960px;
+  width: 100%;
+  max-width: 600px;
   margin: 2rem;
 `;
 
@@ -28,7 +28,6 @@ export const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100%;
 `;
 
@@ -66,7 +65,7 @@ export const SectionForm = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 16px;
+    gap: 22px;
 
     > button {
       margin-top: 20px;

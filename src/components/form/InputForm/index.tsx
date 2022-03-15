@@ -9,6 +9,7 @@ import { maskDate, maskPhone } from "./masks";
 import { useField } from '@unform/core';
 
 import { Container, Error } from "./styles";
+import { AlertIcon } from "../../../icons/AlertIcon";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -68,7 +69,9 @@ useEffect(() => {
       />
 
       {error && (
-        <Error />
+        <Error >
+          <span>{error}</span>
+        </Error>
       )}
     </Container>
   );

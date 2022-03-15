@@ -45,7 +45,7 @@ export default function SignIn() {
         setLoad(true);
 
         const schema = Yup.object().shape({
-          email: Yup.string().required("Email obrigatório"),
+          email: Yup.string().required("Email obrigatório").email('Digite e-mail valido'),
           senha: Yup.string().required("Senha obrigatório"),
         });
 
@@ -103,7 +103,6 @@ export default function SignIn() {
               <div className="field">
                 <InputForm
                   value={formData.email}
-                  type="text"
                   name="email"
                   placeholder="Digite seu email"
                   onChange={handleInputChange}
@@ -134,9 +133,6 @@ export default function SignIn() {
             </Form>
           </SectionForm>
         </Main>
-        {/* <Footer>
-          <h2>Com o seu cadastro você já ganha 20 pontos 💎️</h2>
-        </Footer> */}
       </Content>
     </Container>
   );

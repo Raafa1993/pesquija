@@ -38,8 +38,6 @@ export default function Home() {
   const [load, setLoad] = useState(true);
   const [data, setData] = useState<SearchProps[]>([]);
 
-  const [unlocked, setUnlocked] = useState(true)
-
   useEffect(() => {
     setLoad(true);
     api.get('/pesquisa').then((res) => {
@@ -58,7 +56,7 @@ export default function Home() {
         />
         <div>
           <div className="name">{user.nome}</div>
-          <div className="phone">{user.phone}</div>
+          <div className="phone">{user.telefone}</div>
           <span>
             Participe de + pesquisas para receber cada vez mais!
             <Emoji symbol="✨" label="bright" />
@@ -71,13 +69,13 @@ export default function Home() {
           <div className="points">
             <p>Seus pontos</p>
             <span>
-              <Emoji symbol="💎" label="blue gem" /> 350
+              <Emoji symbol="💎" label="blue gem" /> {user.ponstos || '0'}
             </span>
           </div>
           <div className="survey">
             <p>Pesquisas concluídas</p>
             <span>
-              <Emoji symbol="🏆" label="trophy" /> 0
+              <Emoji symbol="🏆" label="trophy" /> {user.pesquisas || '0'}
             </span>
           </div>
         </div>

@@ -19,12 +19,13 @@ export const Header = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 960px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 0 2rem;
   height: 100%;
   background-color: #089bff;
   position: relative;
+  
 
   .backToPage {
     display: flex;
@@ -69,11 +70,10 @@ export const Header = styled.div`
   }
 
   .sectionImage {
-    height: 240px;
-    width: 260px;
+    width: 190px;
     border-radius: 16px;
     position: absolute;
-    bottom: -25%;
+    bottom: -110px;
 
     img {
       width: 100%;
@@ -96,25 +96,54 @@ export const Main = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 960px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 0 2rem;
   height: 100%;
-  margin-top: 80px;
+  margin-top: 40px;
 
   overflow-x: scroll;
-  
+
+  form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 2rem 0;
+  }
+
 
   .questions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
 
     width: 100%;
     gap: 1.25rem;
+  }
 
-    /* @media (max-width: 580px) {
-      grid-template-columns: 1fr;
-    } */
+  .finalQUestion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 1rem;
+  }
+
+  .buttonFinalQuestion {
+    display: grid;
+    place-items: center;
+    background: #021623;
+    border: 1px solid #021623;
+    border-radius: 16px;
+
+    width: 100%;
+    height: 56px;
+
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 32px;
+    color: #FFFFFF;
   }
 
   .footerQuestion {

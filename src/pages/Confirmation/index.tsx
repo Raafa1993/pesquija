@@ -24,14 +24,14 @@ export default function Confirmation() {
   const params = useParams<any>()
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
-  const [load, setLoad] = useState(false);
-  const user = JSON.parse(window.localStorage.getItem("@Pesquija:user") as any);
+  const [load, setLoad] = useState(true);
+  // const SMS = JSON.parse(window.localStorage.getItem("@Pesquija:sms") as any);
   
   const handleSubmit = useCallback(
     async (data: object) => {
       try {
         formRef.current?.setErrors({});
-        setLoad(false);
+        setLoad(true);
 
         const schema = Yup.object().shape({
           code: Yup.string().required("Código obrigatório").max(5).min(4),
@@ -48,16 +48,11 @@ export default function Confirmation() {
           id_usuario: params.id
         };
 
-        console.log(newData, 'login token');
-
-        localStorage.setItem('@Pesquija:token', JSON.stringify(newData));
-
-        const response = await api.post("/token-validar", newData);
-        
-        setLoad(true);
+        await api.post("/token-validar", newData);
+        setLoad(false);
         
         setTimeout(() => {
-          history.push("/home")
+          history.push("/login")
         }, 3000)
       } catch (err: any) {
         setLoad(false);
@@ -78,7 +73,7 @@ export default function Confirmation() {
     <Container>
       <ContentTop>
         <Header>
-          <h1>{`${user.nome }, seu cadastro foi finalizado com sucesso! ✅`}</h1>
+          <h1>{`${'Usuario' }, seu cadastro foi finalizado com sucesso! ✅`}</h1>
         </Header>
         <SectionImage>
           <img src={FaceEmoji} alt="Emoji" />
@@ -100,6 +95,7 @@ export default function Confirmation() {
               <InputSms
                 type="text"
                 name="code"
+                // value={SMS}
                 placeholder="Código SMS"
               />
             </div>
@@ -110,7 +106,10 @@ export default function Confirmation() {
               </div>
             )} */}
 
-            <ButtonDefault type="submit">
+            <ButtonDefault
+              type="submit"
+              loading={!load}  
+            >
               Finalizar meu cadastro
             </ButtonDefault>
           </Form>

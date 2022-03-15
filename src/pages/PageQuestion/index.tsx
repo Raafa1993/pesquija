@@ -27,7 +27,7 @@ export default function PageQuestion() {
   const [currentPage, setCurrentPage] = useState<any>(0);
 
   const [formData, setFormData] = useState({
-
+    
   })
 
   useEffect(() => {
@@ -47,12 +47,8 @@ export default function PageQuestion() {
     });
   }, [currentPage]);
 
-  function handleOnNextPage(item: any, key: any) {
-
-    console.log(item, key)
-
-
-    setCurrentPage(currentPage + 1)
+  function handleOnChange(item: any) {
+    console.log(item)
   }
 
   return (
@@ -62,8 +58,9 @@ export default function PageQuestion() {
         totalPages={total}
         setCurrentPage={(value) => setCurrentPage(value)} 
         data={data}
-        hadnleOnNextPage={(value, key) => handleOnNextPage(value, key)} 
         load={load}
+        isImage={false}
+        handleOnChange={(value: any) => handleOnChange(value)}
       />
     </Container>
   );

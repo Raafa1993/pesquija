@@ -1,114 +1,96 @@
-import { ContentBottom, Main } from './styles';
-import Artist from '../../images/Ludmilla.png'
-import { PlayIcon } from '../../icons/PlayIcon';
-import { useState } from 'react';
+import { ContentBottom, Main } from "./styles";
+import { PlayIcon } from "../../icons/PlayIcon";
+import { useContext, useEffect, useRef, useState } from "react";
+import { PlayerContext } from "../../context/PlayContextData";
+
+import ImageDefault from '../../images/Ludimilla.png'
 
 interface SongProps {
-    photo: string,
-    title: string,
-    subtitle: string;
-    play: (value: any) => void;
+  image?: string;
+  title?: string;
+  subTitle?: string;
+  music?: string;
+  row: any;
 }
 
-export default function Songs() {
-    const [selected, setSelected] = useState<string>('')
-    const [data, setData] = useState<SongProps>()
+export default function Songs({ image, title, subTitle, music, row }: SongProps) {
+  const audioRef = useRef<HTMLAudioElement>(null)
+  const [selected, setSelected] = useState(0)
+  const { 
+    isPlaying,
+    togglePlay,
+    setplayingState,
+  } = useContext(PlayerContext)
 
-    const infos = [
-        {
-        photo: '',
-        title: 'Socadona (feat. Mr. Vegas)',
-        subtitle: 'LUDMILLA, Mariah Angeliq &#38; Top...',
-        },
-        {
-        photo: '',
-        title: 'Gueto',
-        subtitle: 'Iza',
-        }
-    ]
- 
-    return (
-        <ContentBottom>
-            <Main>
-                <div className="questions">
-                    {
-                        infos.map((row: any, key: any) => {
-                            return (
-                            <div className='songContainer' key={key}>
-                                <div className='song'>
-                                    <div className='artist' style={{backgroundImage: `url(${Artist})`}} />
-                                    <div className='infos'>
-                                        <div className='name'>{row.title}</div>
-                                        <span>{row.subtitle}</span>
-                                    </div>
-                                    <div 
-                                        className='play'
-                                    >
-                                        <PlayIcon />
-                                    </div>
-                                </div>
-                                <div className='score'>
-                                    <div 
-                                        className={`zero ${selected === 'zero'
-                                                    ? 'active'
-                                                    : ''
-                                                }`}
-                                        onClick={() =>setSelected('zero')}
-                                    >
-                                        0
-                                    </div>
-                                    <div 
-                                        className={`one ${selected === 'one'
-                                        ? 'active'
-                                        : ''
-                                        }`}
-                                        onClick={() => setSelected('one')}
-                                    >
-                                        1
-                                    </div>
-                                    <div 
-                                        className={`two ${selected === 'two'
-                                            ? 'active'
-                                            : ''
-                                            }`}
-                                        onClick={() => setSelected('two')}
-                                    >
-                                        2
-                                    </div>
-                                    <div 
-                                        className={`three ${selected === 'three'
-                                            ? 'active'
-                                            : ''
-                                            }`}
-                                        onClick={() => setSelected('three')}
-                                    >
-                                        3
-                                    </div>
-                                    <div 
-                                        className={`four ${selected === 'four'
-                                            ? 'active'
-                                            : ''
-                                            }`}
-                                        onClick={() => setSelected('four')}
-                                    >
-                                        4
-                                    </div>
-                                    <div 
-                                        className={`five ${selected === 'five'
-                                            ? 'active'
-                                            : ''
-                                            }`}
-                                        onClick={() => setSelected('five')}
-                                    >
-                                        5
-                                    </div>
-                                </div>
-                            </div>
-                            )
-                        })
-                    }
-                </div>
-            </Main>
-        </ContentBottom>
-    )
+  useEffect(() => {
+    if (!audioRef.current) {
+      return;
+    }
+    if (isPlaying) {
+      audioRef.current.play()
+    } else {
+      audioRef.current.pause()
+    }
+  }, [isPlaying])
+
+  return (
+    <ContentBottom>
+      <Main>
+        <div className="questions">
+          <div className="songContainer">
+            <div className="song">
+              <div
+                className="artist"
+                style={{ backgroundImage: `url(${'http://192.168.15.8:3332/uploads/pergunta/1647351138344.jpeg'})` }}
+              />
+              <div className="infos">
+                <div className="name">{title}</div>
+                <span>{subTitle}</span>
+              </div>
+              <button 
+                className="play"
+                onClick={togglePlay}
+              >
+                <PlayIcon />
+              </button>
+
+            {music && (
+              <audio
+                src={music}
+                ref={audioRef}
+                autoPlay
+                onPlay={() => setplayingState(true)}
+                onPause={() => setplayingState(false)}
+              />
+            )}
+            </div>
+            <div className="score">
+              {[0, 1, 2, 3, 4, 5].map((row, key) => (
+                <button
+                  className={`buttonSound ${
+                    row === selected && selected === 0
+                      ? "zero"
+                      : "" || (row === selected && selected === 1)
+                      ? "one"
+                      : "" || (row === selected && selected === 2)
+                      ? "two"
+                      : "" || (row === selected && selected === 3)
+                      ? "three"
+                      : "" || (row === selected && selected === 4)
+                      ? "four"
+                      : "" || (row === selected && selected === 5)
+                      ? "five"
+                      : ""
+                  }`}
+                  onClick={() => setSelected(key)}
+                >
+                  {key}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Main>
+    </ContentBottom>
+  );
 }

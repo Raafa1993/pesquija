@@ -77,16 +77,3 @@ export const SectionForm = styled.div`
     margin-top: 2rem;
   }
 `;
-
-export const Footer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-
-  h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    text-align: center;
-    color: var(--white);
-  }
-`;
