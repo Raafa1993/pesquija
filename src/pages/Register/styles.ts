@@ -87,6 +87,7 @@ export const Footer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  padding-bottom: 30px;
 
   h2 {
     font-size: 1.25rem;
