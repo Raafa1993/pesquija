@@ -151,10 +151,12 @@ export default function Register() {
               <Select
                 name="genero"
                 placeholder="Selecione uma opção"
-                // onChange={console.log('')}
               >
                 <option value="default">Selecione uma opção</option>
-                <option value="1">opcao 1</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Feminino">Feminino</option>
+                  <option value="Outro gênero">Outro gênero</option>
+                  <option value="Não quero Declarar">Prefiro não Declarar</option>
               </Select>
                 {/* <InputForm
                   type="text"
