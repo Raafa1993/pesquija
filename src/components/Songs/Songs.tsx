@@ -1,102 +1,127 @@
 import { ContentBottom, Main } from "./styles";
 import { PlayIcon } from "../../icons/PlayIcon";
-import { useContext, useEffect, useRef, useState } from "react";
-import { PlayerContext } from "../../context/PlayContextData";
+import { useEffect, useState } from "react";
 
-import ImageDefault from '../../images/Ludimilla.png'
 import { PauseIcon } from "../../icons/PauseIcon";
 
 interface SongProps {
+  index?: any;
   image?: string;
   title?: string;
   subTitle?: string;
   music?: string;
-  row: any;
+  positionAudio: number;
+  play?: boolean;
+  setPositionAudio: (index: number) => void;
+  handleOnOption: (item: any) => void;
+  handleOnPlay: () => void;
 }
 
-export default function Songs({ image, title, subTitle, music, row }: SongProps) {
-  const audioRef = useRef<HTMLAudioElement>(null)
-  const [selected, setSelected] = useState({})
-  const { 
-    isPlaying,
-    togglePlay,
-    setplayingState,
-  } = useContext(PlayerContext)
+export default function Songs({
+  image,
+  title,
+  index,
+  subTitle,
+  music,
+  play = false,
+  handleOnOption,
+  positionAudio,
+  setPositionAudio,
+}: SongProps) {
+  const [selected, setSelected] = useState({});
 
-  console.log(selected)
+  const [audio] = useState(new Audio(music));
+  const [playing, setPlaying] = useState(play);
+  const toggle = () => setPlaying(!playing);
 
   useEffect(() => {
-    if (!audioRef.current) {
-      return;
-    }
-    if (isPlaying) {
-      audioRef.current.play()
-    } else {
-      audioRef.current.pause()
-    }
-  }, [isPlaying])
+    setPlaying(play)
+  }, [play])
+
+  useEffect(() => {
+    playing ? audio.play() : audio.pause();
+  }, [playing, audio]);
+
+  useEffect(() => {
+    audio.addEventListener("ended", () => finishMusic());
+    return () => {
+      audio.removeEventListener("ended", () => setPlaying(false));
+    };
+  }, [positionAudio]);
+
+  function handleOnSelect(item: any) {
+    setSelected(item.rating);
+    handleOnOption(item);
+  }
+
+  function finishMusic() {
+
+
+    
+    positionAudio >= index
+      ? setPositionAudio(index + 1)
+      : setPositionAudio(index);
+    setPlaying(false);
+  }
 
   return (
-    <ContentBottom>
+    <ContentBottom className="animate__animated animate__zoomIn">
       <Main>
+        
         <div className="questions">
           <div className="songContainer">
             <div className="song">
               <div
-                className="artist"
-                style={{ backgroundImage: `url(${'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YWxidW18ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60'})` }}
+                className={`artist ${
+                  positionAudio >= index ? "" : "isDisabled"
+                }`}
+                style={{
+                  backgroundImage: `url(${image})`,
+                }}
               />
               <div className="infos">
                 <div className="name">{title}</div>
                 <span>{subTitle}</span>
               </div>
-              <button 
+              <button
                 type="button"
                 className="play"
-                onClick={togglePlay}
+                onClick={toggle}
+                disabled={positionAudio >= index ? false : true}
               >
-                <button type="button" className="play" onClick={togglePlay}>
-                  {isPlaying ? (
-                    <PlayIcon />
-
-                  ) : (
-                    <PauseIcon />
-                  )}
-                </button>
+                {playing ? <PauseIcon /> : <PlayIcon />}
               </button>
-
-            {music && (
-              <audio
-                src={music}
-                ref={audioRef}
-                autoPlay
-                onPlay={() => setplayingState(true)}
-                onPause={() => setplayingState(false)}
-              />
-            )}
             </div>
             <div className="score">
-              {[0, 1, 2, 3, 4, 5].map((row, key) => (
+              {[0, 1, 2, 3, 4, 5].map((rowButton, keyButton) => (
                 <button
+                  key={keyButton}
                   type="button"
+                  disabled={positionAudio >= index ? false : true}
                   className={`buttonSound ${
-                    row === selected && selected === 0
+                    rowButton === selected && selected === 0
                       ? "zero"
-                      : "" || (row === selected && selected === 1)
+                      : "" || (rowButton === selected && selected === 1)
                       ? "one"
-                      : "" || (row === selected && selected === 2)
+                      : "" || (rowButton === selected && selected === 2)
                       ? "two"
-                      : "" || (row === selected && selected === 3)
+                      : "" || (rowButton === selected && selected === 3)
                       ? "three"
-                      : "" || (row === selected && selected === 4)
+                      : "" || (rowButton === selected && selected === 4)
                       ? "four"
-                      : "" || (row === selected && selected === 5)
+                      : "" || (rowButton === selected && selected === 5)
                       ? "five"
                       : ""
                   }`}
-                  onClick={() => setSelected(row)}
+                  onClick={() =>
+                    handleOnSelect({
+                      key: index,
+                      rating: rowButton,
+                      title: title,
+                    })
+                  }
                 >
-                  {key}
+                  {keyButton}
                 </button>
               ))}
             </div>

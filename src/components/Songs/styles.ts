@@ -36,6 +36,20 @@ export const Main = styled.div`
         background: transparent;
         transition: all 0.2s;
         cursor: pointer;
+
+        &:disabled {
+            cursor: not-allowed;
+            filter: brightness(0.8);
+            svg {
+              rect {
+                fill: #b5b5b5;
+              }
+            }
+
+            &:hover {
+            opacity: 1;
+          }
+        }
         &:hover {
           opacity: 0.8;
         }
@@ -54,6 +68,10 @@ export const Main = styled.div`
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+
+        &.isDisabled {
+          filter: brightness(0.7);
+        }
       }
 
       .infos {
@@ -88,6 +106,11 @@ export const Main = styled.div`
       background: #b5b5b5;
       color: var(--white);
       cursor: pointer;
+
+      &:disabled {
+        cursor: not-allowed;
+        filter: brightness(0.8);
+      }
 
       &.zero {
         background: var(--red);

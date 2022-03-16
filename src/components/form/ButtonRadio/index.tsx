@@ -10,6 +10,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 export default function ButtonRadio({ loading, isSelected, disabled, children, ...rest }: ButtonProps) {
   return (
     <Container
+      className="animate__animated animate__zoomIn"
       type="button"
       isSelected={isSelected}
       disabled={disabled}

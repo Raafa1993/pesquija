@@ -46,6 +46,9 @@ export default function Questions({
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
   const [radioSelected, setRadioSelected] = useState<any>(false)
   const [loading, setLoading] = useState(false)
+  const [play, setPlay] = useState<any>(null)
+
+  const [positionAudio, setPositionAudio] = useState<number>(0)
 
   const [formData, setFormData] = useState<any>({
     itemsCheck: [],
@@ -54,8 +57,10 @@ export default function Questions({
 
   const [DTOForApi, setDTOForApi] = useState<DTOForApi>({
     id_pesquisa: params.id,
-    respostaPesquisa: [{}]
-})
+    respostaPesquisa: [] as any
+  })
+
+  const [DTOForSongs, setDTOForSongs] = useState<any[]>([])
 
   const [error, setError] = useState({
     error: false,
@@ -174,10 +179,7 @@ export default function Questions({
       resetForm()
 
     } catch (e: any) {
-
-      console.log(e)
       alert(e)
-
     }
   }, [data, formData]
   )
@@ -199,8 +201,40 @@ export default function Questions({
   function handleOnFinish()
   {
 
-    const response:any = api.post('resposta', DTOForApi)
+    try {
 
+      if ( data.tipo === 'subRange' && (data.opcoes.length !== DTOForSongs.length) ) throw "Avalie todas as músicas antes de finalizar."
+
+      const newDTOForAPI:any = DTOForApi.respostaPesquisa.filter((obj:any) => obj.id_pergunta !== data.id_pergunta)
+
+      newDTOForAPI.push({
+        id_pergunta: data.id_pergunta,
+        resposta: {
+          respostas: DTOForSongs
+        }
+      })
+
+      const response:any = api.post('resposta', {
+        id_pesquisa: params.id,
+        respostaPesquisa: newDTOForAPI
+      })
+
+      setPlay(false)
+      history.push(`/fim-questao/${params.id}`)
+
+    } catch ( err: any ) {
+      alert(err)
+    }
+
+  }
+
+  function handleOnOption(item: {key: number, rating: number, title: string}) 
+  {
+
+    const newDTO:any[] = DTOForSongs
+    newDTO[item.key] = item.rating
+    setDTOForSongs([...newDTO])
+   
   }
 
   return (
@@ -269,11 +303,17 @@ export default function Questions({
                 {data.tipo === 'subRange' && (
                   data.opcoes.map((row: any, key: any) => (
                     <Songs
-                      row={row}
                       image={row.image}
                       title={row.title}
                       subTitle={row.subTitle}
                       music={row.caminho}
+                      index={key}
+                      key={key}
+                      handleOnOption={(item) => handleOnOption(item)}
+                      handleOnPlay={() => console.log('')}
+                      positionAudio={positionAudio}
+                      setPositionAudio={setPositionAudio}
+                      play={play}
                     />
                   ))
                 )}
@@ -285,6 +325,7 @@ export default function Questions({
                 <button
                   className="buttonFinalQuestion"
                   onClick={handleOnFinish}
+                  type="button"
                 >
                   Finalizar pesquisa
                 </button>

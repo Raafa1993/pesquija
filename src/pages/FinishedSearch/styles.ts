@@ -114,6 +114,7 @@ export const SectionBottom = styled.div`
     margin: 0 auto;
     padding: 2rem;
     height: 100%;
+    gap: 8px;
 `;
 
 export const CardQuestionFinished = styled.div`
@@ -141,6 +142,7 @@ export const CardQuestionFinished = styled.div`
             color: var(--black);
 
             span {
+                text-transform: uppercase;
                 font-weight: 800;
             }
         }
