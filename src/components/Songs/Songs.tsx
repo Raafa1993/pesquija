@@ -14,7 +14,6 @@ interface SongProps {
   play?: boolean;
   setPositionAudio: (index: number) => void;
   handleOnOption: (item: any) => void;
-  handleOnPlay: () => void;
 }
 
 export default function Songs({
@@ -62,7 +61,7 @@ export default function Songs({
   }
 
   return (
-    <ContentBottom onClick={() => positionAudio < index && alert('Ouça a musica à cima para desbloquear.')} className={`animate__animated animate__zoomIn ${positionAudio < index ? 'disabled' : 'enabled'}`}>
+    <ContentBottom onClick={() => positionAudio < index && alert('Ouça a musica acima para desbloquear.')} className={`animate__animated animate__zoomIn ${positionAudio < index ? 'disabled' : 'enabled'}`}>
       <Main>
         
         

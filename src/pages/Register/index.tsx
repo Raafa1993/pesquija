@@ -64,7 +64,7 @@ export default function Register() {
         genero,
       };
 
-      const response = await api.post('/usuario', newData);
+      await api.post('/usuario', newData);
 
       await signIn({
         email: newData.email,
@@ -73,7 +73,7 @@ export default function Register() {
 
       setLoad(false)
       setTimeout(() => {
-        history.push(`/home/${response.data.result.id_usuario}`)
+        history.push(`/home`)
       }, 3000)
 
     } catch(err: any) {

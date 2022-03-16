@@ -49,7 +49,6 @@ export default function Home() {
       setData(res.data.result)
       api.get('/usuario/'+token.id_usuario).then((response) => {
         setProfile({...response.data.result})
-        console.log(response.data.result)
         setLoad(false)
       })
     })

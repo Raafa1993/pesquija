@@ -47,7 +47,7 @@ export const Profile = styled.div`
   @media (max-width: 1000px) {
     flex-direction: column;
     span {
-      width: 90%;
+      width: 100%;
     }
   }
 `;
@@ -94,6 +94,7 @@ export const DashboardBottom = styled.div`
   .title {
     margin-top: 2.5rem;
     width: 100%;
+    max-width: 600px;
     h3 {
       color: var(--black);
       text-transform: uppercase;

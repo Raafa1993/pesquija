@@ -50,7 +50,8 @@ export const Header = styled.div`
     align-items: center;
     width: 100%;
     margin-top: 32px;
-
+    height: calc(100% - 120px);
+    justify-content: center;
     span {
       font-weight: 600;
       font-size: 16px;
@@ -87,7 +88,10 @@ export const ContentBottom = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 55vh;
+  height: 65vh;
+  @media(max-width: 500px) {
+    height: 55vh;
+  }
   background-color: var(--white);
 `;
 
