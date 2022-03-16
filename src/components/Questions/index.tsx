@@ -201,21 +201,6 @@ export default function Questions({
   {
 
     try {
-<<<<<<< HEAD
-      const newDTOForAPI:any = DTOForApi.respostaPesquisa.filter((obj:any) => obj.id_pergunta !== data.id_pergunta)
-  
-      newDTOForAPI.push({
-        id_pergunta: data.id_pergunta,
-        resposta: {
-          respostas: DTOForSongs
-        }
-      })
-
-    } catch(e) {
-      console.log(e)
-    }
-
-=======
 
       if ( data.tipo === 'subRange' && (data.opcoes.length !== DTOForSongs.length) ) throw "Avalie todas as músicas antes de finalizar."
 
@@ -232,7 +217,6 @@ export default function Questions({
         id_pesquisa: params.id,
         respostaPesquisa: newDTOForAPI
       })
->>>>>>> 177c4677b1d448cc2bfd5fb5463b31923da61377
 
       history.push(`/fim-questao/${params.id}`)
 
