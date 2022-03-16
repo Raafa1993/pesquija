@@ -60,10 +60,6 @@ export default function SignIn() {
         });
 
         setLoad(false);
-
-        setTimeout(() => {
-          history.push(`/home`);
-        }, 3000);
       } catch (err: any) {
         setLoad(false);
 

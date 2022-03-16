@@ -200,21 +200,29 @@ export default function Questions({
   function handleOnFinish()
   {
 
-    const newDTOForAPI:any = DTOForApi.respostaPesquisa.filter((obj:any) => obj.id_pergunta !== data.id_pergunta)
+    try {
 
-    newDTOForAPI.push({
-      id_pergunta: data.id_pergunta,
-      resposta: {
-        respostas: DTOForSongs
-      }
-    })
+      if ( data.tipo === 'subRange' && (data.opcoes.length !== DTOForSongs.length) ) throw "Avalie todas as músicas antes de finalizar."
 
-    const response:any = api.post('resposta', {
-      id_pesquisa: params.id,
-      respostaPesquisa: newDTOForAPI
-    })
+      const newDTOForAPI:any = DTOForApi.respostaPesquisa.filter((obj:any) => obj.id_pergunta !== data.id_pergunta)
 
-    history.push(`/fim-questao/${params.id}`)
+      newDTOForAPI.push({
+        id_pergunta: data.id_pergunta,
+        resposta: {
+          respostas: DTOForSongs
+        }
+      })
+
+      const response:any = api.post('resposta', {
+        id_pesquisa: params.id,
+        respostaPesquisa: newDTOForAPI
+      })
+
+      history.push(`/fim-questao/${params.id}`)
+
+    } catch ( err: any ) {
+      alert(err)
+    }
 
   }
 
@@ -252,10 +260,7 @@ export default function Questions({
           <form>
 
           <div className="questions">
-            {load ? (
-              <div>Carregando</div>
-            ) : (
-              <>
+   
                 {data.tipo === 'checkbox' && (
                   data.opcoes.map((row: any, key: any) => (
                     <Radio
@@ -306,8 +311,6 @@ export default function Questions({
                     />
                   ))
                 )}
-              </>
-            )}
           </div>
             {currentPage + 1 === totalPages ? (
               <div className="finalQUestion">

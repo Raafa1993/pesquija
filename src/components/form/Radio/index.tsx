@@ -16,7 +16,7 @@ export default function Radio({ value, options, onChange }: InputProps) {
     onChange(value);
   }
   return (
-    <Container>
+    <Container className="animate__animated animate__zoomIn">
       {options.map(row => (
         <Label 
           key={row.label} 

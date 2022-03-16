@@ -41,7 +41,7 @@ export default function Songs({
     return () => {
       audio.removeEventListener("ended", () => setPlaying(false));
     };
-  }, []);
+  }, [positionAudio]);
 
   function handleOnSelect(item: any) {
     setSelected(item.rating);
@@ -49,6 +49,9 @@ export default function Songs({
   }
 
   function finishMusic() {
+
+
+    
     positionAudio >= index
       ? setPositionAudio(index + 1)
       : setPositionAudio(index);
@@ -56,12 +59,9 @@ export default function Songs({
   }
 
   return (
-    <ContentBottom>
+    <ContentBottom className="animate__animated animate__zoomIn">
       <Main>
-        <h1>
-          position: {positionAudio >= index ? "habilitado" : "Desabilitado."} -{" "}
-          {positionAudio}
-        </h1>
+        
         <div className="questions">
           <div className="songContainer">
             <div className="song">
