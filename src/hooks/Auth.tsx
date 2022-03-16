@@ -9,7 +9,7 @@ interface User {
   date: string;
   sexo: string;
   ponstos: number;
-  pesquisas: number;
+  pesquisasRespondidas: number;
 }
 
 interface AuthState {

@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { PlayerContext } from "../../context/PlayContextData";
 
 import ImageDefault from '../../images/Ludimilla.png'
+import { PauseIcon } from "../../icons/PauseIcon";
 
 interface SongProps {
   image?: string;
@@ -43,7 +44,7 @@ export default function Songs({ image, title, subTitle, music, row }: SongProps)
             <div className="song">
               <div
                 className="artist"
-                style={{ backgroundImage: `url(${'http://192.168.15.8:3332/uploads/pergunta/1647351138344.jpeg'})` }}
+                style={{ backgroundImage: `url(${'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YWxidW18ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60'})` }}
               />
               <div className="infos">
                 <div className="name">{title}</div>
@@ -54,7 +55,14 @@ export default function Songs({ image, title, subTitle, music, row }: SongProps)
                 className="play"
                 onClick={togglePlay}
               >
-                <PlayIcon />
+                <button type="button" className="play" onClick={togglePlay}>
+                  {isPlaying ? (
+                    <PlayIcon />
+
+                  ) : (
+                    <PauseIcon />
+                  )}
+                </button>
               </button>
 
             {music && (

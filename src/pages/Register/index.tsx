@@ -158,18 +158,10 @@ export default function Register() {
                 name="genero"
                 placeholder="Selecione uma opção"
               >
-<<<<<<< HEAD
                 <option value="">Selecione uma opção</option>
                 {sexo.map((row: any) => (
                   <option value={row.descricao}>{row.descricao}</option>
                 ))}
-=======
-                <option value="default">Selecione uma opção</option>
-                  <option value="Masculino">Masculino</option>
-                  <option value="Feminino">Feminino</option>
-                  <option value="Outro gênero">Outro gênero</option>
-                  <option value="Não quero Declarar">Prefiro não Declarar</option>
->>>>>>> 3787e4f420400f833a2ead26b3d9d01d0b6fcf66
               </Select>
                 {/* <InputForm
                   type="text"

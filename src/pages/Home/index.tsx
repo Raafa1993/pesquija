@@ -75,7 +75,7 @@ export default function Home() {
           <div className="survey">
             <p>Pesquisas concluídas</p>
             <span>
-              <Emoji symbol="🏆" label="trophy" /> {user.pesquisas || '0'}
+              <Emoji symbol="🏆" label="trophy" /> {user.pesquisasRespondidas || '0'}
             </span>
           </div>
         </div>
