@@ -14,11 +14,11 @@ function maskPhone(e: any) {
     e.currentTarget.maxLength = 16
     value = value.replace(/\D/g, '')
     value = value.replace(/(\d{2})(\d{1})/, '($1) $2')
-    value = value.replace(/(\d{4})/, '$1-')
+    value = value.replace(/(\d{4})/, '$1')
     value = value.replace(/(\d{4})/, '$1')
   } else {
     e.currentTarget.maxLength = 14
-    value = value.replace(/(\d{4})/, '$1-')
+    value = value.replace(/(\d{4})/, '$1')
     value = value.replace(/(\d{4})/, '$1')
   }
 
