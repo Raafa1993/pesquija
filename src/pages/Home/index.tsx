@@ -52,6 +52,11 @@ export default function Home() {
         setLoad(false)
       })
     })
+
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+    }, 100)
+
   }, [])
 
   function handleOnLogout()
