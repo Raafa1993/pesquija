@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 interface Props {
     isLoading: number;
     disabled?: boolean;
+    isQuestion?: boolean;
 }
 
 export const Container = styled.button<Props>`
@@ -35,6 +36,14 @@ export const Container = styled.button<Props>`
 
       &:hover {
         background: #364046;
+      }
+    `}
+
+    ${props => props.isQuestion && css`
+      background: var(--green);
+
+      &:hover {
+        background: ${shade(0.2, '#1BA039')};
       }
     `}
 

@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../hooks/Auth";
 import api from "../../services/api";
+import ModalQuestion from "../../components/ModalQuestion";
 
 interface User {
   id: string;
@@ -31,6 +32,8 @@ interface SearchProps {
   status: string,
   imagem: string,
   respondida: boolean,
+  descricao: string,
+  tempo: string
 }
 
 export default function Home() {
@@ -38,6 +41,8 @@ export default function Home() {
   const [load, setLoad] = useState(true);
   const [data, setData] = useState<SearchProps[]>([]);
   const [profile, setProfile] = useState<any>({})
+  const [modal, setModal] = useState(false);
+  const [itemQuestion, setItemQuestion] = useState<any>({});
 
   useEffect(() => {
 
@@ -53,6 +58,13 @@ export default function Home() {
       })
     })
   }, [])
+
+  function handleOnQuestion(item: any) {
+    if(item.respondida === false) {
+      setItemQuestion(item)
+      setModal(true)
+    }
+  }
 
   
   return (
@@ -114,7 +126,8 @@ export default function Home() {
 
                   <button
                     type="button"
-                    onClick={() => row.respondida === false ? history.push(`/questao/${row.id_pesquisa}`) : () => {}} 
+                    onClick={() => handleOnQuestion(row)}
+                    // onClick={() => row.respondida === false ? history.push(`/questao/${row.id_pesquisa}`) : () => {}} 
                     className={`buttonQuestion ${!row.respondida ? 'ok' : 'block'}`}>
                     {!row.respondida ? 'Participar' : 'Bloqueada'}
                   </button>
@@ -125,6 +138,13 @@ export default function Home() {
           </div>
         </Surveys>
       </DashboardBottom>
+
+        <ModalQuestion
+          id="id"
+          onClose={() => setModal(!modal)}
+          itemQuestion={itemQuestion}
+          openModal={modal}
+        />
     </DashboardContainer>
   );
 }
