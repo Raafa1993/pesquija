@@ -54,10 +54,20 @@ export default function Home() {
     })
   }, [])
 
+  function handleOnLogout()
+  {
+
+    window.localStorage.removeItem('@Pesquija:user')
+    window.localStorage.removeItem('@Pesquija:token')
+    window.location.reload()
+
+  }
+
   
   return (
     <DashboardContainer>
       <Profile>
+        <a onClick={handleOnLogout} className="logout">Sair</a>
         <div
           className="userImage"
           style={{ backgroundImage: `url(${UserImage})` }}

@@ -12,9 +12,16 @@ export const Profile = styled.div`
   align-items: center;
   flex-direction: column;
   padding-bottom: 40px;
-  height: 40%;
- 
-
+  height: 40vh;
+  position: relative;
+  .logout {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px;
+    cursor: pointer;
+    color: var(--blue);
+  }
   .userImage {
     background-position: center;
     background-size: cover;
@@ -47,7 +54,8 @@ export const Profile = styled.div`
   @media (max-width: 1000px) {
     flex-direction: column;
     span {
-      width: 100%;
+      width: 60%;
+      text-align: center;
     }
   }
 `;
@@ -57,8 +65,8 @@ export const DashboardBottom = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  height: 60%;
-  padding: 2.5rem;
+  height: 60vh;
+  padding: 2.5rem 2.5rem 0 2.5rem;
   border-radius: 1.375rem 1.375rem 0 0;
   background: var(--white);
   position: relative;
@@ -126,7 +134,10 @@ export const Surveys = styled.div`
   flex-direction: column;
   gap: 1.25rem;
   margin-top: 1.25rem;
-  height: 30rem;
+  height: calc(60vh - 165px);
+  @media(max-width:500px) {
+    height: calc(50vh - 165px);
+  }
   width: 100%;
   max-width: 960px;
   overflow: scroll;
