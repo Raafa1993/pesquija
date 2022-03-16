@@ -34,6 +34,7 @@ export default function FinishedSearch() {
   const [data, setData] = useState<PropsQuestion>();
 
   const [confetti, setConfetti] = useState(true)
+  const [star, setStar] = useState('⭐️')
 
   useEffect(() => {
       setTimeout(function() {
@@ -44,6 +45,7 @@ export default function FinishedSearch() {
   useEffect(() => {
     api.get(`/pesquisa/${params.id}`).then((res) => {
       setData(res.data.result.pesquisa)
+      setStar(res.data.result.pesquisa.dificuldade === 'facil' ? '⭐️' : '' || res.data.result.pesquisa.dificuldade === 'medio' ? '⭐️⭐️⭐️' : '⭐️' || res.data.result.pesquisa.dificuldade === 'dificil' ? '⭐️⭐️⭐️⭐️⭐️' : '')
     })
   }, [params])
 
@@ -101,7 +103,7 @@ export default function FinishedSearch() {
               <div className="buttonsCardFinished">
                 <div className="buttonTimeCardFinished">{data?.tempo} minutos</div>
 
-                <div className="buttonTimeCardFinished">⭐⭐⭐⭐⭐️ {data?.dificuldade}</div>
+                <div className="buttonTimeCardFinished">{star + data?.dificuldade}</div>
               </div>
             </div>
           </CardQuestionFinished>
