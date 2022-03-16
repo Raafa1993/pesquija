@@ -30,20 +30,29 @@ interface SearchProps {
   pontos: number,
   status: string,
   imagem: string,
+  respondida: boolean,
 }
 
 export default function Home() {
   const history = useHistory();
-  const { user } = useAuth();
   const [load, setLoad] = useState(true);
   const [data, setData] = useState<SearchProps[]>([]);
+  const [profile, setProfile] = useState<any>({})
 
   useEffect(() => {
+
+    const tokenString:any = window.localStorage.getItem('@Pesquija:user')
+    const token = JSON.parse(tokenString)
+
     setLoad(true);
     api.get('/pesquisa').then((res) => {
       setData(res.data.result)
+      api.get('/usuario/'+token.id_usuario).then((response) => {
+        setProfile({...response.data.result})
+        console.log(response.data.result)
+        setLoad(false)
+      })
     })
-    setLoad(false)
   }, [])
 
   
@@ -55,8 +64,8 @@ export default function Home() {
           style={{ backgroundImage: `url(${UserImage})` }}
         />
         <div>
-          <div className="name">{user.nome}</div>
-          <div className="phone">{user.telefone}</div>
+          <div className="name">{profile.nome}</div>
+          <div className="phone">{profile.telefone}</div>
           <span>
             Participe de + pesquisas para receber cada vez mais!
             <Emoji symbol="✨" label="bright" />
@@ -69,13 +78,13 @@ export default function Home() {
           <div className="points">
             <p>Seus pontos</p>
             <span>
-              <Emoji symbol="💎" label="blue gem" /> {user.ponstos || '0'}
+              <Emoji symbol="💎" label="blue gem" /> {profile.pontos ? profile.pontos : 0}
             </span>
           </div>
           <div className="survey">
             <p>Pesquisas concluídas</p>
             <span>
-              <Emoji symbol="🏆" label="trophy" /> {user.pesquisasRespondidas || '0'}
+              <Emoji symbol="🏆" label="trophy" /> {profile.pesqusasRespontidas ? profile.pesqusasRespontidas : 0}
             </span>
           </div>
         </div>
@@ -90,7 +99,7 @@ export default function Home() {
 
         <Surveys>
           <div className="unlocked">
-            {data.map((row) => {
+            { load === false && data.map((row) => {
               return (
                 <div className="column" key={row.id_pesquisa}>
                   <div className="columLeft">
@@ -106,9 +115,9 @@ export default function Home() {
 
                   <button
                     type="button"
-                    onClick={() => history.push(`/questao/${row.id_pesquisa}`)} 
-                    className={`buttonQuestion ${row.status === 'ativa' ? 'ok' : 'block'}`}>
-                    {row.status === 'ativa' ? 'Participar' : 'Bloqueada'}
+                    onClick={() => row.respondida === false ? history.push(`/questao/${row.id_pesquisa}`) : () => {}} 
+                    className={`buttonQuestion ${!row.respondida ? 'ok' : 'block'}`}>
+                    {!row.respondida ? 'Participar' : 'Bloqueada'}
                   </button>
                 
                 </div>
