@@ -1,11 +1,13 @@
 //IMAGES
 import { useEffect, useState } from "react";
 import Confetti from 'react-confetti'
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ButtonDefault from "../../components/form/ButtonDefault";
+import ModalConfirmation from "../../components/ModalConfirmation";
 import { useAuth } from "../../hooks/Auth";
 import { UserIcon } from "../../icons/UserIcon";
 import TrophyImg from "../../images/trophy.png";
+import api from "../../services/api";
 
 import {
   Continaer,
@@ -17,9 +19,19 @@ import {
   CardQuestionFinished,
 } from "./styles";
 
+interface PropsQuestion {
+  titulo: string;
+  pontos: number;
+  tempo: number;
+  dificuldade: string;
+  descricao: string;
+}
+
 export default function FinishedSearch() {
   const { user } = useAuth();
-  const history = useHistory()
+  const history = useHistory();
+  const params = useParams<any>();
+  const [data, setData] = useState<PropsQuestion>();
 
   const [confetti, setConfetti] = useState(true)
 
@@ -28,6 +40,12 @@ export default function FinishedSearch() {
           setConfetti(false);
         }, 3500);
     }, []);
+
+  useEffect(() => {
+    api.get(`/pesquisa/${params.id}`).then((res) => {
+      setData(res.data.result.pesquisa)
+    })
+  }, [params])
 
   return (
     <Continaer>
@@ -47,13 +65,13 @@ export default function FinishedSearch() {
 
           <Description>
             <h1 className="titleFinished">
-              {`${user.nome}, parabéns! Você concluiu a pesquisa e ganhou{" "}`}
+              {`${user.nome}, parabéns! Você concluiu a pesquisa e ganhou`}
             </h1>
 
             <span className="diamondFinished">💎</span>
 
             <h2 className="pontsFinished">
-              <span>35 </span>ponstos
+              <span>{data?.pontos} </span>ponstos
             </h2>
 
             <p className="paragraphyFinished">
@@ -68,11 +86,10 @@ export default function FinishedSearch() {
           <CardQuestionFinished>
             <div className="headerCardFinished">
               <h1 className="titleCardFinished">
-                PESQUISA: <span>CONSUMO DE RÁDIO</span>
+                PESQUISA: <span>{data?.titulo}</span>
               </h1>
               <p className="paragraphyCardFinished">
-                Pesquisa para conhecer melhor o seu hábito de consumo do rádio
-                📻
+                {data?.descricao}
               </p>
             </div>
 
@@ -82,9 +99,9 @@ export default function FinishedSearch() {
               </div>
 
               <div className="buttonsCardFinished">
-                <div className="buttonTimeCardFinished">5 minutos</div>
+                <div className="buttonTimeCardFinished">{data?.tempo} minutos</div>
 
-                <div className="buttonTimeCardFinished">⭐⭐⭐⭐⭐️ Facil</div>
+                <div className="buttonTimeCardFinished">⭐⭐⭐⭐⭐️ {data?.dificuldade}</div>
               </div>
             </div>
           </CardQuestionFinished>

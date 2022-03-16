@@ -200,19 +200,20 @@ export default function Questions({
   function handleOnFinish()
   {
 
-    const newDTOForAPI:any = DTOForApi.respostaPesquisa.filter((obj:any) => obj.id_pergunta !== data.id_pergunta)
+    try {
+      const newDTOForAPI:any = DTOForApi.respostaPesquisa.filter((obj:any) => obj.id_pergunta !== data.id_pergunta)
+  
+      newDTOForAPI.push({
+        id_pergunta: data.id_pergunta,
+        resposta: {
+          respostas: DTOForSongs
+        }
+      })
 
-    newDTOForAPI.push({
-      id_pergunta: data.id_pergunta,
-      resposta: {
-        respostas: DTOForSongs
-      }
-    })
+    } catch(e) {
+      console.log(e)
+    }
 
-    const response:any = api.post('resposta', {
-      id_pesquisa: params.id,
-      respostaPesquisa: newDTOForAPI
-    })
 
     history.push(`/fim-questao/${params.id}`)
 
@@ -226,6 +227,9 @@ export default function Questions({
     setDTOForSongs([...newDTO])
    
   }
+
+  console.log(DTOForSongs.length)
+  console.log(data.opcoes.length)
 
   return (
     <Container>
