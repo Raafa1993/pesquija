@@ -57,19 +57,35 @@ export default function Home() {
         setLoad(false)
       })
     })
+
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+    }, 100)
+
   }, [])
 
+<<<<<<< HEAD
   function handleOnQuestion(item: any) {
     if(item.respondida === false) {
       setItemQuestion(item)
       setModal(true)
     }
+=======
+  function handleOnLogout()
+  {
+
+    window.localStorage.removeItem('@Pesquija:user')
+    window.localStorage.removeItem('@Pesquija:token')
+    window.location.reload()
+
+>>>>>>> 4db88a47ab83fc53020c2d7e27d23a6490e9af98
   }
 
   
   return (
     <DashboardContainer>
       <Profile>
+        <a onClick={handleOnLogout} className="logout">Sair</a>
         <div
           className="userImage"
           style={{ backgroundImage: `url(${UserImage})` }}
@@ -101,7 +117,7 @@ export default function Home() {
         </div>
 
         <div className="title">
-          <h3>Painel de pesquisas</h3> <Emoji symbol="👀" label="eyes" />
+          <h3>Painel de pesquisas <Emoji symbol="👀" label="eyes" /></h3> 
           <p>
             Que tal participar de uma pesquisa agora?{" "}
             <Emoji symbol="👀" label="eyes" />
