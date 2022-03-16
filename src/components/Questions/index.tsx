@@ -310,7 +310,6 @@ export default function Questions({
                       index={key}
                       key={key}
                       handleOnOption={(item) => handleOnOption(item)}
-                      handleOnPlay={() => console.log('')}
                       positionAudio={positionAudio}
                       setPositionAudio={setPositionAudio}
                       play={play}

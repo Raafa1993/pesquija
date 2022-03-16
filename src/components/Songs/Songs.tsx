@@ -14,7 +14,6 @@ interface SongProps {
   play?: boolean;
   setPositionAudio: (index: number) => void;
   handleOnOption: (item: any) => void;
-  handleOnPlay: () => void;
 }
 
 export default function Songs({
