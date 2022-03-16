@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { UserIcon } from "../../icons/UserIcon";
 import StartImg from "../../images/star.png";
-import api from "../../services/api";
 import ButtonDefault from "../form/ButtonDefault";
 
 import UserImage from '../../images/User.png';
@@ -15,14 +12,6 @@ import {
   CardQuestion,
 } from "./styles";
 
-interface PropsQuestion {
-  id_pesquisa: number,
-  titulo: string,
-  pontos: number,
-  status: string,
-  imagem: string,
-  respondida: boolean,
-}
 
 interface ModalProps {
   id: string;
