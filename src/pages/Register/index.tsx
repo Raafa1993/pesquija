@@ -18,12 +18,14 @@ import {
 } from "./styles";
 import api from '../../services/api';
 import Select from "../../components/form/Select";
+import { useAuth } from "../../hooks/Auth";
 
 export default function Register() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory()
   const [load, setLoad] = useState(true);
   const [sexo, setSexo] = useState([])
+  const { signIn } = useAuth();
 
   useEffect(() => {
     api.get('/usuario-generos').then((res) => {
@@ -63,10 +65,15 @@ export default function Register() {
       };
 
       const response = await api.post('/usuario', newData);
-      console.log(response.data.result)
+
+      await signIn({
+        email: newData.email,
+        senha: newData.senha,
+      });
+
       setLoad(false)
       setTimeout(() => {
-        history.push(`/confirmation/${response.data.result.id_usuario}`)
+        history.push(`/home/${response.data.result.id_usuario}`)
       }, 3000)
 
     } catch(err: any) {
