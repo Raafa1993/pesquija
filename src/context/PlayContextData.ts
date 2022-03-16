@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-type Episode = {
+type Question = {
   title: string;
   subTitle: string;
   image: string;
@@ -8,10 +8,10 @@ type Episode = {
 }
 
 type PlayerContextData = {
-  episodeList: Episode[];
+  episodeList: Question[];
   currentEpisodeIndex: number; 
   isPlaying: boolean;
-  play: (episode: Episode) => void;
+  play: (quation: Question) => void;
   togglePlay: () => void;
   setplayingState: (state: boolean) => void;
 }
