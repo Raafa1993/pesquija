@@ -11,6 +11,7 @@ interface SongProps {
   subTitle?: string;
   music?: string;
   positionAudio: number;
+  play?: boolean;
   setPositionAudio: (index: number) => void;
   handleOnOption: (item: any) => void;
   handleOnPlay: () => void;
@@ -22,6 +23,7 @@ export default function Songs({
   index,
   subTitle,
   music,
+  play = false,
   handleOnOption,
   positionAudio,
   setPositionAudio,
@@ -29,8 +31,12 @@ export default function Songs({
   const [selected, setSelected] = useState({});
 
   const [audio] = useState(new Audio(music));
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(play);
   const toggle = () => setPlaying(!playing);
+
+  useEffect(() => {
+    setPlaying(play)
+  }, [play])
 
   useEffect(() => {
     playing ? audio.play() : audio.pause();

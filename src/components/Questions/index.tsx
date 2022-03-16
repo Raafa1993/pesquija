@@ -46,6 +46,7 @@ export default function Questions({
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
   const [radioSelected, setRadioSelected] = useState<any>(false)
   const [loading, setLoading] = useState(false)
+  const [play, setPlay] = useState<any>(null)
 
   const [positionAudio, setPositionAudio] = useState<number>(0)
 
@@ -218,6 +219,7 @@ export default function Questions({
         respostaPesquisa: newDTOForAPI
       })
 
+      setPlay(false)
       history.push(`/fim-questao/${params.id}`)
 
     } catch ( err: any ) {
@@ -234,9 +236,6 @@ export default function Questions({
     setDTOForSongs([...newDTO])
    
   }
-
-  console.log(DTOForSongs.length)
-  console.log(data.opcoes.length)
 
   return (
     <Container>
@@ -263,7 +262,10 @@ export default function Questions({
           <form>
 
           <div className="questions">
-   
+            {load ? (
+              <div>Carregando</div>
+            ) : (
+              <>
                 {data.tipo === 'checkbox' && (
                   data.opcoes.map((row: any, key: any) => (
                     <Radio
@@ -311,9 +313,12 @@ export default function Questions({
                       handleOnPlay={() => console.log('')}
                       positionAudio={positionAudio}
                       setPositionAudio={setPositionAudio}
+                      play={play}
                     />
                   ))
                 )}
+              </>
+            )}
           </div>
             {currentPage + 1 === totalPages ? (
               <div className="finalQUestion">
