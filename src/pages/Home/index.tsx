@@ -90,7 +90,7 @@ export default function Home() {
         </div>
 
         <div className="title">
-          <h3>Painel de pesquisas</h3> <Emoji symbol="👀" label="eyes" />
+          <h3>Painel de pesquisas <Emoji symbol="👀" label="eyes" /></h3> 
           <p>
             Que tal participar de uma pesquisa agora?{" "}
             <Emoji symbol="👀" label="eyes" />

@@ -81,16 +81,19 @@ export const DashboardBottom = styled.div`
         text-transform: uppercase;
         font-size: 0.75rem;
         font-weight: 500;
+        white-space: nowrap;
       }
       span {
         font-size: 1.375rem;
         font-weight: 800;
         color: var(--black);
+        white-space: nowrap;
       }
     }
   }
   .title {
     margin-top: 2.5rem;
+    width: 100%;
     h3 {
       color: var(--black);
       text-transform: uppercase;
