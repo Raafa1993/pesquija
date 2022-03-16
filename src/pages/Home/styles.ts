@@ -11,7 +11,9 @@ export const Profile = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 2.5rem;
+  padding-bottom: 40px;
+  height: 40%;
+ 
 
   .userImage {
     background-position: center;
@@ -42,11 +44,6 @@ export const Profile = styled.div`
     font-weight: 600;
     color: var(--yellow);
   }
-  @media (max-width: 1400px) {
-    gap: 2rem;
-    padding-top: 3rem;
-    flex-direction: row;
-  }
   @media (max-width: 1000px) {
     flex-direction: column;
     span {
@@ -60,12 +57,11 @@ export const DashboardBottom = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  height: 60vh;
+  height: 60%;
   padding: 2.5rem;
   border-radius: 1.375rem 1.375rem 0 0;
-  position: fixed;
-  bottom: 0;
   background: var(--white);
+  position: relative;
   .status {
     display: flex;
     gap: 2.5rem;
@@ -105,8 +101,7 @@ export const DashboardBottom = styled.div`
       margin-top: 0.625rem;
     }
   }
-  @media (max-width: 1000px) {
-    height: 55vh;
+  @media (max-width: 800px) {
     .status {
       gap: 10px;
       .points,
@@ -195,8 +190,4 @@ export const Surveys = styled.div`
       }
     }
   }
-  /* @media (max-width: 1400px) {
-        width: 100%;
-        overflow: auto;
-    }    */
 `;

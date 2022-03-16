@@ -43,7 +43,7 @@ export default function Register() {
         email: Yup.string().required("Email obrigatório").email('Digite e-mail valido'),
         senha: Yup.string().required("Senha obrigatória"),
         confirmeSenha: Yup.string().required("Confirmação de senha obrigatória"),
-        telefone: Yup.string().required("Telefone obrigatório"),
+        telefone: Yup.string().required("Telefone obrigatório").max(15),
         nascimento: Yup.string().required("Data de nascimento obrigatório"),
         genero: Yup.string().required("Genero obrigatório"),
       });
@@ -59,7 +59,7 @@ export default function Register() {
         email,
         senha,
         confirmeSenha,
-        telefone,
+        telefone: telefone.replace('(', '').replace(')', '').replace(' ', ''),
         nascimento,
         genero,
       };
@@ -144,16 +144,16 @@ export default function Register() {
               </div>
               <div className="field">
                 <InputForm
-                  type="text"
+                  type="tel"
                   name="telefone"
-                  // mask="fone"
+                  mask="fone"
                   placeholder="Digite seu telefone"
                 />
               </div>
 
               <div className="field">
                 <InputForm
-                  type="text"
+                  type="tel"
                   name="nascimento"
                   mask="date"
                   placeholder="Digite data de nascimento"
