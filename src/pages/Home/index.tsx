@@ -42,7 +42,7 @@ export default function Home() {
   const [data, setData] = useState<SearchProps[]>([]);
   const [profile, setProfile] = useState<any>({})
   const [modal, setModal] = useState(false);
-  const [itemQuestion, setItemQuestion] = useState<any>({});
+  const [itemQuestion, setItemQuestion] = useState<any>([]);
 
   useEffect(() => {
 
@@ -64,21 +64,19 @@ export default function Home() {
 
   }, [])
 
-<<<<<<< HEAD
   function handleOnQuestion(item: any) {
     if(item.respondida === false) {
       setItemQuestion(item)
       setModal(true)
     }
-=======
+  }
+
   function handleOnLogout()
   {
 
     window.localStorage.removeItem('@Pesquija:user')
     window.localStorage.removeItem('@Pesquija:token')
     window.location.reload()
-
->>>>>>> 4db88a47ab83fc53020c2d7e27d23a6490e9af98
   }
 
   

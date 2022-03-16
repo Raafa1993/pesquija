@@ -89,9 +89,9 @@ export const ContentBottom = styled.div`
   align-items: center;
   width: 100%;
   height: 65vh;
-  @media(max-width: 500px) {
+  /* @media(max-width: 500px) {
     height: 55vh;
-  }
+  } */
   background-color: var(--white);
 `;
 
