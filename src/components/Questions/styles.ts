@@ -102,7 +102,7 @@ export const Main = styled.div`
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  padding: 20px 2rem 0 2rem;
+  /* padding: 2rem; */
   height: 100%;
   
   overflow-x: scroll;
@@ -112,10 +112,9 @@ export const Main = styled.div`
     align-items: center;
     flex-direction: column;
     width: 100%;
-    padding:0;
+    padding: 2rem;
     margin-bottom: 30px;
   }
-
 
   .questions {
     display: grid;

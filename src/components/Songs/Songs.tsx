@@ -63,8 +63,6 @@ export default function Songs({
   return (
     <ContentBottom onClick={() => positionAudio < index && alert('Ouça a musica acima para desbloquear.')} className={`animate__animated animate__zoomIn ${positionAudio < index ? 'disabled' : 'enabled'}`}>
       <Main>
-        
-        
         <div className="questions">
           <div className="songContainer">
             <div className="song">
@@ -80,7 +78,7 @@ export default function Songs({
                 <div className="name">{title}</div>
                 <span>{subTitle}</span>
                 <audio controls={positionAudio < index ? false : true} ref={audio}>
-                  <source src={positionAudio < index ? '' : music}/>
+                  <source src={positionAudio < index ? music : music}/>
                 </audio>
               </div>
               <button
