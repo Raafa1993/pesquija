@@ -1,10 +1,12 @@
 import { DashboardBottom, DashboardContainer, SurveyContainer } from "./styles";
 import Warning from '../../assets/Warning.png';
 import Emoji from 'a11y-react-emoji';
-import Company2 from '../../images/PortoSeguro.png';
+import Company2 from '../../assets/worldformats.png';
 import ButtonDefault from "../../components/form/ButtonDefault";
+import { useHistory } from "react-router-dom";
 
 export default function SurveyStarts() {
+    const history = useHistory();
     return (
         <DashboardContainer>
             <DashboardBottom>
@@ -29,7 +31,9 @@ export default function SurveyStarts() {
 
                 </SurveyContainer>
 
-                <ButtonDefault>
+                <ButtonDefault
+                    onClick={() => history.push('/questao/1')}
+                >
                     Iniciar pesquisa
                 </ButtonDefault>
 
