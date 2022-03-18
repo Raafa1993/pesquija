@@ -97,7 +97,17 @@ export default function Questions({
     setFormData({...formData, 'itemsRadio': item})
   }
 
+  function handleOnLogout() {
+    
+    history.push('/ejected')
+    window.localStorage.removeItem('@Pesquija:user');
+    window.localStorage.removeItem('@Pesquija:token');
+
+  }
+
   const handleSubmitNext = useCallback(async (event: any) => {
+    console.log(formData, 'log do formData')
+    console.log(data, 'log do Data')
     try {
 
       event.preventDefault();
@@ -106,6 +116,24 @@ export default function Questions({
       if (data.tipo === 'radio' && formData.itemsCheck.length <= 0)
         throw "Selecione alguma opção"
 
+      if (data.tipo === 'radio' && data.id_pergunta === 15 && formData.itemsCheck.length !== 2)
+        throw "Selecione duas opções"
+
+      if (data.tipo === "checkbox" && data.id_pergunta === 7 && formData.itemsRadio.value === 4) {
+        handleOnLogout()
+        throw "Obrigado por responder."
+      }
+      
+      if (data.tipo === "radio" && data.id_pergunta === 10 && formData.itemsCheck[0].value === 4) {
+        handleOnLogout()
+        throw "Obrigado por responder."
+      }
+
+      if (data.tipo === "checkbox" && data.id_pergunta === 12 && formData.itemsRadio.value === 5) {
+        handleOnLogout()
+        throw "Obrigado por responder."
+      }
+     
       if (data.tipo === "checkbox" && formData.itemsRadio === false )
         throw "Selecione uma opção"
 
