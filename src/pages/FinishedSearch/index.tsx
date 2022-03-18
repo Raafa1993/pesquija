@@ -73,7 +73,7 @@ export default function FinishedSearch() {
             <span className="diamondFinished">💎</span>
 
             <h2 className="pontsFinished">
-              <span>{data?.pontos} </span>ponstos
+              <span>{data?.pontos} </span>pontos
             </h2>
 
             <p className="paragraphyFinished">
@@ -108,12 +108,12 @@ export default function FinishedSearch() {
             </div>
           </CardQuestionFinished>
 
-          <ButtonDefault
+          {/* <ButtonDefault
             type="button"
             onClick={() => history.push('/home')}
             >
             Ver mais pesquisas
-        </ButtonDefault>
+          </ButtonDefault> */}
         </SectionBottom>
       </ContentBottom>
     </Continaer>
