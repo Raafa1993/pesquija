@@ -92,9 +92,10 @@ export default function Questions({
 
   function handleOnLogout() {
     
-    history.push('/ejected')
     window.localStorage.removeItem('@Pesquija:user');
     window.localStorage.removeItem('@Pesquija:token');
+    history.push('/ejected');
+    window.location.reload();
 
   }
 
@@ -108,20 +109,24 @@ export default function Questions({
 
       if (data.tipo === 'radio' && formData.itemsCheck.length <= 0)
         throw "Selecione alguma opção"
-
+      
+      //Check for this specific question that only works with two answers selecteds
       if (data.tipo === 'radio' && data.id_pergunta === 15 && formData.itemsCheck.length !== 2)
         throw "Selecione duas opções"
 
+      //Check for this specific question that stop works when an specific answer is selected
       if (data.tipo === "checkbox" && data.id_pergunta === 7 && formData.itemsRadio.value === 4) {
         handleOnLogout()
         throw "Obrigado por responder."
       }
       
+      //Check for this specific question that stop works when an specific answer is selected
       if (data.tipo === "radio" && data.id_pergunta === 10 && formData.itemsCheck[0].value === 4) {
         handleOnLogout()
         throw "Obrigado por responder."
       }
 
+      //Check for this specific question that stop works when an specific answer is selected
       if (data.tipo === "checkbox" && data.id_pergunta === 12 && formData.itemsRadio.value === 5) {
         handleOnLogout()
         throw "Obrigado por responder."

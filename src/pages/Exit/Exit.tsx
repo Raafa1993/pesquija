@@ -10,7 +10,7 @@ export default function ExitPage() {
         <Container>
             <Content>
                 <h1>
-                    Obrigado por participar, mas infelizmente você não faz parte do perfil dessa pesquisa.😢😎
+                    Obrigado por participar, mas infelizmente você não faz parte do perfil dessa pesquisa.😎
                 </h1>
             </Content>
         </Container>
