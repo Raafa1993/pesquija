@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../hooks/Auth";
 import api from "../../services/api";
+import ModalQuestion from "../../components/ModalQuestion";
 
 interface User {
   id: string;
@@ -31,6 +32,8 @@ interface SearchProps {
   status: string,
   imagem: string,
   respondida: boolean,
+  descricao: string,
+  tempo: string
 }
 
 export default function Home() {
@@ -38,6 +41,8 @@ export default function Home() {
   const [load, setLoad] = useState(true);
   const [data, setData] = useState<SearchProps[]>([]);
   const [profile, setProfile] = useState<any>({})
+  const [modal, setModal] = useState(false);
+  const [itemQuestion, setItemQuestion] = useState<any>([]);
 
   useEffect(() => {
 
@@ -49,16 +54,36 @@ export default function Home() {
       setData(res.data.result)
       api.get('/usuario/'+token.id_usuario).then((response) => {
         setProfile({...response.data.result})
-        console.log(response.data.result)
         setLoad(false)
       })
     })
+
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+    }, 100)
+
   }, [])
+
+  function handleOnQuestion(item: any) {
+    if(item.respondida === false) {
+      setItemQuestion(item)
+      setModal(true)
+    }
+  }
+
+  function handleOnLogout()
+  {
+
+    window.localStorage.removeItem('@Pesquija:user')
+    window.localStorage.removeItem('@Pesquija:token')
+    window.location.reload()
+  }
 
   
   return (
     <DashboardContainer>
       <Profile>
+        <a onClick={handleOnLogout} className="logout">Sair</a>
         <div
           className="userImage"
           style={{ backgroundImage: `url(${UserImage})` }}
@@ -90,7 +115,7 @@ export default function Home() {
         </div>
 
         <div className="title">
-          <h3>Painel de pesquisas</h3> <Emoji symbol="👀" label="eyes" />
+          <h3>Painel de pesquisas <Emoji symbol="👀" label="eyes" /></h3> 
           <p>
             Que tal participar de uma pesquisa agora?{" "}
             <Emoji symbol="👀" label="eyes" />
@@ -115,7 +140,8 @@ export default function Home() {
 
                   <button
                     type="button"
-                    onClick={() => row.respondida === false ? history.push(`/questao/${row.id_pesquisa}`) : () => {}} 
+                    onClick={() => handleOnQuestion(row)}
+                    // onClick={() => row.respondida === false ? history.push(`/questao/${row.id_pesquisa}`) : () => {}} 
                     className={`buttonQuestion ${!row.respondida ? 'ok' : 'block'}`}>
                     {!row.respondida ? 'Participar' : 'Bloqueada'}
                   </button>
@@ -126,6 +152,13 @@ export default function Home() {
           </div>
         </Surveys>
       </DashboardBottom>
+
+        <ModalQuestion
+          id="id"
+          onClose={() => setModal(!modal)}
+          itemQuestion={itemQuestion}
+          openModal={modal}
+        />
     </DashboardContainer>
   );
 }

@@ -18,12 +18,14 @@ import {
 } from "./styles";
 import api from '../../services/api';
 import Select from "../../components/form/Select";
+import { useAuth } from "../../hooks/Auth";
 
 export default function Register() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory()
   const [load, setLoad] = useState(true);
   const [sexo, setSexo] = useState([])
+  const { signIn } = useAuth();
 
   useEffect(() => {
     api.get('/usuario-generos').then((res) => {
@@ -39,10 +41,10 @@ export default function Register() {
       const schema = Yup.object().shape({
         nome: Yup.string().required("Nome obrigatório"),
         email: Yup.string().required("Email obrigatório").email('Digite e-mail valido'),
-        senha: Yup.string().required("Senha obrigatória"),
-        confirmeSenha: Yup.string().required("Confirmação de senha obrigatória"),
-        telefone: Yup.string().required("Telefone obrigatório"),
-        nascimento: Yup.string().required("Data de nascimento obrigatório"),
+        senha: Yup.string().required("Senha obrigatória").min(4, "Minimo 4 digitos"),
+        confirmeSenha: Yup.string().required("Confirmação de senha obrigatória").oneOf([Yup.ref('senha'), null], 'As senhas devem ser iguais'),
+        telefone: Yup.string().required("Telefone obrigatório").max(15).min(11, "Numero invalido"),
+        nascimento: Yup.string().required("Data de nascimento obrigatório").min(9, "Preencha uma data valida"),
         genero: Yup.string().required("Genero obrigatório"),
       });
 
@@ -57,19 +59,26 @@ export default function Register() {
         email,
         senha,
         confirmeSenha,
-        telefone,
+        telefone: telefone.replace('(', '').replace(')', '').replace(' ', ''),
         nascimento,
         genero,
       };
 
-      const response = await api.post('/usuario', newData);
-      console.log(response.data.result)
+      await api.post('/usuario', newData);
+
+      await signIn({
+        email: newData.email,
+        senha: newData.senha,
+      });
+
       setLoad(false)
       setTimeout(() => {
-        history.push(`/confirmation/${response.data.result.id_usuario}`)
+        history.push(`/home`)
       }, 3000)
 
     } catch(err: any) {
+
+      console.log(err)
       
       setLoad(true)
       if (err instanceof Yup.ValidationError) {
@@ -137,16 +146,16 @@ export default function Register() {
               </div>
               <div className="field">
                 <InputForm
-                  type="text"
+                  type="tel"
                   name="telefone"
-                  // mask="fone"
+                  mask="fone"
                   placeholder="Digite seu telefone"
                 />
               </div>
 
               <div className="field">
                 <InputForm
-                  type="text"
+                  type="tel"
                   name="nascimento"
                   mask="date"
                   placeholder="Digite data de nascimento"

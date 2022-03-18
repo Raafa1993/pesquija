@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
 `;
 
 export const ContentTop = styled.div`
@@ -10,7 +10,7 @@ export const ContentTop = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 35%;
+  height: 35vh;
   background-color: #089bff;
 `;
 
@@ -50,7 +50,8 @@ export const Header = styled.div`
     align-items: center;
     width: 100%;
     margin-top: 32px;
-
+    height: calc(100% - 120px);
+    justify-content: center;
     span {
       font-weight: 600;
       font-size: 16px;
@@ -87,7 +88,10 @@ export const ContentBottom = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 65%;
+  height: 65vh;
+  /* @media(max-width: 500px) {
+    height: 55vh;
+  } */
   background-color: var(--white);
 `;
 
@@ -98,10 +102,9 @@ export const Main = styled.div`
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  padding: 0 2rem;
+  /* padding: 2rem; */
   height: 100%;
-  margin-top: 40px;
-
+  
   overflow-x: scroll;
 
   form {
@@ -109,9 +112,9 @@ export const Main = styled.div`
     align-items: center;
     flex-direction: column;
     width: 100%;
-    padding: 2rem 0;
+    padding: 2rem;
+    margin-bottom: 30px;
   }
-
 
   .questions {
     display: grid;

@@ -17,7 +17,6 @@ interface ButtonsProps {
   currentPage: number;
   totalPages: number;
   setCurrentPage: (value: any) => void;
-  handleOnChange: (value: any) => void;
 }
 
 interface RespostaAPI {
@@ -39,7 +38,6 @@ export default function Questions({
   totalPages,
   setCurrentPage,
   isImage,
-  handleOnChange
 }: ButtonsProps) {
   const history = useHistory();
   const params:any = useParams()
@@ -61,11 +59,6 @@ export default function Questions({
   })
 
   const [DTOForSongs, setDTOForSongs] = useState<any[]>([])
-
-  const [error, setError] = useState({
-    error: false,
-    message: ''
-  })
 
   function handleOnPreviusPage() {
     if (currentPage === 0) {
@@ -338,7 +331,6 @@ export default function Questions({
                       index={key}
                       key={key}
                       handleOnOption={(item) => handleOnOption(item)}
-                      handleOnPlay={() => console.log('')}
                       positionAudio={positionAudio}
                       setPositionAudio={setPositionAudio}
                       play={play}

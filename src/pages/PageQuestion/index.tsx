@@ -26,14 +26,15 @@ export default function PageQuestion() {
   const [pages, setPages] = useState([]);
   const [currentPage, setCurrentPage] = useState<any>(0);
 
-  const [formData, setFormData] = useState({
-    
-  })
+  const [teste, setTeste] = useState<QuestionProps[]>([]);
+
 
   useEffect(() => {
     setLoad(true);
     api.get(`/pesquisa/${id}`).then((res) => {
       setData(res.data.result.perguntas[currentPage]);
+
+      setTeste(res.data.result.perguntas)
 
       setTotal(res.data.result.perguntas.length);
       const totalPages = Math.ceil(total / limit);
@@ -47,10 +48,6 @@ export default function PageQuestion() {
     });
   }, [currentPage]);
 
-  function handleOnChange(item: any) {
-    console.log(item)
-  }
-
   return (
     <Container>
       <Questions 
@@ -60,7 +57,6 @@ export default function PageQuestion() {
         data={data}
         load={load}
         isImage={false}
-        handleOnChange={(value: any) => handleOnChange(value)}
       />
     </Container>
   );

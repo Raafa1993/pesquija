@@ -1,6 +1,6 @@
 import { ContentBottom, Main } from "./styles";
 import { PlayIcon } from "../../icons/PlayIcon";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { PauseIcon } from "../../icons/PauseIcon";
 
@@ -14,7 +14,6 @@ interface SongProps {
   play?: boolean;
   setPositionAudio: (index: number) => void;
   handleOnOption: (item: any) => void;
-  handleOnPlay: () => void;
 }
 
 export default function Songs({
@@ -30,7 +29,7 @@ export default function Songs({
 }: SongProps) {
   const [selected, setSelected] = useState({});
 
-  const [audio] = useState(new Audio(music));
+  const audio = useRef<any>();
   const [playing, setPlaying] = useState(play);
   const toggle = () => setPlaying(!playing);
 
@@ -39,13 +38,13 @@ export default function Songs({
   }, [play])
 
   useEffect(() => {
-    playing ? audio.play() : audio.pause();
+    playing ? audio.current?.play() : audio.current?.pause();
   }, [playing, audio]);
 
   useEffect(() => {
-    audio.addEventListener("ended", () => finishMusic());
+    audio.current?.addEventListener("ended", () => finishMusic());
     return () => {
-      audio.removeEventListener("ended", () => setPlaying(false));
+      audio.current?.removeEventListener("ended", () => setPlaying(false));
     };
   }, [positionAudio]);
 
@@ -55,9 +54,6 @@ export default function Songs({
   }
 
   function finishMusic() {
-
-
-    
     positionAudio >= index
       ? setPositionAudio(index + 1)
       : setPositionAudio(index);
@@ -65,9 +61,8 @@ export default function Songs({
   }
 
   return (
-    <ContentBottom className="animate__animated animate__zoomIn">
+    <ContentBottom onClick={() => positionAudio < index && alert('Ouça a musica acima para desbloquear.')} className={`animate__animated animate__zoomIn ${positionAudio < index ? 'disabled' : 'enabled'}`}>
       <Main>
-        
         <div className="questions">
           <div className="songContainer">
             <div className="song">
@@ -82,6 +77,9 @@ export default function Songs({
               <div className="infos">
                 <div className="name">{title}</div>
                 <span>{subTitle}</span>
+                <audio controls={positionAudio < index ? false : true} ref={audio}>
+                  <source src={positionAudio < index ? music : music}/>
+                </audio>
               </div>
               <button
                 type="button"

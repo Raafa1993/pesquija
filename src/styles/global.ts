@@ -43,7 +43,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
-
+    overflow: hidden;
     background: var(--background);
   }
 
