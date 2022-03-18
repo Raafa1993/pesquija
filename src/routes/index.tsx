@@ -1,4 +1,5 @@
 import {
+  Route,
   Switch,
 } from "react-router-dom";
 import Confirmation from "../pages/Confirmation";
@@ -12,6 +13,7 @@ import SurveyFinish from "../pages/SurveyFinish/SurveyFinish";
 import PageQuestion from "../pages/PageQuestion";
 import Home from "../pages/Home";
 import FinishedSearch from "../pages/FinishedSearch";
+import ExitPage from "../pages/Exit/Exit";
 
 function Routes() {
   return (
@@ -20,6 +22,7 @@ function Routes() {
         <PrivateRoutes path="/" exact component={Wellcome} />
         <PrivateRoutes path="/login" component={SignIn} />
         <PrivateRoutes path="/register" component={Register} />
+        <Route path="/ejected" component={ExitPage} />
         <PrivateRoutes path="/confirmation/:id" component={Confirmation} />
 
         <PrivateRoutes path="/home" component={Home} isPrivate />
