@@ -41,10 +41,10 @@ export default function Register() {
       const schema = Yup.object().shape({
         nome: Yup.string().required("Nome obrigatório"),
         email: Yup.string().required("Email obrigatório").email('Digite e-mail valido'),
-        senha: Yup.string().required("Senha obrigatória"),
-        confirmeSenha: Yup.string().required("Confirmação de senha obrigatória"),
-        telefone: Yup.string().required("Telefone obrigatório").max(15),
-        nascimento: Yup.string().required("Data de nascimento obrigatório"),
+        senha: Yup.string().required("Senha obrigatória").min(4, "Minimo 4 digitos"),
+        confirmeSenha: Yup.string().required("Confirmação de senha obrigatória").oneOf([Yup.ref('senha'), null], 'As senhas devem ser iguais'),
+        telefone: Yup.string().required("Telefone obrigatório").max(15).min(11, "Numero invalido"),
+        nascimento: Yup.string().required("Data de nascimento obrigatório").min(9, "Preencha uma data valida"),
         genero: Yup.string().required("Genero obrigatório"),
       });
 
@@ -77,6 +77,8 @@ export default function Register() {
       }, 3000)
 
     } catch(err: any) {
+
+      console.log(err)
       
       setLoad(true)
       if (err instanceof Yup.ValidationError) {
