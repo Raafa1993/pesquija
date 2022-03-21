@@ -19,6 +19,7 @@ import {
 import api from '../../services/api';
 import Select from "../../components/form/Select";
 import { useAuth } from "../../hooks/Auth";
+import { useToasts } from 'react-toast-notifications';
 
 export default function Register() {
   const formRef = useRef<FormHandles>(null);
@@ -26,7 +27,8 @@ export default function Register() {
   const [load, setLoad] = useState(true);
   const [sexo, setSexo] = useState([])
   const { signIn } = useAuth();
-
+  const { addToast } = useToasts();
+ 
   useEffect(() => {
     api.get('/usuario-generos').then((res) => {
       setSexo(res.data.result)
@@ -44,7 +46,7 @@ export default function Register() {
         senha: Yup.string().required("Senha obrigatória").min(4, "Minimo 4 digitos"),
         confirmeSenha: Yup.string().required("Confirmação de senha obrigatória").oneOf([Yup.ref('senha'), null], 'As senhas devem ser iguais'),
         telefone: Yup.string().required("Telefone obrigatório").max(15).min(11, "Numero invalido"),
-        nascimento: Yup.string().required("Data de nascimento obrigatório").min(9, "Preencha uma data valida"),
+        nascimento: Yup.string().required("Data de nascimento obrigatório").min(10, "Preencha uma data valida"),
         genero: Yup.string().required("Genero obrigatório"),
       });
 
@@ -64,7 +66,7 @@ export default function Register() {
         genero,
       };
 
-      await api.post('/usuario', newData);
+      await api.post('/usuario', newData);      
 
       await signIn({
         email: newData.email,
@@ -72,12 +74,18 @@ export default function Register() {
       });
 
       setLoad(false)
+      addToast('Registrado com sucesso', { appearance: 'success' });
       setTimeout(() => {
-        history.push(`/home`)
+        history.push(`/pesquisa`)
       }, 3000)
 
-    } catch(err: any) {
+      // setLoad(false)
+      // setTimeout(() => {
+      //   history.push(`/home`)
+      // }, 3000)
 
+    } catch(err: any) {
+      
       console.log(err)
       
       setLoad(true)
@@ -87,9 +95,9 @@ export default function Register() {
         formRef.current?.setErrors(errors);
         return;
       }
-      // alert(err.response.data.message)
-      // setLoad(false)
-
+      addToast(err.response.data.result[0].error, { appearance: 'error' });
+      setLoad(false)
+     
     }
 
   }, [history])
