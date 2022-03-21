@@ -17,14 +17,14 @@ export default function SurveyStarts() {
                 </div>
 
                 <SurveyContainer>
-                    <h3>pesquisa: <span>Consumo de rádio</span></h3>
+                    <h3>pesquisa: <span>Consumo de rádio FM</span></h3>
                     <p>Pesquisa parar conhecer melhor o seu hábito de consumo de rádio <Emoji symbol="📻" label="radio" /></p>                    
                     <div className="surveyDetails">
                         <div className="companyPhoto" style={{backgroundImage: `url(${Company2})`}} />
                             
                         <div className="details">
                             <div className="minutes">5 minutos</div>
-                            <div className="stars"><Emoji symbol="⭐⭐⭐⭐⭐" label="stars" /> Fácil</div>
+                            <div className="stars"><Emoji symbol="⭐" label="stars" /> Fácil</div>
                             <div className="points"><Emoji className="gem" symbol="💎" label="blue gem" /> 35 pontos</div>
                         </div>
                     </div>
