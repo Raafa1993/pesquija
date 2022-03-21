@@ -248,7 +248,7 @@ export default function Questions({
       history.push(`/fim-questao/${params.id}`)
 
     } catch ( err: any ) {
-      alert(err)
+      addToast(err, { appearance: 'error' });
     }
 
   }

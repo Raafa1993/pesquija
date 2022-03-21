@@ -9,7 +9,11 @@ function App() {
     <>
       <BrowserRouter>
           <AuthProvider>
-            <ToastProvider>
+            <ToastProvider
+              placement="top-center"
+              autoDismiss
+              autoDismissTimeout={3000}
+            >
               <Routes />
             </ToastProvider>
           </AuthProvider>
