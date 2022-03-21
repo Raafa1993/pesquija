@@ -21,9 +21,9 @@ function Routes() {
         <PrivateRoutes path="/" exact component={Wellcome} />
         <PrivateRoutes path="/login" component={SignIn} />
         <PrivateRoutes path="/register" component={Register} />
-        <Route path="/ejected" component={ExitPage} />
+        <Route path="/exit" component={ExitPage} />
         <PrivateRoutes path="/confirmation/:id" component={Confirmation} />
-        <PrivateRoutes path="/home" component={Home} isPrivate />
+        {/* <PrivateRoutes path="/home" component={Home} isPrivate /> */}
         <PrivateRoutes path="/pesquisa" component={SurveyStarts} isPrivate />
         <PrivateRoutes path="/fim-questao/:id" component={FinishedSearch} isPrivate />
         <PrivateRoutes path="/questao/:id" component={PageQuestion} isPrivate />        
