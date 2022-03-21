@@ -9,6 +9,7 @@ import ButtonRadio from "../form/ButtonRadio";
 import Songs from "../Songs/Songs";
 import api from "../../services/api";
 import Radio from "../form/Radio";
+import { useToasts } from 'react-toast-notifications';
 
 interface ButtonsProps {
   load: boolean;
@@ -45,6 +46,7 @@ export default function Questions({
   const [radioSelected, setRadioSelected] = useState<any>(false)
   const [loading, setLoading] = useState(false)
   const [play, setPlay] = useState<any>(null)
+  const { addToast } = useToasts();
 
   const [positionAudio, setPositionAudio] = useState<number>(0)
 
@@ -94,16 +96,13 @@ export default function Questions({
     
     window.localStorage.removeItem('@Pesquija:user');
     window.localStorage.removeItem('@Pesquija:token');
-    history.push('/ejected');
+    history.push('/exit');
     window.location.reload();
 
-  }
+  } 
 
   const handleSubmitNext = useCallback(async (event: any) => {
-    console.log(formData, 'log do formData')
-    console.log(data, 'log do Data')
     try {
-
       event.preventDefault();
       setLoading(true)
 
@@ -205,7 +204,7 @@ export default function Questions({
       resetForm()
 
     } catch (e: any) {
-      alert(e)
+      addToast(e, { appearance: 'error' });
     }
   }, [data, formData]
   )
@@ -262,6 +261,22 @@ export default function Questions({
     setDTOForSongs([...newDTO])
    
   }
+
+  const [shuffled, setShuffled] = useState<any>()
+
+  useEffect(() => {
+    shuffler()
+  }, [data])
+
+
+  function shuffler() {
+    if (data.tipo === 'subRange') {
+      const shuffle = (arr: any) => [...arr].sort(() => Math.random() - 0.5);
+      const newList = shuffle(data.opcoes);
+      setShuffled(newList)
+    }
+  }
+
 
   return (
     <Container>
@@ -327,7 +342,7 @@ export default function Questions({
                 )}
 
                 {data.tipo === 'subRange' && (
-                  data.opcoes.map((row: any, key: any) => (
+                    shuffled.map((row: any, key: any) => (
                     <Songs
                       image={row.image}
                       title={row.title}
