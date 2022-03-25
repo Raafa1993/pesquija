@@ -24,8 +24,8 @@ export const Container = styled.div<Props>`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 70%; 
-    height: 85%;
+    width: 50%; 
+    height: 50%;
     @media (max-width: 1100px) {
       height: 90%;
       overflow: auto;
