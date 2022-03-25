@@ -6,6 +6,7 @@ import getValidationErrors from "../../Utils/getValidationErrors";
 import { Form } from "@unform/web";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
+import { useToasts } from 'react-toast-notifications'
 
 // IMAGES
 import FaceEmoji from "../../images/faceEmoji.png";
@@ -25,6 +26,7 @@ export default function Confirmation() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
   const [load, setLoad] = useState(true);
+  const { addToast } = useToasts();
   // const SMS = JSON.parse(window.localStorage.getItem("@Pesquija:sms") as any);
   
   const handleSubmit = useCallback(
@@ -63,7 +65,8 @@ export default function Confirmation() {
           formRef.current?.setErrors(errors);
           return;
         }
-        alert(err.response.data.message);
+        addToast(err.response.data.message, { appearance: 'error' });
+        
       }
     },
     [history],

@@ -67,6 +67,10 @@ export const Header = styled.div`
       text-align: center;
       color: var(--white);
       margin-top: 6px;
+      @media (max-width: 1500px) {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
     }
   }
 

@@ -108,12 +108,12 @@ export default function FinishedSearch() {
             </div>
           </CardQuestionFinished>
 
-          <ButtonDefault
+          {/* <ButtonDefault
             type="button"
             onClick={() => history.push('/home')}
             >
             Ver mais pesquisas
-        </ButtonDefault>
+          </ButtonDefault> */}
         </SectionBottom>
       </ContentBottom>
     </Continaer>

@@ -37,9 +37,9 @@ export const Main = styled.div`
                 background: transparent;
                 transition: all 0.2s;
                 cursor: pointer;
-                @media(max-width: 500px) {
+                /* @media(max-width: 500px) {
                     display: none;
-                }
+                } */
                 &:disabled {
                     cursor: not-allowed;
                     filter: brightness(0.8);
@@ -92,10 +92,10 @@ export const Main = styled.div`
                 }
                 audio {
                   display: none;
-                  @media(max-width: 500px) {
+                  /* @media(max-width: 500px) {
                     display: flex;
                     margin-top: 10px;
-                  }
+                  } */
                 }
             }
         }

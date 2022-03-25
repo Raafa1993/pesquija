@@ -28,7 +28,7 @@ const Route: React.FC<RouteProps> = ({
         ) : (
           <Redirect
             to={{
-              pathname: isPrivate ? "/" : "/home",
+                pathname: isPrivate ? "/" : "/pesquisa",
               state: { form: location },
             }}
           />
@@ -39,3 +39,11 @@ const Route: React.FC<RouteProps> = ({
 };
 
 export default Route;
+
+
+{/*Login mandaria para a home mas por enquanto está indo direto para a pesquisa <Redirect
+  to={{
+    pathname: isPrivate ? "/" : "/home",
+    state: { form: location },
+  }}
+/> */}

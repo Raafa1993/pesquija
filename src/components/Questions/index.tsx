@@ -9,6 +9,7 @@ import ButtonRadio from "../form/ButtonRadio";
 import Songs from "../Songs/Songs";
 import api from "../../services/api";
 import Radio from "../form/Radio";
+import { useToasts } from 'react-toast-notifications';
 
 interface ButtonsProps {
   load: boolean;
@@ -45,6 +46,7 @@ export default function Questions({
   const [radioSelected, setRadioSelected] = useState<any>(false)
   const [loading, setLoading] = useState(false)
   const [play, setPlay] = useState<any>(null)
+  const { addToast } = useToasts();
 
   const [positionAudio, setPositionAudio] = useState<number>(0)
 
@@ -90,15 +92,45 @@ export default function Questions({
     setFormData({...formData, 'itemsRadio': item})
   }
 
+  function handleOnLogout() {
+    
+    window.localStorage.removeItem('@Pesquija:user');
+    window.localStorage.removeItem('@Pesquija:token');
+    history.push('/exit');
+    window.location.reload();
+
+  } 
+
   const handleSubmitNext = useCallback(async (event: any) => {
     try {
-
       event.preventDefault();
       setLoading(true)
 
       if (data.tipo === 'radio' && formData.itemsCheck.length <= 0)
         throw "Selecione alguma opção"
+      
+      //Check for this specific question that only works with two answers selecteds
+      if (data.tipo === 'radio' && data.id_pergunta === 15 && formData.itemsCheck.length !== 2)
+        throw "Selecione duas opções"
 
+      //Check for this specific question that stop works when an specific answer is selected
+      if (data.tipo === "checkbox" && data.id_pergunta === 7 && formData.itemsRadio.value === 4) {
+        handleOnLogout()
+        throw "Obrigado por responder."
+      }
+      
+      //Check for this specific question that stop works when an specific answer is selected
+      if (data.tipo === "radio" && data.id_pergunta === 10 && formData.itemsCheck[0].value === 4) {
+        handleOnLogout()
+        throw "Obrigado por responder."
+      }
+
+      //Check for this specific question that stop works when an specific answer is selected
+      if (data.tipo === "checkbox" && data.id_pergunta === 12 && formData.itemsRadio.value === 5) {
+        handleOnLogout()
+        throw "Obrigado por responder."
+      }
+     
       if (data.tipo === "checkbox" && formData.itemsRadio === false )
         throw "Selecione uma opção"
 
@@ -172,7 +204,7 @@ export default function Questions({
       resetForm()
 
     } catch (e: any) {
-      alert(e)
+      addToast(e, { appearance: 'error' });
     }
   }, [data, formData]
   )
@@ -216,7 +248,7 @@ export default function Questions({
       history.push(`/fim-questao/${params.id}`)
 
     } catch ( err: any ) {
-      alert(err)
+      addToast(err, { appearance: 'error' });
     }
 
   }
@@ -229,6 +261,22 @@ export default function Questions({
     setDTOForSongs([...newDTO])
    
   }
+
+  const [shuffled, setShuffled] = useState<any>()
+
+  useEffect(() => {
+    shuffler()
+  }, [data])
+
+
+  function shuffler() {
+    if (data.tipo === 'subRange') {
+      const shuffle = (arr: any) => [...arr].sort(() => Math.random() - 0.5);
+      const newList = shuffle(data.opcoes);
+      setShuffled(newList)
+    }
+  }
+
 
   return (
     <Container>
@@ -294,7 +342,7 @@ export default function Questions({
                 )}
 
                 {data.tipo === 'subRange' && (
-                  data.opcoes.map((row: any, key: any) => (
+                    shuffled.map((row: any, key: any) => (
                     <Songs
                       image={row.image}
                       title={row.title}

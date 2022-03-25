@@ -57,7 +57,7 @@ export const DashboardBottom = styled.div`
         background: var(--green);
     }
     @media(max-width: 1400px) {
-        height: 70vh;
+        height: 80vh;
         .warning {
             width: 180px;
             height: 180px;
@@ -67,7 +67,7 @@ export const DashboardBottom = styled.div`
             padding-top: 55px;
         }
         button {
-            height: 55px;
+            height: 85px;
         }
     }
     @media(max-width: 1000px) {
