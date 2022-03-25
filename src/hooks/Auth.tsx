@@ -37,8 +37,8 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 function AuthProvider({ children }: TransactionsProviderProps) {
   const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@Pesquija:token');
-    const user = localStorage.getItem('@Pesquija:user');
+    const token = localStorage.getItem('@Token:token');
+    const user = localStorage.getItem('@User:user');
 
     if (token && user) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -56,8 +56,8 @@ function AuthProvider({ children }: TransactionsProviderProps) {
 
     const { user, token } = response.data.result;
 
-    localStorage.setItem('@Pesquija:token', token);
-    localStorage.setItem('@Pesquija:user', JSON.stringify(user));
+    localStorage.setItem('@Token:token', token);
+    localStorage.setItem('@User:user', JSON.stringify(user));
 
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
@@ -68,15 +68,15 @@ function AuthProvider({ children }: TransactionsProviderProps) {
   }, []);
   
   const signOut = useCallback(() => {
-    localStorage.removeItem('@Pesquija:token');
-    localStorage.removeItem('@Pesquija:user');
+    localStorage.removeItem('@Token:token');
+    localStorage.removeItem('@User:user');
 
     setData({} as AuthState)
   }, [])
 
   const updateUser = useCallback(
     (user: User) => {
-      localStorage.setItem("@Pesquija:user", JSON.stringify(user));
+      localStorage.setItem("@User:user", JSON.stringify(user));
 
       setData({
         token: data.token,

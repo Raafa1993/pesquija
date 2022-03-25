@@ -46,7 +46,7 @@ export default function Home() {
 
   useEffect(() => {
 
-    const tokenString:any = window.localStorage.getItem('@Pesquija:user')
+    const tokenString:any = window.localStorage.getItem('@User:user')
     const token = JSON.parse(tokenString)
 
     setLoad(true);
@@ -74,8 +74,8 @@ export default function Home() {
   function handleOnLogout()
   {
 
-    window.localStorage.removeItem('@Pesquija:user')
-    window.localStorage.removeItem('@Pesquija:token')
+    window.localStorage.removeItem('@User:user')
+    window.localStorage.removeItem('@Token:token')
     window.location.reload()
   }
 
