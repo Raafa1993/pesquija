@@ -10,6 +10,8 @@ import Songs from "../Songs/Songs";
 import api from "../../services/api";
 import Radio from "../form/Radio";
 import { useToasts } from 'react-toast-notifications';
+import Modal from '../Modal/Modal';
+import ButtonDefault from "../form/ButtonDefault";
 
 interface ButtonsProps {
   load: boolean;
@@ -47,6 +49,9 @@ export default function Questions({
   const [loading, setLoading] = useState(false)
   const [play, setPlay] = useState<any>(null)
   const { addToast } = useToasts();
+  const [modal, setModal] = useState<boolean>(false);
+  const [anotherQuestion, setAnotherQuestion] = useState('');
+  const [inputOther, setInputOther] = useState<any>('')
 
   const [positionAudio, setPositionAudio] = useState<number>(0)
 
@@ -64,7 +69,8 @@ export default function Questions({
 
   function handleOnPreviusPage() {
     if (currentPage === 0) {
-      history.push("/home");
+      // history.push("/home");
+      history.push("/pesquisa");
     }
     setCurrentPage(currentPage - 1);
   }
@@ -94,39 +100,71 @@ export default function Questions({
 
   function handleOnLogout() {
     
-    window.localStorage.removeItem('@Pesquija:user');
-    window.localStorage.removeItem('@Pesquija:token');
+    window.localStorage.removeItem('@User:user');
+    window.localStorage.removeItem('@Token:token');
     history.push('/exit');
     window.location.reload();
 
   } 
 
   const handleSubmitNext = useCallback(async (event: any) => {
+    console.log(formData, 'log do formData')
+    console.log(data, 'log do data')
     try {
       event.preventDefault();
       setLoading(true)
 
       if (data.tipo === 'radio' && formData.itemsCheck.length <= 0)
         throw "Selecione alguma opção"
-      
+
       //Check for this specific question that only works with two answers selecteds
-      if (data.tipo === 'radio' && data.id_pergunta === 15 && formData.itemsCheck.length !== 2)
-        throw "Selecione duas opções"
+      if (data.tipo === 'radio' && data.id_pergunta === 15 && formData.itemsCheck.length !== 2) {
+        if (formData.itemsCheck[0].label === 'Outro gênero. Qual? ') {
+          setModal(true);
+          setAnotherQuestion(formData.itemsCheck[0].label)
+          
+          DTOForApi.respostaPesquisa.push({
+            id_pergunta: data.id_pergunta,
+            resposta: {
+              respostas: inputOther
+            }
+          })
+          setInputOther('')
+        }
+        else {
+          throw "Selecione duas opções"          
+        }
+      }
+
+      if (data.tipo === 'radio' && data.id_pergunta === 13 && formData.itemsCheck[0].label === 'Outros tipos de música. Quais?') {
+        setModal(true);
+        setAnotherQuestion(formData.itemsCheck[0].label)
+
+        DTOForApi.respostaPesquisa.push({
+          id_pergunta: data.id_pergunta,
+          resposta: {
+            respostas: inputOther
+          }
+        })
+        setInputOther('')
+       
+        
+      }
 
       //Check for this specific question that stop works when an specific answer is selected
-      if (data.tipo === "checkbox" && data.id_pergunta === 7 && formData.itemsRadio.value === 4) {
+      if (data.tipo === "checkbox" && data.id_pergunta === 7 && formData.itemsRadio.label === 'Não ouço rádio') {
         handleOnLogout()
         throw "Obrigado por responder."
       }
       
       //Check for this specific question that stop works when an specific answer is selected
-      if (data.tipo === "radio" && data.id_pergunta === 10 && formData.itemsCheck[0].value === 4) {
+      if (data.tipo === "radio" && data.id_pergunta === 10 && formData.itemsCheck[0].label === 'Madrugada (das 00h01 às 05h59)') {
         handleOnLogout()
         throw "Obrigado por responder."
       }
 
       //Check for this specific question that stop works when an specific answer is selected
-      if (data.tipo === "checkbox" && data.id_pergunta === 12 && formData.itemsRadio.value === 5) {
+      if (data.tipo === "checkbox" && data.id_pergunta === 12 && formData.itemsRadio.label === 'Nenhuma dessas emissoras') {
         handleOnLogout()
         throw "Obrigado por responder."
       }
@@ -149,7 +187,6 @@ export default function Questions({
               respostas: [formData.itemsRadio.label]
             }
           })
-
         } else if ( data.tipo === 'radio' ) {
 
           const arrayCheckbox:any = []
@@ -176,8 +213,9 @@ export default function Questions({
             id_pergunta: data.id_pergunta,
             resposta: {
               respostas: [formData.itemsRadio.label]
-            }
+            },
           })
+          // console.log(formData.itemsRadio.label, 'log da linha 182')
 
         } else if ( data.tipo === 'radio' ) {
 
@@ -246,6 +284,8 @@ export default function Questions({
 
       setPlay(false)
       history.push(`/fim-questao/${params.id}`)
+      window.localStorage.removeItem('@User:user');
+      window.localStorage.removeItem('@Token:token');
 
     } catch ( err: any ) {
       addToast(err, { appearance: 'error' });
@@ -263,6 +303,8 @@ export default function Questions({
   }
 
   const [shuffled, setShuffled] = useState<any>()
+  const [shuffledRadio, setShuffledRadio] = useState<any>()
+  const [shuffledCheckbox, setShuffledCheckbox] = useState<any>()
 
   useEffect(() => {
     shuffler()
@@ -275,6 +317,22 @@ export default function Questions({
       const newList = shuffle(data.opcoes);
       setShuffled(newList)
     }
+
+    if (data.tipo === 'checkbox') {
+      const shuffle = (arr: any) => [...arr].sort(() => Math.random() - 0.5);
+      const newList = shuffle(data.opcoes);
+      setShuffledCheckbox(newList)
+    }
+
+    if (data.tipo === 'radio') {
+      const shuffle = (arr: any) => [...arr].sort(() => Math.random() - 0.5);
+      const newList = shuffle(data.opcoes);
+      setShuffledRadio(newList)
+    }
+  }
+
+  function handleOther() {
+    setModal(false)
   }
 
 
@@ -308,7 +366,7 @@ export default function Questions({
             ) : (
               <>
                 {data.tipo === 'checkbox' && (
-                  data.opcoes.map((row: any, key: any) => (
+                  shuffledCheckbox.map((row: any, key: any) => (
                     <Radio
                       key={key}
                       options={[
@@ -327,7 +385,7 @@ export default function Questions({
                 )}
 
                 {data.tipo === 'radio' && (
-                  data.opcoes.map((row: any, key: any) => (
+                    shuffledRadio.map((row: any, key: any) => (
                     <ButtonRadio
                       key={key}
                       isSelected={selectedItems.filter(obj => obj.value === key).length ? true : false}
@@ -384,6 +442,31 @@ export default function Questions({
           </form>
         </Main>
       </ContentBottom>
+      { modal &&
+        <Modal
+          id="id"
+          onClose={() => setModal(false)}
+          openModal={modal}
+        >
+          <div className="modal">
+            <div>
+              <form onSubmit={handleOther}>
+                <h3>
+                  {anotherQuestion}
+                </h3>
+                <input 
+                  type="text" 
+                  value={inputOther}
+                  onChange={(e) => setInputOther(e.target.value)}
+                />
+                <ButtonDefault type="submit">
+                  Enviar
+                </ButtonDefault>
+              </form>
+            </div>
+          </div>
+        </Modal>
+      }
     </Container>
   );
 }
