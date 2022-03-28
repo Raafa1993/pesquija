@@ -44,10 +44,10 @@ export default function PageQuestion() {
       arrayPages.push(i);
     }
     setPages(arrayPages as any);
-      setLoad(false);
-
+    setLoad(false);
     
   }
+  
   return (
     <Container>
       <Questions 

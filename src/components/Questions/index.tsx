@@ -221,9 +221,6 @@ export default function Questions({
       if (data.tipo === "checkbox" && formData.itemsRadio === false )
         throw "Selecione uma opção"
 
-      setLoading(false)
-      setCurrentPage(currentPage + 1)
-
       const respostaPesquisa:any = DTOForApi.respostaPesquisa.filter(obj => obj.id_pergunta === data.id_pergunta)
 
       const arrayCheckbox: any = []
@@ -303,8 +300,11 @@ export default function Questions({
             respostas: arrayCheckbox
           }
         })
-        validateAnswer(arrayCheckbox)
+        await validateAnswer(arrayCheckbox)
       }
+
+      setLoading(false)
+      setCurrentPage(currentPage + 1)
 
     } catch (e: any) {
       addToast(e, { appearance: 'error' });
