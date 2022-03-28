@@ -18,7 +18,7 @@ export default function SurveyStarts() {
 
                 <SurveyContainer>
                     <h3>pesquisa: <span>Consumo de rádio FM</span></h3>
-                    <p>Pesquisa parar conhecer melhor o seu hábito de consumo de rádio <Emoji symbol="📻" label="radio" /></p>                    
+                    <p>Pesquisa parar conhecer melhor o seu hábito de consumo de rádio</p>                    
                     <div className="surveyDetails">
                         <div className="companyPhoto" style={{backgroundImage: `url(${Company2})`}} />
                             

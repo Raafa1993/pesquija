@@ -163,4 +163,15 @@ export const SurveyContainer = styled.div`
             }
         }
     }
+    @media(max-width: 425px) {
+        height: 260px;
+        .companyPhoto {
+            display: none;
+        }
+        .details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+    }
 `

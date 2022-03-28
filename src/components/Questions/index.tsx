@@ -19,6 +19,7 @@ interface ButtonsProps {
   isImage: boolean;
   currentPage: number;
   totalPages: number;
+  getData: () => void
   setCurrentPage: (value: any) => void;
 }
 
@@ -40,6 +41,7 @@ export default function Questions({
   currentPage,
   totalPages,
   setCurrentPage,
+  getData = () => {},
   isImage,
 }: ButtonsProps) {
   const history = useHistory();
@@ -54,6 +56,7 @@ export default function Questions({
   const [inputOther, setInputOther] = useState<any>('')
 
   const [positionAudio, setPositionAudio] = useState<number>(0)
+  const [favoriteRadios, setFavoriteRadios] = useState<any>()
 
   const [formData, setFormData] = useState<any>({
     itemsCheck: [],
@@ -64,7 +67,24 @@ export default function Questions({
     id_pesquisa: params.id,
     respostaPesquisa: [] as any
   })
-
+  
+  async function validateAnswer(answers: any) {
+    try {
+      setLoading(true)
+      const response:any = await api.post('resposta-validar', {
+        id_pergunta: 12,
+        resposta: {
+          respostas: answers
+        }
+      })  
+      if (response.data.result.update === true) {
+        getData()
+      }
+    } catch (err: any) {
+      
+    }
+  }
+  
   const [DTOForSongs, setDTOForSongs] = useState<any[]>([])
 
   function handleOnPreviusPage() {
@@ -108,8 +128,8 @@ export default function Questions({
   } 
 
   const handleSubmitNext = useCallback(async (event: any) => {
-    console.log(formData, 'log do formData')
-    console.log(data, 'log do data')
+    // console.log(formData, 'log do formData')
+    // console.log(data, 'log do data')
     try {
       event.preventDefault();
       setLoading(true)
@@ -132,8 +152,21 @@ export default function Questions({
           setInputOther('')
         }
         else {
-          throw "Selecione duas opções"          
+          throw "Selecione somente duas opções"          
         }
+      }
+
+      if (data.tipo === 'dinamica' && data.id_pergunta === 31 && formData.itemsCheck[0].label === 'Outra emissora preferida. Qual?') {
+        setModal(true);
+        setAnotherQuestion(formData.itemsCheck[0].label)
+
+        DTOForApi.respostaPesquisa.push({
+          id_pergunta: data.id_pergunta,
+          resposta: {
+            respostas: inputOther
+          }
+        })
+        setInputOther('')   
       }
 
       if (data.tipo === 'radio' && data.id_pergunta === 13 && formData.itemsCheck[0].label === 'Outros tipos de música. Quais?') {
@@ -146,9 +179,7 @@ export default function Questions({
             respostas: inputOther
           }
         })
-        setInputOther('')
-       
-        
+        setInputOther('')   
       }
 
       //Check for this specific question that stop works when an specific answer is selected
@@ -158,15 +189,33 @@ export default function Questions({
       }
       
       //Check for this specific question that stop works when an specific answer is selected
-      if (data.tipo === "radio" && data.id_pergunta === 10 && formData.itemsCheck[0].label === 'Madrugada (das 00h01 às 05h59)') {
+      if (data.tipo === "radio" && data.id_pergunta === 10 && formData.itemsCheck.length < 2) {
+        if (formData.itemsCheck[0].label === 'Madrugada (das 00h01 às 05h59)') {
+          handleOnLogout()
+          throw "Obrigado por responder."
+        }
+      }
+
+      //Check for this specific question that stop works when an specific answer is selected
+      if (data.tipo === "radio" && data.id_pergunta === 12 && formData.itemsCheck[0].label === 'Nenhuma dessas emissoras') {
         handleOnLogout()
         throw "Obrigado por responder."
       }
 
-      //Check for this specific question that stop works when an specific answer is selected
-      if (data.tipo === "checkbox" && data.id_pergunta === 12 && formData.itemsRadio.label === 'Nenhuma dessas emissoras') {
-        handleOnLogout()
-        throw "Obrigado por responder."
+      if (data.tipo === "radio" && data.id_pergunta === 12) {
+        const arrayCheckbox: any = []
+
+        formData.itemsCheck.map((row: any) => {
+          arrayCheckbox.push(row.label)
+        })
+
+        DTOForApi.respostaPesquisa.push({
+          id_pergunta: data.id_pergunta,
+          resposta: {
+            respostas: arrayCheckbox
+          }
+        })
+        
       }
      
       if (data.tipo === "checkbox" && formData.itemsRadio === false )
@@ -177,6 +226,8 @@ export default function Questions({
 
       const respostaPesquisa:any = DTOForApi.respostaPesquisa.filter(obj => obj.id_pergunta === data.id_pergunta)
 
+      const arrayCheckbox: any = []
+      
       if ( respostaPesquisa.length === 0 ) {
         
         if ( data.tipo === 'checkbox' ) {
@@ -215,11 +266,10 @@ export default function Questions({
               respostas: [formData.itemsRadio.label]
             },
           })
-          // console.log(formData.itemsRadio.label, 'log da linha 182')
 
         } else if ( data.tipo === 'radio' ) {
 
-          const arrayCheckbox:any = []
+          
 
           formData.itemsCheck.map((row:any) => {
             arrayCheckbox.push(row.value)
@@ -240,6 +290,21 @@ export default function Questions({
 
       setDTOForApi({...DTOForApi})
       resetForm()
+      if (data.tipo === "radio" && data.id_pergunta === 12) {
+        const arrayCheckbox: any = []
+
+        formData.itemsCheck.map((row: any) => {
+          arrayCheckbox.push(row.label)
+        })
+
+        DTOForApi.respostaPesquisa.push({
+          id_pergunta: data.id_pergunta,
+          resposta: {
+            respostas: arrayCheckbox
+          }
+        })
+        validateAnswer(arrayCheckbox)
+      }
 
     } catch (e: any) {
       addToast(e, { appearance: 'error' });
@@ -386,6 +451,21 @@ export default function Questions({
 
                 {data.tipo === 'radio' && (
                     shuffledRadio.map((row: any, key: any) => (
+                    <ButtonRadio
+                      key={key}
+                      isSelected={selectedItems.filter(obj => obj.value === key).length ? true : false}
+                      onClick={() => handleSelectItem({
+                        label: row,
+                        value: key
+                      })}
+                    >
+                      {row}
+                    </ButtonRadio>
+                  ))
+                )}
+
+                {data.tipo === 'dinamica' && (
+                    data.opcoes.map((row: any, key: any) => (
                     <ButtonRadio
                       key={key}
                       isSelected={selectedItems.filter(obj => obj.value === key).length ? true : false}
