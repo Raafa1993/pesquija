@@ -57,7 +57,7 @@ export const DashboardBottom = styled.div`
         background: var(--green);
     }
     @media(max-width: 1400px) {
-        height: 70vh;
+        height: 80vh;
         .warning {
             width: 180px;
             height: 180px;
@@ -67,7 +67,7 @@ export const DashboardBottom = styled.div`
             padding-top: 55px;
         }
         button {
-            height: 55px;
+            height: 85px;
         }
     }
     @media(max-width: 1000px) {
@@ -149,7 +149,6 @@ export const SurveyContainer = styled.div`
     @media(max-width: 1400px) {
         overflow-y: scroll;
         margin-top: 10px;
-        /* height: 280px; */
     }
     @media(max-width: 1000px) {
         width: 110%;
@@ -161,6 +160,17 @@ export const SurveyContainer = styled.div`
                 width: 110px;
                 height: 110px;
             }
+        }
+    }
+    @media(max-width: 425px) {
+        height: 260px;
+        .companyPhoto {
+            display: none;
+        }
+        .details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
     }
 `

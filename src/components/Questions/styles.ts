@@ -3,6 +3,35 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100%;
   height: 100vh;
+
+  .modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      h3 {
+        margin-bottom: 20px;
+      }
+      input {
+        border: 1px solid var(--blue);
+        border-radius: 8px;
+        font-size: 16px;
+        padding: 5px 10px;
+      }
+      button {
+        margin-top: 20px;
+        height: 45px;
+      }
+    }
+  }
 `;
 
 export const ContentTop = styled.div`
@@ -67,6 +96,10 @@ export const Header = styled.div`
       text-align: center;
       color: var(--white);
       margin-top: 6px;
+      @media (max-width: 1500px) {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
     }
   }
 

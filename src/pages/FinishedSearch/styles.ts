@@ -102,6 +102,22 @@ export const Description = styled.div`
         text-align: center;
         color: #FFD600;
     }
+
+    .flex {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+    @media (max-width: 1400px) and (min-width: 1300px) {
+        .flex {
+            flex-direction: row;
+            margin-bottom: 20px;
+        }
+        .titleFinished {
+            text-align: left;
+        }
+    }
 `;
 
 export const SectionBottom = styled.div`

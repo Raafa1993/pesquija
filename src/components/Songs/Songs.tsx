@@ -95,7 +95,7 @@ export default function Songs({
                 <button
                   key={keyButton}
                   type="button"
-                  disabled={positionAudio >= index ? false : true}
+                  disabled={positionAudio > index ? false : true}
                   className={`buttonSound ${
                     rowButton === selected && selected === 0
                       ? "zero"

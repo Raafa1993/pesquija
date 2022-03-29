@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import api from "../../services/api";
 import Emoji from "a11y-react-emoji";
 
 //Images
@@ -10,10 +13,6 @@ import {
   Profile,
   Surveys,
 } from "./styles";
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useAuth } from "../../hooks/Auth";
-import api from "../../services/api";
 import ModalQuestion from "../../components/ModalQuestion";
 
 interface User {
@@ -46,7 +45,7 @@ export default function Home() {
 
   useEffect(() => {
 
-    const tokenString:any = window.localStorage.getItem('@Pesquija:user')
+    const tokenString:any = window.localStorage.getItem('@User:user')
     const token = JSON.parse(tokenString)
 
     setLoad(true);
@@ -74,8 +73,8 @@ export default function Home() {
   function handleOnLogout()
   {
 
-    window.localStorage.removeItem('@Pesquija:user')
-    window.localStorage.removeItem('@Pesquija:token')
+    window.localStorage.removeItem('@User:user')
+    window.localStorage.removeItem('@Token:token')
     window.location.reload()
   }
 

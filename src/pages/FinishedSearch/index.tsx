@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import Confetti from 'react-confetti'
 import { useHistory, useParams } from "react-router-dom";
-import ButtonDefault from "../../components/form/ButtonDefault";
-import ModalConfirmation from "../../components/ModalConfirmation";
+// import ButtonDefault from "../../components/form/ButtonDefault";
 import { useAuth } from "../../hooks/Auth";
 import { UserIcon } from "../../icons/UserIcon";
 import TrophyImg from "../../images/trophy.png";
@@ -29,7 +28,7 @@ interface PropsQuestion {
 
 export default function FinishedSearch() {
   const { user } = useAuth();
-  const history = useHistory();
+  // const history = useHistory();
   const params = useParams<any>();
   const [data, setData] = useState<PropsQuestion>();
 
@@ -45,7 +44,7 @@ export default function FinishedSearch() {
   useEffect(() => {
     api.get(`/pesquisa/${params.id}`).then((res) => {
       setData(res.data.result.pesquisa)
-      setStar(res.data.result.pesquisa.dificuldade === 'facil' ? '⭐️' : '' || res.data.result.pesquisa.dificuldade === 'medio' ? '⭐️⭐️⭐️' : '⭐️' || res.data.result.pesquisa.dificuldade === 'dificil' ? '⭐️⭐️⭐️⭐️⭐️' : '')
+      setStar(res.data.result.pesquisa.dificuldade === 'facil' ? '⭐️' : '' || res.data.result.pesquisa.dificuldade === 'medio' ? '⭐️⭐️⭐️' : '' || res.data.result.pesquisa.dificuldade === 'dificil' ? '⭐️⭐️⭐️⭐️⭐️' : '')
     })
   }, [params])
 
@@ -66,15 +65,17 @@ export default function FinishedSearch() {
             />
 
           <Description>
-            <h1 className="titleFinished">
-              {`${user.nome}, parabéns! Você concluiu a pesquisa e ganhou`}
-            </h1>
+            <div className="flex">
+              <h1 className="titleFinished">
+                {`${user.nome}, parabéns! Você concluiu a pesquisa e ganhou:`}
+              </h1>
 
-            <span className="diamondFinished">💎</span>
+              <span className="diamondFinished">💎</span>
 
-            <h2 className="pontsFinished">
-              <span>{data?.pontos} </span>pontos
-            </h2>
+              <h2 className="pontsFinished">
+                <span>{data?.pontos} </span>pontos
+              </h2>
+            </div>
 
             <p className="paragraphyFinished">
               Participe de + pesquisas para receber cada vez mais! ✨
@@ -108,12 +109,12 @@ export default function FinishedSearch() {
             </div>
           </CardQuestionFinished>
 
-          <ButtonDefault
+          {/* <ButtonDefault
             type="button"
             onClick={() => history.push('/home')}
             >
             Ver mais pesquisas
-        </ButtonDefault>
+          </ButtonDefault> */}
         </SectionBottom>
       </ContentBottom>
     </Continaer>

@@ -17,6 +17,7 @@ import ButtonBackToPage from "../../components/form/ButtonBackToPage";
 import InputForm from "../../components/form/InputForm";
 import ButtonDefault from "../../components/form/ButtonDefault";
 import Emoji from 'a11y-react-emoji';
+import { useToasts } from 'react-toast-notifications';
 
 interface SignInFormData {
   email: any;
@@ -28,6 +29,7 @@ export default function SignIn() {
   const history = useHistory();
   const [load, setLoad] = useState(false);
   const { signIn } = useAuth();
+  const { addToast } = useToasts();
 
   const [formData, setFormData] = useState<SignInFormData>({
     email: "",
@@ -58,7 +60,6 @@ export default function SignIn() {
           email: data.email,
           senha: data.senha,
         });
-
         setLoad(false);
       } catch (err: any) {
         setLoad(false);
@@ -69,7 +70,7 @@ export default function SignIn() {
           formRef.current?.setErrors(errors);
           return;
         }
-        alert(err.response.data.message);
+        addToast(err.response.data.message, { appearance: 'error' });        
       }
     },
     [history],
@@ -110,7 +111,6 @@ export default function SignIn() {
                   value={formData.senha}
                   type="password"
                   name="senha"
-                  // mask="fone"1
                   placeholder="Digite sua senha"
                   onChange={handleInputChange}
                 />

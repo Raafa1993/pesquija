@@ -26,28 +26,28 @@ export default function PageQuestion() {
   const [pages, setPages] = useState([]);
   const [currentPage, setCurrentPage] = useState<any>(0);
 
-  const [teste, setTeste] = useState<QuestionProps[]>([]);
-
-
   useEffect(() => {
     setLoad(true);
-    api.get(`/pesquisa/${id}`).then((res) => {
-      setData(res.data.result.perguntas[currentPage]);
-
-      setTeste(res.data.result.perguntas)
-
-      setTotal(res.data.result.perguntas.length);
-      const totalPages = Math.ceil(total / limit);
-
-      const arrayPages = [];
-      for (let i = 0; i < totalPages; i++) {
-        arrayPages.push(i);
-      }
-      setPages(arrayPages as any);
-      setLoad(false);
-    });
+    getData()
   }, [currentPage]);
 
+  async function getData()
+  {
+
+    const res = await api.get(`/pesquisa/${id}`)
+    setData(res.data.result.perguntas[currentPage]);
+    setTotal(res.data.result.perguntas.length);
+    const totalPages = Math.ceil(total / limit);
+
+    const arrayPages = [];
+    for (let i = 0; i < totalPages; i++) {
+      arrayPages.push(i);
+    }
+    setPages(arrayPages as any);
+    setLoad(false);
+    
+  }
+  
   return (
     <Container>
       <Questions 
@@ -55,6 +55,7 @@ export default function PageQuestion() {
         totalPages={total}
         setCurrentPage={(value) => setCurrentPage(value)} 
         data={data}
+        getData={getData}
         load={load}
         isImage={false}
       />
