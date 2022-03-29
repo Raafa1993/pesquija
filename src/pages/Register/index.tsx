@@ -7,6 +7,10 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
+import api from '../../services/api';
+import Select from "../../components/form/Select";
+import { useAuth } from "../../hooks/Auth";
+
 import {
   Container,
   Content,
@@ -16,9 +20,6 @@ import {
   SectionForm,
   Footer,
 } from "./styles";
-import api from '../../services/api';
-import Select from "../../components/form/Select";
-import { useAuth } from "../../hooks/Auth";
 
 export default function Register() {
   const formRef = useRef<FormHandles>(null);
