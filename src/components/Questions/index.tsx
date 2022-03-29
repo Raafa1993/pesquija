@@ -111,8 +111,8 @@ export default function Questions({
   } 
 
   const handleSubmitNext = useCallback(async (event: any) => {
-    console.log(formData, 'log do formData')
-    console.log(data, 'log do data')
+    // console.log(formData, 'log do formData')
+    // console.log(data, 'log do data')
     try {
       event.preventDefault();
       setLoading(true)
@@ -120,7 +120,6 @@ export default function Questions({
       if (data.tipo === 'radio' && formData.itemsCheck.length <= 0)
         throw "Selecione alguma opção"
 
-      //Check for this specific question that only works with two answers selecteds
       if (data.tipo === 'radio' && data.id_pergunta === 15 && formData.itemsCheck.length !== 2) {
         if (formData.itemsCheck[0].label === 'Outro gênero. Qual? ') {
           setModal(true);
@@ -171,13 +170,11 @@ export default function Questions({
         setInputOther('')   
       }
 
-      //Check for this specific question that stop works when an specific answer is selected
       if (data.tipo === "checkbox" && data.id_pergunta === 7 && formData.itemsRadio.label === 'Não ouço rádio') {
         handleOnLogout()
         throw "Obrigado por responder."
       }
       
-      //Check for this specific question that stop works when an specific answer is selected
       if (data.tipo === "radio" && data.id_pergunta === 10 && formData.itemsCheck.length < 2) {
         if (formData.itemsCheck[0].label === 'Madrugada (das 00h01 às 05h59)') {
           handleOnLogout()
@@ -185,7 +182,6 @@ export default function Questions({
         }
       }
 
-      //Check for this specific question that stop works when an specific answer is selected
       if (data.tipo === "radio" && data.id_pergunta === 12 && formData.itemsCheck[0].label === 'Nenhuma dessas emissoras') {
         handleOnLogout()
         throw "Obrigado por responder."
@@ -224,6 +220,7 @@ export default function Questions({
 
           const arrayCheckbox:any = []
 
+          // eslint-disable-next-line array-callback-return
           formData.itemsCheck.map((row:any) => {
             arrayCheckbox.push(row.value)
           })
@@ -253,6 +250,7 @@ export default function Questions({
 
           
 
+          // eslint-disable-next-line array-callback-return
           formData.itemsCheck.map((row:any) => {
             arrayCheckbox.push(row.value)
           })
