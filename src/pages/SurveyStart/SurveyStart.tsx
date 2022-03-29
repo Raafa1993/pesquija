@@ -14,7 +14,8 @@ export default function SurveyStarts() {
     const params = useParams<any>();
 
     useEffect(() => {
-        api.get(`/pesquisa/${params.id}`).then((res) => {
+        //api.get(`/pesquisa/${params.id}`)
+        api.get(`/pesquisa/`+1).then((res) => {
             setData(res.data.result.pesquisa)
             setStar(res.data.result.pesquisa.dificuldade === 'facil' ? '⭐️' : '' || res.data.result.pesquisa.dificuldade === 'medio' ? '⭐️⭐️⭐️' : '⭐️' || res.data.result.pesquisa.dificuldade === 'dificil' ? '⭐️⭐️⭐️⭐️⭐️' : '')
         })
@@ -47,9 +48,8 @@ export default function SurveyStarts() {
                                 5 minutos
                             </div>
                             <div className="stars">
-                                <Emoji symbol={star} label="stars" />
+                                <Emoji symbol={star} label="stars" /> Fácil 
                                 {/* {data?.dificuldade} */}
-                                Fácil
                              </div>
                             <div className="points">
                                 <Emoji className="gem" symbol="💎" label="blue gem" /> 
