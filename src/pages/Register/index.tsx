@@ -20,13 +20,7 @@ import {
   SectionForm,
   Footer,
 } from "./styles";
-<<<<<<< HEAD
-=======
-import api from '../../services/api';
-import Select from "../../components/form/Select";
-import { useAuth } from "../../hooks/Auth";
-import { useToasts } from 'react-toast-notifications';
->>>>>>> 3b5c1db336fbbd3ae7e16d04f504f1f9acd65d7e
+import { useToasts } from "react-toast-notifications";
 
 export default function Register() {
   const formRef = useRef<FormHandles>(null);
