@@ -111,7 +111,6 @@ export default function SignIn() {
                   value={formData.senha}
                   type="password"
                   name="senha"
-                  // mask="fone"1
                   placeholder="Digite sua senha"
                   onChange={handleInputChange}
                 />
