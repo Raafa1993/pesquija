@@ -181,15 +181,14 @@ export default function Questions({
           throw "Obrigado por responder."
         }
       }
-
-      if (data.tipo === "radio" && data.id_pergunta === 12 && formData.itemsCheck[0].label === 'Nenhuma dessas emissoras') {
+      
+      if (data.tipo === "radio" && data.id_pergunta === 12 && formData.itemsCheck.filter((obj:any) => obj.label === 'Nenhuma dessas emissoras').length > 0) {
         handleOnLogout()
         throw "Obrigado por responder."
       }
 
       if (data.tipo === "radio" && data.id_pergunta === 12) {
         const arrayCheckbox: any = []
-
         formData.itemsCheck.map((row: any) => {
           arrayCheckbox.push(row.label)
         })
@@ -246,9 +245,7 @@ export default function Questions({
             },
           })
 
-        } else if ( data.tipo === 'radio' ) {
-
-          
+        } else if ( data.tipo === 'radio' ) {          
 
           // eslint-disable-next-line array-callback-return
           formData.itemsCheck.map((row:any) => {
@@ -429,14 +426,19 @@ export default function Questions({
                       })}
                     />
                   ))
-                )}
+                )}  
 
                 {data.tipo === 'radio' && (
                     shuffledRadio.map((row: any, key: any) => (
                     <ButtonRadio
                       key={key}
-                      isSelected={selectedItems.filter(obj => obj.value === key).length ? true : false}
-                      onClick={() => handleSelectItem({
+                        disabled={
+                          ( row !== 'Nenhuma dessas emissoras' && selectedItems.filter(obj => obj.label === 'Nenhuma dessas emissoras').length ? true : false) ||
+                          ( row !== 'Outros tipos de música. Quais?' && selectedItems.filter(obj => obj.label === 'Outros tipos de música. Quais?').length ? true : false) ||
+                          ( row !== 'Outro gênero. Qual? ' && selectedItems.filter(obj => obj.label === 'Outro gênero. Qual? ').length ? true : false)
+                        }
+                        isSelected={selectedItems.filter(obj => obj.value === key).length ? true : false}
+                        onClick={() => handleSelectItem({
                         label: row,
                         value: key
                       })}
@@ -450,6 +452,7 @@ export default function Questions({
                     favoriteRadios.map((row: any, key: any) => (
                     <ButtonRadio
                       key={key}
+                      disabled={row !== 'Outra emissora preferida. Qual?' && selectedItems.filter(obj => obj.label === 'Outra emissora preferida. Qual?').length ? true : false}
                       isSelected={selectedItems.filter(obj => obj.value === key).length ? true : false}
                       onClick={() => handleSelectItem({
                         label: row,

@@ -180,6 +180,10 @@ export const Main = styled.div`
     font-size: 16px;
     line-height: 32px;
     color: #FFFFFF;
+
+    @media (max-width: 425px) {
+      margin-bottom: 10px;
+    }
   }
 
   .footerQuestion {
