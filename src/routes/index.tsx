@@ -25,6 +25,7 @@ function Routes() {
         <PrivateRoutes path="/confirmation/:id" component={Confirmation} />
         {/* <PrivateRoutes path="/home" component={Home} isPrivate /> */}
         <PrivateRoutes path="/pesquisa" component={SurveyStarts} isPrivate />
+        {/* <PrivateRoutes path="/pesquisa/:id" component={SurveyStarts} isPrivate /> */}
         <PrivateRoutes path="/fim-questao/:id" component={FinishedSearch} isPrivate />
         <PrivateRoutes path="/questao/:id" component={PageQuestion} isPrivate />        
       </Switch>

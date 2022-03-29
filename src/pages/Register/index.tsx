@@ -79,6 +79,7 @@ export default function Register() {
         history.push(`/pesquisa`)
       }, 3000)
 
+      // This is removed for the test version
       // setLoad(false)
       // setTimeout(() => {
       //   history.push(`/home`)
@@ -171,20 +172,15 @@ export default function Register() {
               </div>
 
               <div className="field">
-              <Select
-                name="genero"
-                placeholder="Selecione uma opção"
-              >
-                <option value="">Selecione uma opção</option>
-                {sexo.map((row: any) => (
-                  <option value={row.descricao}>{row.descricao}</option>
-                ))}
-              </Select>
-                {/* <InputForm
-                  type="text"
+                <Select
                   name="genero"
-                  placeholder="Digite seu sexo"
-                /> */}
+                  placeholder="Selecione uma opção"
+                >
+                  <option value="">Selecione uma opção</option>
+                  {sexo.map((row: any) => (
+                    <option value={row.descricao}>{row.descricao}</option>
+                  ))}
+                </Select>
               </div>
 
               <ButtonDefault
