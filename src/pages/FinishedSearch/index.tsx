@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Confetti from 'react-confetti'
 import { useHistory, useParams } from "react-router-dom";
 // import ButtonDefault from "../../components/form/ButtonDefault";
-// import ModalConfirmation from "../../components/ModalConfirmation";
 import { useAuth } from "../../hooks/Auth";
 import { UserIcon } from "../../icons/UserIcon";
 import TrophyImg from "../../images/trophy.png";
