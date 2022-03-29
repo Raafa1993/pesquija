@@ -68,23 +68,6 @@ export default function Questions({
     respostaPesquisa: [] as any
   })
   
-  async function validateAnswer(answers: any) {
-    try {
-      setLoading(true)
-      const response:any = await api.post('resposta-validar', {
-        id_pergunta: 12,
-        resposta: {
-          respostas: answers
-        }
-      })  
-      if (response.data.result.update === true) {
-        getData()
-      }
-    } catch (err: any) {
-      
-    }
-  }
-  
   const [DTOForSongs, setDTOForSongs] = useState<any[]>([])
 
   function handleOnPreviusPage() {
@@ -128,8 +111,8 @@ export default function Questions({
   } 
 
   const handleSubmitNext = useCallback(async (event: any) => {
-    // console.log(formData, 'log do formData')
-    // console.log(data, 'log do data')
+    console.log(formData, 'log do formData')
+    console.log(data, 'log do data')
     try {
       event.preventDefault();
       setLoading(true)
@@ -167,6 +150,12 @@ export default function Questions({
           }
         })
         setInputOther('')   
+      }
+
+      if (data.tipo === 'dinamica' && data.id_pergunta === 31) {
+        if (selectedItems.length > 1) {
+          throw 'Selecione apenas uma opção'
+        }
       }
 
       if (data.tipo === 'radio' && data.id_pergunta === 13 && formData.itemsCheck[0].label === 'Outros tipos de música. Quais?') {
@@ -208,14 +197,10 @@ export default function Questions({
         formData.itemsCheck.map((row: any) => {
           arrayCheckbox.push(row.label)
         })
-
-        DTOForApi.respostaPesquisa.push({
-          id_pergunta: data.id_pergunta,
-          resposta: {
-            respostas: arrayCheckbox
-          }
-        })
-        
+        validateAnswer(arrayCheckbox)
+        const newArray = arrayCheckbox
+        newArray.push('Outra emissora preferida. Qual?')
+        setFavoriteRadios(newArray)
       }
      
       if (data.tipo === "checkbox" && formData.itemsRadio === false )
@@ -287,21 +272,6 @@ export default function Questions({
 
       setDTOForApi({...DTOForApi})
       resetForm()
-      if (data.tipo === "radio" && data.id_pergunta === 12) {
-        const arrayCheckbox: any = []
-
-        formData.itemsCheck.map((row: any) => {
-          arrayCheckbox.push(row.label)
-        })
-
-        DTOForApi.respostaPesquisa.push({
-          id_pergunta: data.id_pergunta,
-          resposta: {
-            respostas: arrayCheckbox
-          }
-        })
-        await validateAnswer(arrayCheckbox)
-      }
 
       setLoading(false)
       setCurrentPage(currentPage + 1)
@@ -311,6 +281,20 @@ export default function Questions({
     }
   }, [data, formData]
   )
+
+  async function validateAnswer(answers: any) {
+    try {
+      setLoading(true)
+      const response: any = await api.post('resposta-validar', {
+        id_pergunta: 12,
+        resposta: {
+          respostas: answers
+        }
+      })
+    } catch (err: any) {
+
+    }
+  }
 
   function resetForm()
   {
@@ -465,7 +449,7 @@ export default function Questions({
                 )}
 
                 {data.tipo === 'dinamica' && (
-                    data.opcoes.map((row: any, key: any) => (
+                    favoriteRadios.map((row: any, key: any) => (
                     <ButtonRadio
                       key={key}
                       isSelected={selectedItems.filter(obj => obj.value === key).length ? true : false}
