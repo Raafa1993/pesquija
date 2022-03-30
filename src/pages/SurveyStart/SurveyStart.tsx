@@ -37,7 +37,7 @@ export default function SurveyStarts() {
                     </h3>
                     <p>
                         {/* {data?.descricao} */}
-                        Pesquisa parar conhecer melhor o seu hábito de consumo de rádio
+                        Pesquisa para conhecer melhor o seu hábito de consumo de rádio
                     </p>                    
                     <div className="surveyDetails">
                         <div className="companyPhoto" style={{backgroundImage: `url(${Company2})`}} />
