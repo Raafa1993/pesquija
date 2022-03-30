@@ -53,7 +53,7 @@ export default function Questions({
   const { addToast } = useToasts();
   const [modal, setModal] = useState<boolean>(false);
   const [anotherQuestion, setAnotherQuestion] = useState('');
-  const [inputOther, setInputOther] = useState<any>('')
+  const [inputOther, setInputOther] = useState<any>()
 
   const [positionAudio, setPositionAudio] = useState<number>(0)
   const [favoriteRadios, setFavoriteRadios] = useState<any>()
@@ -120,10 +120,13 @@ export default function Questions({
       if (data.tipo === 'radio' && formData.itemsCheck.length <= 0)
         throw "Selecione alguma opção"
 
-      if (data.tipo === 'radio' && data.id_pergunta === 15 && formData.itemsCheck.length !== 2) {
-        if (formData.itemsCheck[0].label === 'Outro gênero. Qual? ') {
+      if (data.tipo === 'radio' && data.id_pergunta === 15) {
+        if (formData.itemsCheck.length !== 2) {
+          throw "Selecione somente duas opções"          
+        }
+        else if (formData.itemsCheck.filter((obj: any) => obj.label === 'Outro gênero. Qual? ').length > 0) {
           setModal(true);
-          setAnotherQuestion(formData.itemsCheck[0].label)
+          setAnotherQuestion('Outro gênero. Qual?')
           
           DTOForApi.respostaPesquisa.push({
             id_pergunta: data.id_pergunta,
@@ -133,33 +136,37 @@ export default function Questions({
           })
           setInputOther('')
         }
-        else {
-          throw "Selecione somente duas opções"          
-        }
-      }
-
-      if (data.tipo === 'dinamica' && data.id_pergunta === 31 && formData.itemsCheck[0].label === 'Outra emissora preferida. Qual?') {
-        setModal(true);
-        setAnotherQuestion(formData.itemsCheck[0].label)
-
-        DTOForApi.respostaPesquisa.push({
-          id_pergunta: data.id_pergunta,
-          resposta: {
-            respostas: inputOther
-          }
-        })
-        setInputOther('')   
       }
 
       if (data.tipo === 'dinamica' && data.id_pergunta === 31) {
         if (selectedItems.length > 1) {
           throw 'Selecione apenas uma opção'
         }
+        if (formData.itemsCheck[0].label === 'Outra emissora preferida. Qual?') {
+          setModal(true);
+          setAnotherQuestion('Outra emissora preferida. Qual?')
+
+          DTOForApi.respostaPesquisa.push({
+            id_pergunta: data.id_pergunta,
+            resposta: {
+              respostas: inputOther
+            }
+          })
+          setInputOther('')
+        } else {
+
+          DTOForApi.respostaPesquisa.push({
+            id_pergunta: 31,
+            resposta: {
+              respostas: formData.itemsCheck[0].label
+            }
+          })
+        }
       }
 
-      if (data.tipo === 'radio' && data.id_pergunta === 13 && formData.itemsCheck[0].label === 'Outros tipos de música. Quais?') {
+      if (data.tipo === 'radio' && data.id_pergunta === 13 && formData.itemsCheck.filter((obj: any) => obj.label === 'Outros tipos de música. Quais?').length > 0) {
         setModal(true);
-        setAnotherQuestion(formData.itemsCheck[0].label)
+        setAnotherQuestion('Outros tipos de música. Quais?')
 
         DTOForApi.respostaPesquisa.push({
           id_pergunta: data.id_pergunta,
@@ -192,7 +199,7 @@ export default function Questions({
         formData.itemsCheck.map((row: any) => {
           arrayCheckbox.push(row.label)
         })
-        validateAnswer(arrayCheckbox)
+        validateTwelveAnswer(arrayCheckbox)
         const newArray = arrayCheckbox
         newArray.push('Outra emissora preferida. Qual?')
         setFavoriteRadios(newArray)
@@ -219,7 +226,6 @@ export default function Questions({
 
           const arrayCheckbox:any = []
 
-          // eslint-disable-next-line array-callback-return
           formData.itemsCheck.map((row:any) => {
             arrayCheckbox.push(row.value)
           })
@@ -247,7 +253,6 @@ export default function Questions({
 
         } else if ( data.tipo === 'radio' ) {          
 
-          // eslint-disable-next-line array-callback-return
           formData.itemsCheck.map((row:any) => {
             arrayCheckbox.push(row.value)
           })
@@ -261,10 +266,9 @@ export default function Questions({
               respostas: arrayCheckbox
             }
           })
-        }
-
+        } 
       }
-
+     
       setDTOForApi({...DTOForApi})
       resetForm()
 
@@ -277,7 +281,7 @@ export default function Questions({
   }, [data, formData]
   )
 
-  async function validateAnswer(answers: any) {
+  async function validateTwelveAnswer(answers: any) {
     try {
       setLoading(true)
       const response: any = await api.post('resposta-validar', {
@@ -288,6 +292,20 @@ export default function Questions({
       })
     } catch (err: any) {
 
+    }
+  }
+  
+  async function validateTwentySevenAnswer(songs: any) {
+    try {
+      setLoading(true)
+      const response: any = await api.post('resposta-validar', {
+        id_pergunta: 27,
+        resposta: {
+          respostas: songs
+        }
+      })
+    } catch (err: any) {
+      
     }
   }
 
@@ -311,6 +329,7 @@ export default function Questions({
     try {
 
       if ( data.tipo === 'subRange' && (data.opcoes.length !== DTOForSongs.length) ) throw "Avalie todas as músicas antes de finalizar."
+      
 
       const newDTOForAPI:any = DTOForApi.respostaPesquisa.filter((obj:any) => obj.id_pergunta !== data.id_pergunta)
 
@@ -321,6 +340,14 @@ export default function Questions({
         }
       })
 
+      for (var i = 0; i < DTOForSongs.length; i++) {
+        if (typeof DTOForSongs[i] !== 'number') {
+          throw 'Avalie todas as músicas antes de finalizar.'          
+        }
+      }
+     
+      validateTwentySevenAnswer(DTOForSongs)
+
       const response:any = api.post('resposta', {
         id_pesquisa: params.id,
         respostaPesquisa: newDTOForAPI
@@ -330,6 +357,9 @@ export default function Questions({
       history.push(`/fim-questao/${params.id}`)
       window.localStorage.removeItem('@User:user');
       window.localStorage.removeItem('@Token:token');
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000)
 
     } catch ( err: any ) {
       addToast(err, { appearance: 'error' });
@@ -339,7 +369,7 @@ export default function Questions({
 
   function handleOnOption(item: {key: number, rating: number, title: string}) 
   {
-
+    
     const newDTO:any[] = DTOForSongs
     newDTO[item.key] = item.rating
     setDTOForSongs([...newDTO])
@@ -410,7 +440,7 @@ export default function Questions({
             ) : (
               <>
                 {data.tipo === 'checkbox' && (
-                  shuffledCheckbox.map((row: any, key: any) => (
+                    data.opcoes.map((row: any, key: any) => (
                     <Radio
                       key={key}
                       options={[
@@ -428,14 +458,12 @@ export default function Questions({
                   ))
                 )}  
 
-                {data.tipo === 'radio' && (
-                    shuffledRadio.map((row: any, key: any) => (
+                  {data.tipo === 'radio' &&  (
+                    data.opcoes.map((row: any, key: any) => (
                     <ButtonRadio
                       key={key}
                         disabled={
-                          ( row !== 'Nenhuma dessas emissoras' && selectedItems.filter(obj => obj.label === 'Nenhuma dessas emissoras').length ? true : false) ||
-                          ( row !== 'Outros tipos de música. Quais?' && selectedItems.filter(obj => obj.label === 'Outros tipos de música. Quais?').length ? true : false) ||
-                          ( row !== 'Outro gênero. Qual? ' && selectedItems.filter(obj => obj.label === 'Outro gênero. Qual? ').length ? true : false)
+                          ( row !== 'Nenhuma dessas emissoras' && selectedItems.filter(obj => obj.label === 'Nenhuma dessas emissoras').length ? true : false) 
                         }
                         isSelected={selectedItems.filter(obj => obj.value === key).length ? true : false}
                         onClick={() => handleSelectItem({
@@ -448,11 +476,30 @@ export default function Questions({
                   ))
                 )}
 
+                {/* {data.tipo === 'radio' && data.id_pergunta === 13 && (
+                  shuffledRadio.map((row: any, key: any) => (
+                    <ButtonRadio
+                      key={key}
+                        disabled={
+                          ( row !== 'Nenhuma dessas emissoras' && selectedItems.filter(obj => obj.label === 'Nenhuma dessas emissoras').length ? true : false) ||
+                          ( row !== 'Outro gênero. Qual? ' && selectedItems.filter(obj => obj.label === 'Outro gênero. Qual? ').length ? true : false)
+                        }
+                        isSelected={selectedItems.filter(obj => obj.value === key).length ? true : false}
+                        onClick={() => handleSelectItem({
+                        label: row,
+                        value: key
+                      })}
+                    >
+                      {row}
+                    </ButtonRadio>
+                  ))
+                )} */}
+
                 {data.tipo === 'dinamica' && (
                     favoriteRadios.map((row: any, key: any) => (
                     <ButtonRadio
                       key={key}
-                      disabled={row !== 'Outra emissora preferida. Qual?' && selectedItems.filter(obj => obj.label === 'Outra emissora preferida. Qual?').length ? true : false}
+                      // disabled={row !== 'Outra emissora preferida. Qual?' && selectedItems.filter(obj => obj.label === 'Outra emissora preferida. Qual?').length ? true : false}
                       isSelected={selectedItems.filter(obj => obj.value === key).length ? true : false}
                       onClick={() => handleSelectItem({
                         label: row,
