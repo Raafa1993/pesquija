@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Confetti from 'react-confetti'
 import { useHistory, useParams } from "react-router-dom";
 // import ButtonDefault from "../../components/form/ButtonDefault";
-// import ModalConfirmation from "../../components/ModalConfirmation";
 import { useAuth } from "../../hooks/Auth";
 import { UserIcon } from "../../icons/UserIcon";
 import TrophyImg from "../../images/trophy.png";
@@ -45,7 +44,7 @@ export default function FinishedSearch() {
   useEffect(() => {
     api.get(`/pesquisa/${params.id}`).then((res) => {
       setData(res.data.result.pesquisa)
-      setStar(res.data.result.pesquisa.dificuldade === 'facil' ? '⭐️' : '' || res.data.result.pesquisa.dificuldade === 'medio' ? '⭐️⭐️⭐️' : '⭐️' || res.data.result.pesquisa.dificuldade === 'dificil' ? '⭐️⭐️⭐️⭐️⭐️' : '')
+      setStar(res.data.result.pesquisa.dificuldade === 'facil' ? '⭐️' : '' || res.data.result.pesquisa.dificuldade === 'medio' ? '⭐️⭐️⭐️' : '' || res.data.result.pesquisa.dificuldade === 'dificil' ? '⭐️⭐️⭐️⭐️⭐️' : '')
     })
   }, [params])
 

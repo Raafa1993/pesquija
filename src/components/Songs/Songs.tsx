@@ -38,15 +38,18 @@ export default function Songs({
   }, [play])
 
   useEffect(() => {
-    playing ? audio.current?.play() : audio.current?.pause();
+    if(playing) {
+      audio.current?.play()  
+      finishMusic()
+    } else {
+      audio.current?.pause()
+      setPlaying(false)
+    }
   }, [playing, audio]);
 
   useEffect(() => {
-    audio.current?.addEventListener("ended", () => finishMusic());
-    return () => {
-      audio.current?.removeEventListener("ended", () => setPlaying(false));
-    };
-  }, [positionAudio]);
+    audio.current?.addEventListener("ended", () => setPlaying(false));
+  }, [positionAudio, playing, audio]);
 
   function handleOnSelect(item: any) {
     setSelected(item.rating);
@@ -57,7 +60,6 @@ export default function Songs({
     positionAudio >= index
       ? setPositionAudio(index + 1)
       : setPositionAudio(index);
-    setPlaying(false);
   }
 
   return (

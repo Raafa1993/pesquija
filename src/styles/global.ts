@@ -36,14 +36,14 @@ export const GlobalStyles = createGlobalStyle`
     scroll-behavior: smooth;
   }
 
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     display: none;
-  }
+  } */
 
   body {
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
-    overflow: hidden;
+    /* overflow: scroll; */
     background: var(--background);
   }
 

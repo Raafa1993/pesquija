@@ -149,7 +149,6 @@ export const SurveyContainer = styled.div`
     @media(max-width: 1400px) {
         overflow-y: scroll;
         margin-top: 10px;
-        /* height: 280px; */
     }
     @media(max-width: 1000px) {
         width: 110%;

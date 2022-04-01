@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import api from "../../services/api";
 import Emoji from "a11y-react-emoji";
 
 //Images
@@ -10,10 +13,6 @@ import {
   Profile,
   Surveys,
 } from "./styles";
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useAuth } from "../../hooks/Auth";
-import api from "../../services/api";
 import ModalQuestion from "../../components/ModalQuestion";
 
 interface User {

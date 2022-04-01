@@ -10,28 +10,29 @@ export const Container = styled.div`
 `;
 
 export const Label = styled.label<Props>`
-     display: grid;
+    display: grid;
     place-items: center;
     width: 100%;
     height: 64px;
 
-    background: rgba(255, 214, 0, 0.04);
-    border: 1px solid #FFD600;
+    background: rgba(2, 22, 35, 0.04);
+    border: 1px solid #021623;
     border-radius: 16px;
 
     font-size: 1rem;
     line-height: 32px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--black);
     cursor: pointer;
 
     ${props => props.isSelected && css`
-      background: rgba(255, 214, 0, 0.3);
+      background: #021623;
+      color: var(--white);
     `}
 
-    &:hover {
-      background: rgba(255, 214, 0, 0.3);
-    }
+    /* &:hover {
+      background: rgba(2, 22, 35, 0.04);
+    } */
 
   input {
     position: absolute;
@@ -70,6 +71,9 @@ export const Label = styled.label<Props>`
   .radioLabel {
     font-size: 0.937rem;
     color: var(--black);
+    ${props => props.isSelected && css`
+      color: var(--white);
+    `}
   }
 
 

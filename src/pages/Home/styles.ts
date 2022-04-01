@@ -135,9 +135,6 @@ export const Surveys = styled.div`
   gap: 1.25rem;
   margin-top: 1.25rem;
   height: calc(60vh - 165px);
-  @media(max-width:500px) {
-    height: calc(50vh - 165px);
-  }
   width: 100%;
   max-width: 960px;
   overflow: scroll;
@@ -178,6 +175,7 @@ export const Surveys = styled.div`
       transition: ease-in-out 0.2s;
 
       &.ok {
+        width: 120px;
         border: 2px solid var(--green);
         background: #f3f9f4;
         color: var(--green);
@@ -187,6 +185,7 @@ export const Surveys = styled.div`
         }
       }
       &.block {
+        width: 120px;
         border: 2px solid var(--red);
         background: #f7f2f2;
         color: var(--red);
@@ -202,6 +201,17 @@ export const Surveys = styled.div`
       span {
         color: var(--blue);
         font-weight: 800;
+      }
+    }
+  }
+  @media(max-width:500px) {
+    height: calc(50vh - 165px);
+    .column {
+      .buttonQuestion {
+        &.ok, 
+        &.block {
+          width: 100px;
+        }
       }
     }
   }

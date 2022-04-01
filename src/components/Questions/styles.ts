@@ -137,9 +137,19 @@ export const Main = styled.div`
   margin: 0 auto;
   /* padding: 2rem; */
   height: 100%;
-  
-  overflow-x: scroll;
+  overflow: scroll;
 
+  scrollbar-width: thin;         
+  scrollbar-color: var(--blue);
+  &::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 12px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--blue);
+    border-radius: 12px;
+  }
+  
   form {
     display: flex;
     align-items: center;
@@ -180,6 +190,10 @@ export const Main = styled.div`
     font-size: 16px;
     line-height: 32px;
     color: #FFFFFF;
+
+    @media (max-width: 425px) {
+      margin-bottom: 10px;
+    }
   }
 
   .footerQuestion {

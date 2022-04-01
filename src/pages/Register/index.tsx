@@ -7,6 +7,10 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
+import api from '../../services/api';
+import Select from "../../components/form/Select";
+import { useAuth } from "../../hooks/Auth";
+
 import {
   Container,
   Content,
@@ -16,10 +20,7 @@ import {
   SectionForm,
   Footer,
 } from "./styles";
-import api from '../../services/api';
-import Select from "../../components/form/Select";
-import { useAuth } from "../../hooks/Auth";
-import { useToasts } from 'react-toast-notifications';
+import { useToasts } from "react-toast-notifications";
 
 export default function Register() {
   const formRef = useRef<FormHandles>(null);
@@ -79,6 +80,7 @@ export default function Register() {
         history.push(`/pesquisa`)
       }, 3000)
 
+      // This is removed for the test version
       // setLoad(false)
       // setTimeout(() => {
       //   history.push(`/home`)
@@ -171,20 +173,15 @@ export default function Register() {
               </div>
 
               <div className="field">
-              <Select
-                name="genero"
-                placeholder="Selecione uma opção"
-              >
-                <option value="">Selecione uma opção</option>
-                {sexo.map((row: any) => (
-                  <option value={row.descricao}>{row.descricao}</option>
-                ))}
-              </Select>
-                {/* <InputForm
-                  type="text"
+                <Select
                   name="genero"
-                  placeholder="Digite seu sexo"
-                /> */}
+                  placeholder="Selecione uma opção"
+                >
+                  <option value="">Selecione uma opção</option>
+                  {sexo.map((row: any) => (
+                    <option value={row.descricao}>{row.descricao}</option>
+                  ))}
+                </Select>
               </div>
 
               <ButtonDefault
