@@ -56,6 +56,8 @@ export default function Questions({
   const [inputOther, setInputOther] = useState<any>()
 
   const [positionAudio, setPositionAudio] = useState<number>(0)
+  const [positionAudioPlay, setPositionAudioPlay] = useState<number>(0)
+
   const [favoriteRadios, setFavoriteRadios] = useState<any>()
 
   const [formData, setFormData] = useState<any>({
@@ -521,6 +523,8 @@ export default function Questions({
                       index={key}
                       key={key}
                       handleOnOption={(item) => handleOnOption(item)}
+                      positionAudioPlay={positionAudioPlay}
+                      setPositionAudioPlay={setPositionAudioPlay}
                       positionAudio={positionAudio}
                       setPositionAudio={setPositionAudio}
                       play={play}

@@ -14,6 +14,8 @@ interface SongProps {
   play?: boolean;
   setPositionAudio: (index: number) => void;
   handleOnOption: (item: any) => void;
+  positionAudioPlay:number,
+  setPositionAudioPlay(position:number):void
 }
 
 export default function Songs({
@@ -26,6 +28,8 @@ export default function Songs({
   handleOnOption,
   positionAudio,
   setPositionAudio,
+  positionAudioPlay,
+  setPositionAudioPlay = () => {}
 }: SongProps) {
   const [selected, setSelected] = useState({});
 
@@ -34,13 +38,20 @@ export default function Songs({
   const toggle = () => setPlaying(!playing);
 
   useEffect(() => {
-    setPlaying(play)
-  }, [play])
+    if (playing === true) setPositionAudioPlay(index)
+  }, [playing])
+
+  useEffect(() => {
+
+    if ( playing === true && positionAudioPlay !== index ) {
+      setPlaying(false)
+    }
+
+  }, [positionAudioPlay])
 
   useEffect(() => {
     if(playing) {
       audio.current?.play()  
-      finishMusic()
     } else {
       audio.current?.pause()
       setPlaying(false)
@@ -49,6 +60,13 @@ export default function Songs({
 
   useEffect(() => {
     audio.current?.addEventListener("ended", () => setPlaying(false));
+    audio.current?.addEventListener("timeupdate", (e:any) => {
+
+      if ( e.target.currentTime >= 5 && positionAudio >= index) {
+        finishMusic()
+      }
+
+    })
   }, [positionAudio, playing, audio]);
 
   function handleOnSelect(item: any) {
@@ -92,39 +110,40 @@ export default function Songs({
                 {playing ? <PauseIcon /> : <PlayIcon />}
               </button>
             </div>
-            <div className="score">
-              {[0, 1, 2, 3, 4, 5].map((rowButton, keyButton) => (
-                <button
-                  key={keyButton}
-                  type="button"
-                  disabled={positionAudio > index ? false : true}
-                  className={`buttonSound ${
-                    rowButton === selected && selected === 0
-                      ? "zero"
-                      : "" || (rowButton === selected && selected === 1)
-                      ? "one"
-                      : "" || (rowButton === selected && selected === 2)
-                      ? "two"
-                      : "" || (rowButton === selected && selected === 3)
-                      ? "three"
-                      : "" || (rowButton === selected && selected === 4)
-                      ? "four"
-                      : "" || (rowButton === selected && selected === 5)
-                      ? "five"
-                      : ""
-                  }`}
-                  onClick={() =>
-                    handleOnSelect({
-                      key: index,
-                      rating: rowButton,
-                      title: title,
-                    })
-                  }
-                >
-                  {keyButton}
-                </button>
-              ))}
-            </div>
+
+              <div className="score">
+                {positionAudio > index && [0, 1, 2, 3, 4, 5].map((rowButton, keyButton) => (
+                  <button
+                    key={keyButton}
+                    type="button"
+                    disabled={positionAudio > index ? false : true}
+                    className={`buttonSound animate__animated animate__fadeInDown ${
+                      rowButton === selected && selected === 0
+                        ? "zero"
+                        : "" || (rowButton === selected && selected === 1)
+                        ? "one"
+                        : "" || (rowButton === selected && selected === 2)
+                        ? "two"
+                        : "" || (rowButton === selected && selected === 3)
+                        ? "three"
+                        : "" || (rowButton === selected && selected === 4)
+                        ? "four"
+                        : "" || (rowButton === selected && selected === 5)
+                        ? "five"
+                        : ""
+                    }`}
+                    onClick={() =>
+                      handleOnSelect({
+                        key: index,
+                        rating: rowButton,
+                        title: title,
+                      })
+                    }
+                  >
+                    {keyButton}
+                  </button>
+                ))}
+              </div>
           </div>
         </div>
       </Main>
