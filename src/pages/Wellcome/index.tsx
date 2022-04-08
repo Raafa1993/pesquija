@@ -19,9 +19,7 @@ export default function Wellcome() {
     <Container>
       <Content>
         <h1>
-          Participe de pesquisas,{" "}
-          <span className="colorHighlights">ganhe pontos</span> e troque por
-          prêmios 😎💎
+          Olá, <span className="colorHighlights">você</span> foi selecionado para responder a nossa pesquisa e nos ajudar a criar um produto melhor para você. 😎💎
         </h1>
 
         <SectionImage>
@@ -33,14 +31,13 @@ export default function Wellcome() {
 
         <Footer>
           <h2>
-            É fácil! Responda à pesquisas, receba recompensas e{" "}
-            <span className="colorHighlights">troque por prêmios</span>.
+            É uma pesquisa rápida e divertida de responder e todas as informações cedidas serão confidenciais. <span className="colorHighlights">É só clicar no botão</span> abaixo e começar!.
           </h2>
 
           <ButtonDefault 
             onClick={() => history.push("/login")}
           >
-            Quero participar e ganhar
+            Participar da pesquisa
           </ButtonDefault>
         </Footer>
       </Content>

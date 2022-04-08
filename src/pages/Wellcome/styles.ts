@@ -28,7 +28,7 @@ export const SectionImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px;
+  margin: 10px;
   width: 100%;
 
 `;
@@ -57,7 +57,7 @@ export const Footer = styled.div`
   }
 
   >button {
-    margin-top: 40px;
+    margin-top: 20px;
   }
 `;
 
