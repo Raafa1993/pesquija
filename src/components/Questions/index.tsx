@@ -434,6 +434,10 @@ export default function Questions({
       </ContentTop>
       <ContentBottom>
         <Main>
+          {
+            data.tipo === 'subRange' &&
+            <p>De o play na música e após 5 seg, as opções de notas vão aparecer</p>
+          }
           <form>
 
           <div className="questions">
