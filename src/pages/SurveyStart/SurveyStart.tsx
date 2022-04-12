@@ -27,7 +27,7 @@ export default function SurveyStarts() {
                 <div className="warning" style={{backgroundImage: `url(${Warning})`}} />
                 <div className="infos">
                     <p>Inscreva-me nesta pesquisa e use minhas informações conforme descrito na <span>Política de Privacidade</span>.</p>
-                    <p>Ao clicar em <span>Iniciar pesquisa</span> você concorda e assume que leu e entendeu nossa política de privacidade, assim como vamos usar e compartilhar suas informações pessoais.</p>
+                    <p>Ao clicar em <span>Iniciar pesquisa</span> você concorda e assume que leu e entendeu nossa política de privacidade.</p>
                 </div>
 
                 <SurveyContainer>
