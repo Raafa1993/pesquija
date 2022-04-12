@@ -116,9 +116,9 @@ export default function Register() {
             <h1>Parabéns!🎉</h1>
             <p>
               Agora basta preencher o cadastro abaixo para começar a participar de
-              nossas pesquisas e{" "}
+              nossas {" "}
               <span className="colorHighlights">
-                ganhar muitos e muitos prêmios
+                pesquisas
               </span>
               .
             </p>
@@ -192,9 +192,9 @@ export default function Register() {
                 </ButtonDefault>
             </Form>
           </SectionForm>
-          <Footer>
+          {/* <Footer>
             <h2>Com o seu cadastro você já ganha 20 pontos 💎️</h2>
-          </Footer>
+          </Footer> */}
         </Main>
       </Content>
     </Container>

@@ -64,6 +64,7 @@ export const SectionForm = styled.div`
 
   width: 100%;
   margin-top: 3.6rem;
+  padding-bottom: 60px;
 
   form {
     display: flex;
