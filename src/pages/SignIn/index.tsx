@@ -87,9 +87,9 @@ export default function SignIn() {
           <SectionTitle>
             <h1>Faça seu login! <Emoji className="gem" symbol="🎁" label="gift" />  </h1>
             <p>
-              Você está apenas à alguns cliques de{" "}
+              Preencha o cadastro abaixo para participar de nossa{" "}
               <span className="colorHighlights">
-                ganhar muitos e muitos prêmios
+                pesquisa
               </span>
               .
             </p>
