@@ -1,7 +1,7 @@
 //IMAGES
 import { useEffect, useState } from "react";
 import Confetti from 'react-confetti'
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // import ButtonDefault from "../../components/form/ButtonDefault";
 import { useAuth } from "../../hooks/Auth";
 import { UserIcon } from "../../icons/UserIcon";
@@ -67,18 +67,18 @@ export default function FinishedSearch() {
           <Description>
             <div className="flex">
               <h1 className="titleFinished">
-                {`${user.nome}, parabéns! Você concluiu a pesquisa e ganhou:`}
+                {`${user.nome}, parabéns! Você concluiu a pesquisa.`}
               </h1>
 
-              <span className="diamondFinished">💎</span>
+              {/* <span className="diamondFinished">💎</span>
 
               <h2 className="pontsFinished">
                 <span>{data?.pontos} </span>pontos
-              </h2>
+              </h2> */}
             </div>
 
             <p className="paragraphyFinished">
-              Participe de + pesquisas para receber cada vez mais! ✨
+              Obrigado por nos ajudar respondendo a pesquisa! ✨
             </p>
           </Description>
         </SectionTop>
