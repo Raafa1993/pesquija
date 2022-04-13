@@ -149,6 +149,13 @@ export const Main = styled.div`
     background: var(--blue);
     border-radius: 12px;
   }
+
+  p {
+    font-weight: 700;
+    color: var(--black);
+    margin-top: 10px;
+    padding: 0 10px;
+  }
   
   form {
     display: flex;
