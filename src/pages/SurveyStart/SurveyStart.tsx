@@ -51,11 +51,11 @@ export default function SurveyStarts() {
                                 <Emoji symbol={star} label="stars" /> Fácil 
                                 {/* {data?.dificuldade} */}
                              </div>
-                            <div className="points">
+                            {/* <div className="points">
                                 <Emoji className="gem" symbol="💎" label="blue gem" /> 
-                                {/* {data?.pontos} */}
+                                {data?.pontos}
                                 35 pontos
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
