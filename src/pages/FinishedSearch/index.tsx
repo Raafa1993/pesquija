@@ -52,9 +52,11 @@ export default function FinishedSearch() {
     <Continaer>
       <ContentTop>
         <SectionTop>
-          <div className="cardTrophy">
+          {/* <div className="cardTrophy">
             <img src={TrophyImg} alt="trofeu imagem" />
-          </div>
+          </div> 
+          Manter esse trophy comentado enquanto está sem o ContentBottom
+          */}
 
             <Confetti
                 width={600}
@@ -65,6 +67,10 @@ export default function FinishedSearch() {
             />
 
           <Description>
+            {/* Enquanto está sem o contentbottom manter o trophy aqui */}
+            <div className="cardTrophy">
+              <img src={TrophyImg} alt="trofeu imagem" />
+            </div>
             <div className="flex">
               <h1 className="titleFinished">
                 {`${user.nome}, parabéns! Você concluiu a pesquisa.`}
@@ -84,7 +90,7 @@ export default function FinishedSearch() {
         </SectionTop>
       </ContentTop>
 
-      <ContentBottom>
+      {/* <ContentBottom>
         <SectionBottom>
           <CardQuestionFinished>
             <div className="headerCardFinished">
@@ -109,14 +115,14 @@ export default function FinishedSearch() {
             </div>
           </CardQuestionFinished>
 
-          {/* <ButtonDefault
+          <ButtonDefault
             type="button"
             onClick={() => history.push('/home')}
             >
             Ver mais pesquisas
-          </ButtonDefault> */}
+          </ButtonDefault> 
         </SectionBottom>
-      </ContentBottom>
+      </ContentBottom> */}
     </Continaer>
   );
 }

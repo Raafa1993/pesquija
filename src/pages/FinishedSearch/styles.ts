@@ -12,8 +12,10 @@ export const ContentTop = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 60%;
+    /* height: 60%; */
+    height: 100vh; // manter enquanto está sem a div bottom
 
 `;
 
@@ -31,6 +33,7 @@ export const SectionTop = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
@@ -47,9 +50,9 @@ export const SectionTop = styled.div`
         }
 
     .cardTrophy {
-        display: grid;
-        place-items: center;
-
+        /* display: grid;
+        place-items: center; */
+        
         img {
             width: 200px;
             object-fit: cover;
@@ -61,12 +64,13 @@ export const Description = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     height: 100%;
     margin-bottom: 12px;
 
     .titleFinished {
-        width: 320px;
+        /* width: 320px; */
+        width: 380px;
         font-weight: 600;
         font-size: 1.375rem;
         line-height: 32px;
@@ -97,7 +101,8 @@ export const Description = styled.div`
 
     .paragraphyFinished {
         font-weight: 600;
-        font-size: 0.75rem;
+        /* font-size: 0.75rem; */
+        font-size: 1rem;
         line-height: 24px;
         text-align: center;
         color: #FFD600;
